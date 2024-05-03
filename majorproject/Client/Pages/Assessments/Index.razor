@@ -1,0 +1,109 @@
+﻿@page "/assessments/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@* @attribute [Authorize] *@
+@* @inject HttpInterceptorService _interceptor *@
+@* @implements IDisposable *@
+
+<h3 class="card-title">Risk Assessment Forms</h3>
+
+<br />
+
+<a href="/assessments/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New RA Form
+</a>
+<br />
+<br />
+
+@* @if (Assessments == null)
+{
+    <div class="alert alert-info">Loading RA Forms...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Department</th>
+                <th>Process</th>
+                <th>Location</th>
+                <th>Assessment Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assessment in Assessments)
+            {
+                <tr>
+                    <td>@assessment.Id</td>
+                    <td>@assessment.Department</td>
+                    <td>@assessment.Process</td>
+                    <td>@assessment.Location</td>
+                    <td>@assessment.AssessmentDate</td>
+                    <td>
+                        <a href="/assessments/edit/@assessment.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <a href="/assessments/view/@assessment.Id" class="btn btn-primary">
+                            <span class="oi oi-eye"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(assessment.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <BottomInfo />
+}
+ *@
+@code {
+    // private List<Assessment>? Assessments;
+
+    // protected async override Task OnInitializedAsync()
+    // {
+    //     _interceptor.MonitorEvent();
+    //     Assessments = await _client.GetFromJsonAsync<List<Assessment>>($"{Endpoints.AssessmentsEndpoint}");
+    // }
+
+    // async Task Delete(int assessmentId)
+    // {
+    //     if (Assessments != null)
+    //     {
+    //         var assessment = Assessments.First(q => q.Id == assessmentId);
+    //         var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {assessment.Name}?");
+    //         if (confirm)
+    //         {
+    //             await _client.DeleteAsync($"{Endpoints.AssessmentsEndpoint}/{assessmentId}");
+    //             await OnInitializedAsync();
+    //         }
+    //     }
+    // }
+
+    // protected async override Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    // }
+
+    // public void Dispose()
+    // {
+    //     _interceptor.DisposeEvent();
+    //     js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    // }
+}
+
+<table class="table table-responsive" id="bookingsTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Department</th>
+            <th>Process</th>
+            <th>Location</th>
+            <th>Assessment Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
