@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using majorproject.Server.Data;
 
@@ -11,9 +12,11 @@ using majorproject.Server.Data;
 namespace majorproject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503084343_AddApplicationTables")]
+    partial class AddApplicationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,6 +166,238 @@ namespace majorproject.Server.Data.Migrations
                     b.ToTable("PersistedGrants", (string)null);
                 });
 
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Activity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FormID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RAFId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkActivity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RAFId");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Approval", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Approved")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FormID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RAFId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RAFId");
+
+                    b.ToTable("Approvals");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Hazard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HazardName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PossibleInjury")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RiskEID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RiskEvaluationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("RiskEvaluationId");
+
+                    b.ToTable("Hazards");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RAF", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("Assessment")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Department")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FormId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastReview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("NextReview")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Process")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RAFs");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RiskControl", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddControl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImplementingPerson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Likelihood")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RPN")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Severity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RiskControls");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RiskEvaluation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ExistingRiskControls")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Likelihood")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RPN")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RiskCID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RiskControlId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Severity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RiskControlId");
+
+                    b.ToTable("RiskEvaluations");
+                });
+
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RiskTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FormID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Lead")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PFive")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PFour")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("POne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PThree")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PTwo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RAFId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RAFId");
+
+                    b.ToTable("RiskTeams");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -188,20 +423,6 @@ namespace majorproject.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -291,13 +512,6 @@ namespace majorproject.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
-                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -369,9 +583,6 @@ namespace majorproject.Server.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -381,6 +592,9 @@ namespace majorproject.Server.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("position")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -393,256 +607,57 @@ namespace majorproject.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "13f0b49b-f38d-4621-8685-cf7316172673",
-                            Email = "admin@localhost.com",
-                            EmailConfirmed = false,
-                            FirstName = "Admin",
-                            LastName = "User",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEI+Ib3vxII9CKA8e6WCvhnB0yNui61jK5ggdqnCX7KI1M+GO6klIhn6fMqSmkZ1fng==",
-                            PhoneNumberConfirmed = false,
-                            Position = "Manager",
-                            SecurityStamp = "6c92f920-4ddd-445a-8597-9c542d91c5aa",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@localhost.com"
-                        });
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Activity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Major_Project_2024.Shared.Domain.RAF", "RAF")
+                        .WithMany()
+                        .HasForeignKey("RAFId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FormID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RAFId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WorkActivity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RAFId");
-
-                    b.ToTable("Activities");
+                    b.Navigation("RAF");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Approval", b =>
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Approval", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Major_Project_2024.Shared.Domain.RAF", "RAF")
+                        .WithMany()
+                        .HasForeignKey("RAFId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("Approved")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FormID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RAFId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RAFId");
-
-                    b.ToTable("Approvals");
+                    b.Navigation("RAF");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.Hazard", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Major_Project_2024.Shared.Domain.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.HasOne("Major_Project_2024.Shared.Domain.RiskEvaluation", "RiskEvaluation")
+                        .WithMany()
+                        .HasForeignKey("RiskEvaluationId");
 
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
+                    b.Navigation("Activity");
 
-                    b.Property<string>("HazardName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PossibleInjury")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RiskEID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RiskEvaluationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorkID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("RiskEvaluationId");
-
-                    b.ToTable("Hazards");
+                    b.Navigation("RiskEvaluation");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.RAF", b =>
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RiskEvaluation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Major_Project_2024.Shared.Domain.RiskControl", "RiskControl")
+                        .WithMany()
+                        .HasForeignKey("RiskControlId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("Assessment")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastReview")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("NextReview")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Process")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RAFs");
+                    b.Navigation("RiskControl");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.RiskControl", b =>
+            modelBuilder.Entity("Major_Project_2024.Shared.Domain.RiskTeam", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Major_Project_2024.Shared.Domain.RAF", "RAF")
+                        .WithMany()
+                        .HasForeignKey("RAFId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AddControl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImplementingPerson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Likelihood")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RPN")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Severity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RiskControls");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.RiskEvaluation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ExistingRiskControls")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Likelihood")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RPN")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RiskCID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RiskControlId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Severity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RiskControlId");
-
-                    b.ToTable("RiskEvaluations");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.RiskTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FormID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Lead")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PFive")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PFour")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("POne")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PThree")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PTwo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RAFId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RAFId");
-
-                    b.ToTable("RiskTeams");
+                    b.Navigation("RAF");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -694,57 +709,6 @@ namespace majorproject.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.RAF", "RAF")
-                        .WithMany()
-                        .HasForeignKey("RAFId");
-
-                    b.Navigation("RAF");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.Approval", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.RAF", "RAF")
-                        .WithMany()
-                        .HasForeignKey("RAFId");
-
-                    b.Navigation("RAF");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId");
-
-                    b.HasOne("majorproject.Shared.Domain.RiskEvaluation", "RiskEvaluation")
-                        .WithMany()
-                        .HasForeignKey("RiskEvaluationId");
-
-                    b.Navigation("Activity");
-
-                    b.Navigation("RiskEvaluation");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.RiskEvaluation", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.RiskControl", "RiskControl")
-                        .WithMany()
-                        .HasForeignKey("RiskControlId");
-
-                    b.Navigation("RiskControl");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.RiskTeam", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.RAF", "RAF")
-                        .WithMany()
-                        .HasForeignKey("RAFId");
-
-                    b.Navigation("RAF");
                 });
 #pragma warning restore 612, 618
         }

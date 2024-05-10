@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace majorproject.Shared.Domain
+{
+    public class RiskControl: BaseDomainModel
+    {
+        public string? AddControl { get; set; }
+        public int? Severity { get; set; }
+        public int? Likelihood { get; set; }
+        public int? RPN { get; set; }
+        public string? ImplementingPerson { get; set; }
+        public DateTime? DueDate { get; set; }
+        public string? Remarks { get; set; }
+
+    }
+}
