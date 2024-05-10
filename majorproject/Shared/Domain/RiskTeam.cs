@@ -8,12 +8,12 @@ namespace majorproject.Shared.Domain
 {
     public class RiskTeam:BaseDomainModel
     {
-        public string? Lead { get; set; }
-        public string? POne { get; set; }
-        public string? PTwo { get; set; }
-        public string? PThree { get; set; }
-        public string? PFour{ get; set; }
-        public string? PFive { get; set; }
+        public string? Leader { get; set; }
+        public string? MemberOne { get; set; }
+        public string? MemberTwo { get; set; }
+        public string? MemberThree { get; set; }
+        public string? MemberFour{ get; set; }
+        public string? MemberFive { get; set; }
         public int FormID {  get; set; }
         public virtual RAF? RAF { get; set; }
     }
