@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using majorproject.Server.Data;
 
 #nullable disable
 
-namespace majorproject.Server.Data.Migrations
+namespace majorproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240508080245_ChangedAprrovedFromStringtoBoolean")]
-    partial class ChangedAprrovedFromStringtoBoolean
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,6 +188,20 @@ namespace majorproject.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -280,6 +291,13 @@ namespace majorproject.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -375,6 +393,27 @@ namespace majorproject.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ac3f2522-96a7-4903-ba3a-81874bcafe13",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBorY5ExhWS3ynZByuQLNwntgGaBm7SBgn1TPAchMsbde5/Ljj6EMweb7tVmFuAMpg==",
+                            PhoneNumberConfirmed = false,
+                            Position = "Manager",
+                            SecurityStamp = "aa11ad93-5e25-48c2-a653-ef034cf6ca1c",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
@@ -483,9 +522,6 @@ namespace majorproject.Server.Data.Migrations
                     b.Property<string>("Department")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FormId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastReview")
                         .HasColumnType("datetime2");
 
@@ -581,22 +617,22 @@ namespace majorproject.Server.Data.Migrations
                     b.Property<int>("FormID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Lead")
+                    b.Property<string>("Leader")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PFive")
+                    b.Property<string>("MemberFive")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PFour")
+                    b.Property<string>("MemberFour")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("POne")
+                    b.Property<string>("MemberOne")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PThree")
+                    b.Property<string>("MemberThree")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PTwo")
+                    b.Property<string>("MemberTwo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RAFId")

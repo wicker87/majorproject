@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace majorproject.Server.Data.Migrations
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace majorproject.Server.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    /// <inheritdoc />
+    public partial class NewDB : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -26,6 +32,9 @@ namespace majorproject.Server.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -58,7 +67,7 @@ namespace majorproject.Server.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Expiration = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50140, nullable: false)
+                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,11 +81,11 @@ namespace majorproject.Server.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Version = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Use = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Use = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Algorithm = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsX509Certificate = table.Column<bool>(type: "bit", nullable: false),
                     DataProtected = table.Column<bool>(type: "bit", nullable: false),
-                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50140, nullable: false)
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,11 +105,48 @@ namespace majorproject.Server.Data.Migrations
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Expiration = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ConsumedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50140, nullable: false)
+                    Data = table.Column<string>(type: "nvarchar(max)", maxLength: 50000, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RAFs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Process = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Assessment = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastReview = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    NextReview = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RAFs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskControls",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddControl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Severity = table.Column<int>(type: "int", nullable: true),
+                    Likelihood = table.Column<int>(type: "int", nullable: true),
+                    RPN = table.Column<int>(type: "int", nullable: true),
+                    ImplementingPerson = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskControls", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +255,154 @@ namespace majorproject.Server.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Activities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkActivity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FormID = table.Column<int>(type: "int", nullable: false),
+                    RAFId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Activities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Activities_RAFs_RAFId",
+                        column: x => x.RAFId,
+                        principalTable: "RAFs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Approvals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Approved = table.Column<bool>(type: "bit", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FormID = table.Column<int>(type: "int", nullable: false),
+                    RAFId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Approvals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Approvals_RAFs_RAFId",
+                        column: x => x.RAFId,
+                        principalTable: "RAFs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskTeams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Leader = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemberOne = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemberTwo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemberThree = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemberFour = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MemberFive = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FormID = table.Column<int>(type: "int", nullable: false),
+                    RAFId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskTeams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RiskTeams_RAFs_RAFId",
+                        column: x => x.RAFId,
+                        principalTable: "RAFs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RiskEvaluations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExistingRiskControls = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Severity = table.Column<int>(type: "int", nullable: true),
+                    Likelihood = table.Column<int>(type: "int", nullable: true),
+                    RPN = table.Column<int>(type: "int", nullable: true),
+                    RiskCID = table.Column<int>(type: "int", nullable: false),
+                    RiskControlId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskEvaluations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RiskEvaluations_RiskControls_RiskControlId",
+                        column: x => x.RiskControlId,
+                        principalTable: "RiskControls",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hazards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HazardName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PossibleInjury = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkID = table.Column<int>(type: "int", nullable: false),
+                    ActivityId = table.Column<int>(type: "int", nullable: true),
+                    RiskEID = table.Column<int>(type: "int", nullable: false),
+                    RiskEvaluationId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hazards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hazards_Activities_ActivityId",
+                        column: x => x.ActivityId,
+                        principalTable: "Activities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Hazards_RiskEvaluations_RiskEvaluationId",
+                        column: x => x.RiskEvaluationId,
+                        principalTable: "RiskEvaluations",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "ad2bcf0c-20db-474f-8407-5a6b159518ba", null, "Administrator", "ADMINISTRATOR" },
+                    { "bd2bcf0c-20db-474f-8407-5a6b159518bb", null, "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Position", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "ac3f2522-96a7-4903-ba3a-81874bcafe13", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEBorY5ExhWS3ynZByuQLNwntgGaBm7SBgn1TPAchMsbde5/Ljj6EMweb7tVmFuAMpg==", null, false, "Manager", "aa11ad93-5e25-48c2-a653-ef034cf6ca1c", false, "admin@localhost.com" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Activities_RAFId",
+                table: "Activities",
+                column: "RAFId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Approvals_RAFId",
+                table: "Approvals",
+                column: "RAFId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -260,6 +454,16 @@ namespace majorproject.Server.Data.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Hazards_ActivityId",
+                table: "Hazards",
+                column: "ActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hazards_RiskEvaluationId",
+                table: "Hazards",
+                column: "RiskEvaluationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
                 table: "Keys",
                 column: "Use");
@@ -283,10 +487,24 @@ namespace majorproject.Server.Data.Migrations
                 name: "IX_PersistedGrants_SubjectId_SessionId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "SessionId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RiskEvaluations_RiskControlId",
+                table: "RiskEvaluations",
+                column: "RiskControlId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RiskTeams_RAFId",
+                table: "RiskTeams",
+                column: "RAFId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Approvals");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -306,16 +524,34 @@ namespace majorproject.Server.Data.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "Hazards");
+
+            migrationBuilder.DropTable(
                 name: "Keys");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "RiskTeams");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Activities");
+
+            migrationBuilder.DropTable(
+                name: "RiskEvaluations");
+
+            migrationBuilder.DropTable(
+                name: "RAFs");
+
+            migrationBuilder.DropTable(
+                name: "RiskControls");
         }
     }
 }
