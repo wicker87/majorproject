@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace majorproject.Shared.Domain
 {
-    public class RAF:BaseDomainModel
+    public class RAF : BaseDomainModel
     {
         public string? Department { get; set; }
         public string? Process {  get; set; }
         public string? Location {  get; set; }
-        public DateTime? Assessment {  get; set; }
-        public DateTime? LastReview { get; set; }
-        public DateTime? NextReview { get; set;}
-
-
+        public DateTime AssessmentDate {  get; set; }
+        public DateTime LastReviewDate { get; set; }
+        public DateTime NextReviewDate { get; set;}
     }
 }

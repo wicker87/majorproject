@@ -1,0 +1,127 @@
+﻿@page "/riskteams/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor 
+@implements IDisposable 
+
+<h3 class="card-title">Risk teams Data</h3>
+
+<br />
+
+<a href="/riskteams/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Risk team
+</a>
+<br />
+<br />
+
+@if (RiskTeams == null)
+{
+    <div class="alert alert-info">Loading Risk teams Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Leader</th>
+                <th>Member 1</th>
+                <th>Member 2</th>
+                <th>Member 3</th>
+                <th>Member 4</th>
+                <th>Member 5</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var riskteam in RiskTeams)
+            {
+                <tr>
+                    <td>@riskteam.Id</td>
+                    <td>@riskteam.Leader.FullName</td>
+                    <td>@riskteam.Member1.FullName</td>
+                    <td>@riskteam.Member2.FullName</td>
+                    <td>
+                        @if (riskteam.Member3 != null)
+                        {
+                            @riskteam.Member3.FullName
+                        }
+                        else
+                        {
+                            <span> </span>
+                        }
+                    </td>
+                    <td>
+                        @if (riskteam.Member4 != null)
+                        {
+                            @riskteam.Member4.FullName
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </td>
+                    <td>
+                        @if (riskteam.Member5 != null)
+                        {
+                            @riskteam.Member5.FullName
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/riskteams/edit/@riskteam.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <a href="/riskteams/view/@riskteam.Id" class="btn btn-primary">
+                            <span class="oi oi-eye"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(riskteam.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <BottomInfo />
+}
+
+@code {
+    private List<RiskTeam>? RiskTeams;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        RiskTeams = await _client.GetFromJsonAsync<List<RiskTeam>>($"{Endpoints.RiskTeamsEndpoint}");
+    }
+
+    async Task Delete(int riskteamId)
+    {
+        if (RiskTeams != null)
+        {
+            var riskteam = RiskTeams.First(q => q.Id == riskteamId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {riskteam.Leader}'s riskteam?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.RiskTeamsEndpoint}/{riskteamId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

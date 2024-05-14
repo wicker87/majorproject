@@ -1,0 +1,140 @@
+﻿@inject IJSRuntime js
+
+<h6>Note that the image must be in jpg/jpeg type, size not exceeding 200 KB.</h6>
+<EditForm Model="@employee" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div style="display: flex; gap: 40px">
+            <div>
+                <div class="form-group">
+                    <label> Photo: </label>
+                    <div>
+                        <InputFile @bind-Value="employee.Photo" class="form-control" style="width: 500px;" OnChange="HandleFileSelected" />
+                        <ValidationMessage For="@(() => employee.Photo)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Full Name: </label>
+                    <div>
+                        <InputText @bind-Value="employee.FullName" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => employee.FullName)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Date Of Birth: </label>
+                    <div>
+                        <InputDate @bind-Value="employee.DateOfBirth" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => employee.DateOfBirth)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Gender: </label>
+                    <div>
+                        <InputSelect @bind-Value="employee.Gender" class="form-control" style="width: 500px;">
+                            <option value="">-- Select Gender --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => employee.Gender)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Phone Number: </label>
+                    <div>
+                        <InputText @bind-Value="employee.PhoneNumber" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => employee.PhoneNumber)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Email Address: </label>
+                    <div>
+                        <InputText @bind-Value="employee.EmailAddress" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => employee.EmailAddress)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Designation: </label>
+                    <div>
+                        <InputSelect @bind-Value="employee.Designation" class="form-control" style="width: 500px;">
+                            <option value="">-- Select Designation --</option>
+                            <option value="Project Manager">Project Manager</option>
+                            <option value="Safety Inspector">Safety Inspector</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => employee.Designation)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Employee ID: </label>
+                    <div>
+                        <InputNumber @bind-Value="employee.EmployeeID" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => employee.EmployeeID)" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>Profile Photo:</p>
+                @if (!string.IsNullOrEmpty(employee.Photo))
+                {
+                    <img src="@($"data:image/jpeg;base64,{employee.Photo}")"
+                         width="160"
+                         height="160" />
+                }
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 80px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-success btn-block">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        <div>
+            <BackToList Target="employees" />
+        </div>
+    </div>
+</EditForm>
+<BottomInfo /> 
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Employee? employee { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+
+        // Check the file size (max 200 KB)
+        var maxFileSize = 200 * 1024;
+        // Check the file type (only jpg or jpeg)
+        var allowedTypes = new[] { "image/jpg", "image/jpeg" };
+        if (imageFile.Size > maxFileSize || !allowedTypes.Contains(imageFile.ContentType))
+        {
+            // Show an error message
+            var alert = await js.InvokeAsync<bool>("confirm", $"The image does not meet the requirements");
+            return;
+        }
+        else
+        {
+            // Read the file content into a byte array and convert to base64-encoded string
+            using (MemoryStream ms = new MemoryStream())
+            {
+                await imageFile.OpenReadStream().CopyToAsync(ms);
+                employee.Photo = Convert.ToBase64String(ms.ToArray());
+            }
+        } 
+    }
+}

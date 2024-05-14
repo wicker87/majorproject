@@ -1,12 +1,16 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@* Top Left Button *@
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Risk Assessor</a>
+        <a class="navbar-brand" href=""><img src="Hazard.png" height="36"> Risk Assessor</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
 
+@* Side bar buttons *@
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
@@ -14,7 +18,7 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
+        @* <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="oi oi-plus" aria-hidden="true"></span> Counter
             </NavLink>
@@ -23,10 +27,45 @@
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
+        </div> *@
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="rafs">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Risk Assessments
+            </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="assessments">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Forms
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="activities">
+                <span class="oi oi-list" aria-hidden="true"></span> Work Activities
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="hazards">
+                <span class="oi oi-list" aria-hidden="true"></span> Hazard Identifications
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="riskevaluations">
+                <span class="oi oi-list" aria-hidden="true"></span> Risk Evaluations
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="riskcontrols">
+                <span class="oi oi-list" aria-hidden="true"></span> Risk Controls
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="riskteams">
+                <span class="oi oi-people" aria-hidden="true"></span> Risk Teams
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="employees">
+                <span class="oi oi-person" aria-hidden="true"></span> Employees
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="approvals">
+                <span class="oi oi-check" aria-hidden="true"></span> Form Approvers
             </NavLink>
         </div>
     </nav>
@@ -41,4 +80,24 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     isAuthenticated = authState.User.Identity.IsAuthenticated;
+    //     AuthenticationStateProvider.AuthenticationStateChanged += AuthenticationStateChanged;
+    // }
+
+    // private async void AuthenticationStateChanged(Task<AuthenticationState> task)
+    // {
+    //     var authState = await task;
+    //     isAuthenticated = authState.User.Identity.IsAuthenticated;
+    //     StateHasChanged();
+    // }
+
+    // public void Dispose()
+    // {
+    //     // Unsubscribe from the event when the component is disposed
+    //     AuthenticationStateProvider.AuthenticationStateChanged -= AuthenticationStateChanged;
+    // }
 }

@@ -12,6 +12,7 @@ namespace majorproject.Server.IRepository
         Task Save(HttpContext httpContext);
         IGenericRepository<Activity> Activities { get; }
         IGenericRepository<Approval> Approvals { get; }
+        IGenericRepository<Employee> Employees { get; }
         IGenericRepository<Hazard> Hazards { get; }
         IGenericRepository<RAF> RAFs { get; }
         IGenericRepository<RiskControl> RiskControls { get; }

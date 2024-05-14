@@ -2,16 +2,21 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
 
+@* Top Menu Bar Links/Buttons*@
+
 <AuthorizeView>
     <Authorized>
-        <a href="authentication/profile">Hello, @context.User.Identity?.Name!</a>
-        <button class="nav-link btn btn-link" @onclick="BeginLogOut">Log out</button>
+        <span>Welcome, @context.User.Identity?.Name</span>
+        <a href="authentication/profile"><i class="fas fa-user"></i> Account Setting</a>
+        <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/register">Register</a>
-        <a href="authentication/login">Log in</a>
+        <a href="authentication/register"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="authentication/login"><i class="fas fa-sign-in-alt"></i> Login</a>
     </NotAuthorized>
 </AuthorizeView>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @code{
     private void BeginLogOut()

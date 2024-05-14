@@ -1,83 +1,103 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\
 for details on configuring this project to bundle and minify static web assets. */
 
+/* Styles the navigation bar brand to allow text wrapping and center alignment */
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
+/* Sets the default color for all anchor tags */
 a {
-  color: #0077cc;
+    color: #0077cc;
 }
 
+/* Adds a color border and shadow to form controls when they are focused */
 .form-control:focus {
     border-color: #0077cc;
     box-shadow: 0 0 0 0.2rem #0077cc;
 }
 
+/* Styles the primary buttons */
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
+/* Customizes the appearance of active links in navigation pills */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
+/* Defines the focus outline for link-styled buttons */
 .btn-link.nav-link:focus {
-  outline: black auto 1px;
+    outline: black auto 1px;
 }
 
+/* Sets the base font size for the HTML document */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
+/* Increases the base font size for screens wider than 768px */
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
+/* Limits the maximum width of the container class */
 .container {
-  max-width: 960px;
+    max-width: 960px;
 }
 
+/* Limits the maximum width of the pricing header */
 .pricing-header {
-  max-width: 700px;
+    max-width: 700px;
 }
 
+/* Adds a top border to elements with the border-top class */
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
+/* Adds a bottom border to elements with the border-bottom class */
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
+/* Applies a light box-shadow to elements with the box-shadow class */
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+/* Styles the accept-policy button with a specific font size and line height */
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
+/* Sets the position of the HTML element to relative and ensures it takes up at least the full height of the viewport */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
+/* Adds a bottom margin to the body to account for a fixed footer */
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+/* Styles the footer to be fixed at the bottom of the page, with a specific height and overflow behavior */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  overflow: scroll;
-  white-space: nowrap;
-  line-height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
+    line-height: 60px;
 }
