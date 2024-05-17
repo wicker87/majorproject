@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace majorproject.Server.Areas.Identity.Pages.Account
 {
@@ -92,9 +93,10 @@ namespace majorproject.Server.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
-            [Display (Name ="position")]
+            [Display (Name ="Position")]
             public string Position { get; set; }
 
+            
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
