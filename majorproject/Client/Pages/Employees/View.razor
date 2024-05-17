@@ -1,0 +1,18 @@
+﻿@page "/employees/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Employee</h3>
+
+<FormComponent employee="employee" Disabled="true" /> @*disable textfield*@
+
+
+@code {
+    [Parameter] public int id { get; set; }
+    Employee? employee = new Employee();
+    protected async override Task OnParametersSetAsync()
+    {
+        employee = await
+        _client.GetFromJsonAsync<Employee>($"{Endpoints.EmployeesEndpoint}/{id}");
+    }
+}

@@ -2,17 +2,17 @@
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu />  @* Side Navigation *@
     </div>
 
-    <main>
+    <main class="main-content">
         <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <LoginDisplay />  @* Top Navigation *@
         </div>
 
         <article class="content px-4">
             @Body
         </article>
+        <BottomInfo />
     </main>
 </div>

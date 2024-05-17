@@ -1,0 +1,152 @@
+﻿@inject IJSRuntime js
+@inject HttpClient _client
+
+<h6>Note that a riskteam must have between 3 to 5 people.</h6>
+<EditForm Model="@riskteam" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label> Leader: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.LeaderId" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Leader --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>                           
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.LeaderId)" />
+            </div>  
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Member 1: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.Member1Id" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Member 1 --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.Member1Id)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Member 2: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.Member2Id" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Member 2 --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.Member2Id)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Member 3: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.Member3Id" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Member 3 --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.Member3Id)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Member 4: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.Member4Id" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Member 4 --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.Member4Id)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Member 5: </label>
+            <div>
+                <InputSelect @bind-Value="riskteam.Member5Id" class="form-control" style="width: 500px;">
+                    <option value="">-- Select Member 5 --</option>
+                    @if (Employees != null)
+                    {
+                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FullName);
+                        foreach (var employee in safetyInspectors)
+                        {
+                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => riskteam.Member5Id)" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 80px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-success btn-block">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        <div>
+            <BackToList Target="riskteams" />
+        </div>
+    </div>
+</EditForm>
+<BottomInfo /> 
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public RiskTeam? riskteam { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+
+    private IList<Employee>? Employees;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Employees = await _client.GetFromJsonAsync<List<Employee>>($"{Endpoints.EmployeesEndpoint}");
+    }
+}

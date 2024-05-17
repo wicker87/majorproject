@@ -26,7 +26,8 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskTeams()
         {
-            var riskTeams = await _unitOfWork.RiskTeams.GetAll();
+            var riskTeams = await _unitOfWork.RiskTeams.GetAll(includes: q => q.Include(x => x.Leader).Include(x => x.Member1)
+            .Include(x => x.Member2).Include(x => x.Member3).Include(x => x.Member4).Include(x => x.Member5));
             return Ok(riskTeams);
         }
 

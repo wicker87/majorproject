@@ -8,10 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Controls\**" />
+    <Compile Remove="Pages\Evaluations\**" />
+    <Compile Remove="Pages\Members\**" />
+    <Content Remove="Pages\Controls\**" />
+    <Content Remove="Pages\Evaluations\**" />
+    <Content Remove="Pages\Members\**" />
+    <EmbeddedResource Remove="Pages\Controls\**" />
+    <EmbeddedResource Remove="Pages\Evaluations\**" />
+    <EmbeddedResource Remove="Pages\Members\**" />
+    <None Remove="Pages\Controls\**" />
+    <None Remove="Pages\Evaluations\**" />
+    <None Remove="Pages\Members\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\scripts\datatable.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.17" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.17" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="10.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +43,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Approvals\" />
     <Folder Include="Pages\Hazards\" />
-    <Folder Include="Pages\Members\" />
-    <Folder Include="Pages\Controls\" />
-    <Folder Include="Pages\Evaluations\" />
+    <Folder Include="Pages\RiskControls\" />
+    <Folder Include="Pages\RiskEvaluations\" />
+    <Folder Include="Pages\RAFs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Approvals\Index.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
 
 </Project>

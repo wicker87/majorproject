@@ -19,6 +19,7 @@ namespace majorproject.Server.Data
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Approval> Approvals { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Hazard> Hazards { get; set; }  
         public DbSet<RAF> RAFs { get; set; }
         public DbSet<RiskControl> RiskControls { get; set;}
@@ -28,7 +29,15 @@ namespace majorproject.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new ActivitySeedConfiguration());
 
+            builder.ApplyConfiguration(new RAFSeedConfiguration());
+
+            builder.ApplyConfiguration(new EmployeeSeedConfiguration());
+
+            builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
+
+            // Identity seed
             builder.ApplyConfiguration(new RoleSeedConfiguration());
 
             builder.ApplyConfiguration(new UserSeedConfiguration());

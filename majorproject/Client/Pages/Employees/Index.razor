@@ -1,0 +1,117 @@
+﻿@page "/employees/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor 
+@implements IDisposable 
+
+<h3 class="card-title">Employees Data</h3>
+
+<br />
+
+<a href="/employees/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Employee
+</a>
+<br />
+<br />
+
+@if (Employees == null)
+{
+    <div class="alert alert-info">Loading Employees Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>EmployeeID</th>
+                <th>Photo</th>
+                <th>Full Name</th>
+                <th>D.O.B</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Designation</th>               
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Employees)
+            {
+                <tr>
+                    <td>@employee.EmployeeID</td>
+                    <td>
+                        @if (employee.Photo != null)
+                        {
+                            <img src="@($"data:image/jpeg;base64,{employee.Photo}")" width="80" height="80" style="border-radius: 50%; outline: 1px solid black;" />
+                        }
+                        else
+                        {
+                            @if (employee.Gender == "Male")
+                            {
+                                <img src="mprofilr.jpg" width="80" height="80" style="border-radius: 50%;" />
+                            }
+                            else
+                            {
+                                <img src="fprofilr.jpg" width="80" height="80" style="border-radius: 50%;" />
+                            }
+                        }
+                    </td>
+                    <td>@employee.FullName</td>
+                    <td>@employee.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@employee.Gender</td>
+                    <td>@employee.PhoneNumber</td>
+                    <td>@employee.EmailAddress</td>
+                    <td>@employee.Designation</td>                  
+                    <td>
+                        <a href="/employees/edit/@employee.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <a href="/employees/view/@employee.Id" class="btn btn-primary">
+                            <span class="oi oi-eye"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(employee.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Employee>? Employees;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Employees = await _client.GetFromJsonAsync<List<Employee>>($"{Endpoints.EmployeesEndpoint}");
+    }
+
+    async Task Delete(int employeeId)
+    {
+        if (Employees != null)
+        {
+            var employee = Employees.First(q => q.Id == employeeId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {employee.FullName}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.EmployeesEndpoint}/{employeeId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}
