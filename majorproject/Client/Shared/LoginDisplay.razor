@@ -7,7 +7,7 @@
 <AuthorizeView>
     <Authorized>
         <span>Welcome, @context.User.Identity?.Name</span>
-        <a href="authentication/profile"><i class="fas fa-user"></i> Account Setting</a>
+        <a href="authentication/profile"><i class="fas fa-user-circle"></i> Account Setting</a>
         <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </Authorized>
     <NotAuthorized>
@@ -15,10 +15,11 @@
         <a href="authentication/login"><i class="fas fa-sign-in-alt"></i> Login</a>
     </NotAuthorized>
 </AuthorizeView>
+<a href="https://www.mom.gov.sg/workplace-safety-and-health/safety-and-health-management-systems/risk-management" target="_blank"><i class="fas fa-info-circle"></i> About RA</a>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-@code{
+@code {
     private void BeginLogOut()
     {
         Navigation.NavigateToLogout("authentication/logout");

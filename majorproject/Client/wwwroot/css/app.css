@@ -4,7 +4,8 @@
 /* Set default font styles for the entire document */
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #ffff99;
+    background-color: #ffffff;
+    font-size: 15px;
 }
 
 /* Remove outline when an h1 element is focused */
@@ -14,7 +15,7 @@ h1:focus {
 
 /* Styles for hyperlinks and button links */
 a, .btn-link {
-    color: #ffff66;
+    color: #0071c1;
 }
 
 /* Styles for primary buttons */
@@ -92,15 +93,15 @@ a, .btn-link {
     /* Circular loading indicator */
     .loading-progress circle {
         fill: none;
-        stroke: #e0e0e0;
-        stroke-width: 0.6rem;
+        stroke: #d9d9d9;
+        stroke-width: 0.8rem;
         transform-origin: 50% 50%;
         transform: rotate(-90deg); /* Start from the top */
     }
 
         /* Animated part of the loading indicator */
         .loading-progress circle:last-child {
-            stroke: #1b6ec2;
+            stroke: #ffb366;
             stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%; /* Circular progress effect */
             transition: stroke-dasharray 0.05s ease-in-out; /* Smooth animation */
         }

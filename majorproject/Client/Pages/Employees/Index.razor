@@ -44,7 +44,7 @@ else
                     <td>
                         @if (employee.Photo != null)
                         {
-                            <img src="@($"data:image/jpeg;base64,{employee.Photo}")" width="80" height="80" style="border-radius: 50%;" />
+                            <img src="@($"data:image/jpeg;base64,{employee.Photo}")" width="80" height="80" style="border-radius: 50%; outline: 1px solid black;" />
                         }
                         else
                         {
@@ -79,7 +79,6 @@ else
             }
         </tbody>
     </table>
-    <BottomInfo />
 }
 
 @code {

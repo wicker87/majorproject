@@ -2,24 +2,32 @@
 .page {
     position: relative;
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
-    background-color: #ffff99;
+    background-color: white;
 }
 
 /* Style for the main content area */
 main {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+}
+
+.content {
+    flex: 1;
+    padding-bottom: 50px;
 }
 
 /* Style for the sidebar */
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(230, 230, 0) 0%, #cc7a00 80%); /*side menu color*/
+    background-image: linear-gradient(180deg, #ffb366 0%, #cc6600 80%); /*side menu color*/
 }
 
 /* Style for the top row of the layout */
 .top-row {
-    background-color: #999900;
-    border-bottom: 5px solid #666600;
+    background-color: #ffb366;
+    border-bottom: 5px solid #cc6600;
     justify-content: flex-end;
     height: 4.0rem;
     display: flex;
@@ -72,7 +80,7 @@ main {
 
     /* Style for the sidebar on larger screens */
     .sidebar {
-        width: 240px;
+        width: 220px;
         height: 100vh;
         position: sticky;
         top: 0;
@@ -92,9 +100,9 @@ main {
             width: 0;
         }
 
-    /* Padding for the top row and article elements */
+    /* Padding for the top row and article(page contents) elements */
     .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 }
