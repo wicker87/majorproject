@@ -9,28 +9,28 @@
         <div class="form-group">
             <label> Leader: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.LeaderId" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Leader" class="form-control" style="width: 500px;">
                     <option value="">-- Select Leader --</option>
-                    @if (Employees != null)
+                    @*  @if (E != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
+                        .OrderBy(e => e.FullName);///
                         foreach (var employee in safetyInspectors)
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>                           
                         }
-                    }
+                    } *@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.LeaderId)" />
+                <ValidationMessage For="@(() => riskteam.Leader)" />
             </div>  
         </div>
         <br />
         <div class="form-group">
             <label> Member 1: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member1Id" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.MemberOne" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 1 --</option>
-                    @if (Employees != null)
+                    @*@if (Employees != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
                         .OrderBy(e => e.FullName);
@@ -38,18 +38,18 @@
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
                         }
-                    }
+                    }*@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member1Id)" />
+                <ValidationMessage For="@(() => riskteam.MemberOne)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 2: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member2Id" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.MemberTwo" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 2 --</option>
-                    @if (Employees != null)
+                    @*@if (Employees != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
                         .OrderBy(e => e.FullName);
@@ -57,18 +57,18 @@
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
                         }
-                    }
+                    }*@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member2Id)" />
+                <ValidationMessage For="@(() => riskteam.MemberTwo)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 3: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member3Id" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.MemberThree" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 3 --</option>
-                    @if (Employees != null)
+                    @*@if (Employees != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
                         .OrderBy(e => e.FullName);
@@ -76,18 +76,18 @@
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
                         }
-                    }
+                    }*@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member3Id)" />
+                <ValidationMessage For="@(() => riskteam.MemberThree)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 4: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member4Id" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.MemberFour" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 4 --</option>
-                    @if (Employees != null)
+                    @*@if (Employees != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
                         .OrderBy(e => e.FullName);
@@ -95,18 +95,18 @@
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
                         }
-                    }
+                    }*@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member4Id)" />
+                <ValidationMessage For="@(() => riskteam.MemberFour)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 5: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member5Id" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.MemberFive" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 5 --</option>
-                    @if (Employees != null)
+                   @* @if (Employees != null)
                     {
                         var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
                         .OrderBy(e => e.FullName);
@@ -114,9 +114,9 @@
                         {
                             <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
                         }
-                    }
+                    }*@
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member5Id)" />
+                <ValidationMessage For="@(() => riskteam.MemberFive)" />
             </div>
         </div>
     </fieldset>
@@ -143,10 +143,5 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; } 
 
-    private IList<Employee>? Employees;
-
-    protected async override Task OnInitializedAsync()
-    {
-        Employees = await _client.GetFromJsonAsync<List<Employee>>($"{Endpoints.EmployeesEndpoint}");
-    }
+    
 }

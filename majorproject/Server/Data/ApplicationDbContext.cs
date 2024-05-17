@@ -19,7 +19,6 @@ namespace majorproject.Server.Data
 
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Approval> Approvals { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Hazard> Hazards { get; set; }  
         public DbSet<RAF> RAFs { get; set; }
         public DbSet<RiskControl> RiskControls { get; set;}
@@ -31,9 +30,15 @@ namespace majorproject.Server.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new ActivitySeedConfiguration());
 
-            builder.ApplyConfiguration(new RAFSeedConfiguration());
+            builder.ApplyConfiguration(new HazardSeedConfiguration());
 
-            builder.ApplyConfiguration(new EmployeeSeedConfiguration());
+            builder.ApplyConfiguration(new RiskControlSeedConfiguration());
+
+            builder.ApplyConfiguration(new ApprovalSeedConfiguration());
+
+            builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
+
+            builder.ApplyConfiguration(new RAFSeedConfiguration());
 
             builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
 

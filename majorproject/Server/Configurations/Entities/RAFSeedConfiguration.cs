@@ -1,4 +1,8 @@
-﻿using majorproject.Shared.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using majorproject.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,21 +16,15 @@ namespace majorproject.Server.Configurations.Entities
                 new RAF
                 {
                     Id = 1,
+                    Department="TP Staff",
+                    Process= "CEN MP - April 2024",
+                    Location= "EN10-2-15",
+                    AssessmentDate = DateTime.Now,
+                    LastReviewDate= DateTime.Now,
+                    NextReviewDate= DateTime.Now,
 
-                    Department = "Manufacturing",
-                    Process = "Assembly Line Production",
-                    Location = "Factory",
-                    AssessmentDate = new DateTime(2024, 4, 17),
-                    LastReviewDate = new DateTime(2024, 4, 18),
-                    NextReviewDate = new DateTime(2027, 4, 18),
-                   
-
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
                 }
-            );
+                );
         }
     }
 }

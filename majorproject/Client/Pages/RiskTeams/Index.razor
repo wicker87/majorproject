@@ -40,13 +40,13 @@ else
             {
                 <tr>
                     <td>@riskteam.Id</td>
-                    <td>@riskteam.Leader.FullName</td>
-                    <td>@riskteam.Member1.FullName</td>
-                    <td>@riskteam.Member2.FullName</td>
+                    <td>@riskteam.Leader</td>
+                    <td>@riskteam.MemberOne</td>
+                    <td>@riskteam.MemberTwo</td>
                     <td>
-                        @if (riskteam.Member3 != null)
+                        @if (riskteam.MemberThree != null)
                         {
-                            @riskteam.Member3.FullName
+                            @riskteam.MemberThree
                         }
                         else
                         {
@@ -54,9 +54,9 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.Member4 != null)
+                        @if (riskteam.MemberFour != null)
                         {
-                            @riskteam.Member4.FullName
+                            @riskteam.MemberFour
                         }
                         else
                         {
@@ -64,10 +64,11 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.Member5 != null)
+                        @if (riskteam.MemberFive != null)
                         {
-                            @riskteam.Member5.FullName
+                            @riskteam.MemberFive
                         }
+                        
                         else
                         {
                             <span></span>

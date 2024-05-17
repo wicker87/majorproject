@@ -1,4 +1,4 @@
-﻿@page "/approvals/"
+﻿@*@page "/approvals/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -97,4 +97,4 @@ else
         _interceptor.DisposeEvent();
         js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
     }
-}
+}*@

@@ -1,4 +1,8 @@
-﻿using majorproject.Shared.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using majorproject.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,40 +16,14 @@ namespace majorproject.Server.Configurations.Entities
                 new RiskTeam
                 {
                     Id = 1,
-
-                    LeaderId = 1,
-                    Member1Id = 3,
-                    Member2Id = 4,
-                    Member3Id = 5,
-                    Member4Id = null,
-                    Member5Id = null,
-
-                    FormId = 1,
-
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
-                },
-                new RiskTeam
-                {
-                    Id = 2,
-
-                    LeaderId = 7,
-                    Member1Id = 9,
-                    Member2Id = 10,
-                    Member3Id = 11,
-                    Member4Id = 12,
-                    Member5Id = 13,
-
-                    FormId = null,
-
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
+                    Leader = "Mr Tan Cheng Khoon",
+                    MemberOne = "Chai Zhuo Lym Ryan",
+                    MemberTwo = "Peh Jun Jie",
+                    MemberThree= "Lim Yee Zhe",
+                    MemberFour= "",
+                    MemberFive = ""
                 }
-            );
+                );
         }
     }
 }
