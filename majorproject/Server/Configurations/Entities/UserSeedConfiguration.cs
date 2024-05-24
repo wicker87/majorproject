@@ -19,7 +19,7 @@ namespace majorproject.Server.Configurations.Entities
                 Position= "Manager",
                 DateOfBirth = DateTime.Now,
                 Gender="Female",
-                Photo="Tan",
+                Photo=null,
                 UserName = "admin@localhost.com",
                 NormalizedUserName = "ADMIN@LOCALHOST.COM",
                 PasswordHash = hasher.HashPassword(null, "P@ssword1")

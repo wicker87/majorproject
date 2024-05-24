@@ -9,7 +9,7 @@ namespace majorproject.Server.Models
         public string? Position { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
-        public string? Photo {  get; set; }
+        public byte[]? Photo {  get; set; }
 
 
 

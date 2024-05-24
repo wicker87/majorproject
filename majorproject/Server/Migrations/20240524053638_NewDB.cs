@@ -37,7 +37,7 @@ namespace majorproject.Server.Migrations
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -382,7 +382,7 @@ namespace majorproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Approvals",
                 columns: new[] { "Id", "Approved", "DateOfApproval", "FormId", "Name", "RAFId" },
-                values: new object[] { 1, true, new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(7732), null, "tom", null });
+                values: new object[] { 1, true, new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1329), null, "tom", null });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
@@ -396,7 +396,7 @@ namespace majorproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "Gender", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Photo", "Position", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "47491240-5cd0-4e8f-a9a0-41fd0ab5633d", new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8825), "admin@localhost.com", false, "Admin", "Female", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEE9W59k1l8sAYPKmxmZnyxLoQYhtFkIMz5OZCe4JxJ5CF+VCK31O2TD5J1sy6z9mEg==", null, false, "Tan", "Manager", "33e32065-4bc0-4f52-bb87-93ec9be3e8fa", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "429e3904-cba9-4860-baeb-d3ac56ea58f2", new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(2459), "admin@localhost.com", false, "Admin", "Female", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEOQSs3wcqfEUpJBFaydMex5+nNQVgiTT05WqQMUQ708Wpt4V3pxg04GYa0ptiDynKA==", null, false, null, "Manager", "fb4a4e91-af3f-4e56-847f-b68073bc9462", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "Hazards",
@@ -406,12 +406,12 @@ namespace majorproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "RAFs",
                 columns: new[] { "Id", "AssessmentDate", "Department", "LastReviewDate", "Location", "NextReviewDate", "Process" },
-                values: new object[] { 1, new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8130), "TP Staff", new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8132), "EN10-2-15", new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8132), "CEN MP - April 2024" });
+                values: new object[] { 1, new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1723), "TP Staff", new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1724), "EN10-2-15", new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1725), "CEN MP - April 2024" });
 
             migrationBuilder.InsertData(
                 table: "RiskControls",
                 columns: new[] { "Id", "AddControl", "DueDate", "ImplementingPerson", "Likelihood", "RPN", "Remarks", "RiskEId", "RiskEvaluationId", "Severity" },
-                values: new object[] { 1, "", new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(7531), "", 0, 0, "", null, null, 0 });
+                values: new object[] { 1, "", new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1120), "", 0, 0, "", null, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "RiskEvaluations",

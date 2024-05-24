@@ -375,8 +375,8 @@ namespace majorproject.Server.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -408,8 +408,8 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "47491240-5cd0-4e8f-a9a0-41fd0ab5633d",
-                            DateOfBirth = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8825),
+                            ConcurrencyStamp = "429e3904-cba9-4860-baeb-d3ac56ea58f2",
+                            DateOfBirth = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(2459),
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -418,11 +418,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE9W59k1l8sAYPKmxmZnyxLoQYhtFkIMz5OZCe4JxJ5CF+VCK31O2TD5J1sy6z9mEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOQSs3wcqfEUpJBFaydMex5+nNQVgiTT05WqQMUQ708Wpt4V3pxg04GYa0ptiDynKA==",
                             PhoneNumberConfirmed = false,
-                            Photo = "Tan",
                             Position = "Manager",
-                            SecurityStamp = "33e32065-4bc0-4f52-bb87-93ec9be3e8fa",
+                            SecurityStamp = "fb4a4e91-af3f-4e56-847f-b68073bc9462",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -493,7 +492,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = 1,
                             Approved = true,
-                            DateOfApproval = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(7732),
+                            DateOfApproval = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1329),
                             Name = "tom"
                         });
                 });
@@ -564,11 +563,11 @@ namespace majorproject.Server.Migrations
                         new
                         {
                             Id = 1,
-                            AssessmentDate = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8130),
+                            AssessmentDate = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1723),
                             Department = "TP Staff",
-                            LastReviewDate = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8132),
+                            LastReviewDate = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1724),
                             Location = "EN10-2-15",
-                            NextReviewDate = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(8132),
+                            NextReviewDate = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1725),
                             Process = "CEN MP - April 2024"
                         });
                 });
@@ -619,7 +618,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = 1,
                             AddControl = "",
-                            DueDate = new DateTime(2024, 5, 17, 15, 53, 34, 662, DateTimeKind.Local).AddTicks(7531),
+                            DueDate = new DateTime(2024, 5, 24, 13, 36, 37, 967, DateTimeKind.Local).AddTicks(1120),
                             ImplementingPerson = "",
                             Likelihood = 0,
                             RPN = 0,
