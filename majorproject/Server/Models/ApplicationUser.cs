@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Drawing;
 
 namespace majorproject.Server.Models
 {
@@ -9,8 +10,6 @@ namespace majorproject.Server.Models
         public string? Position { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
-        public byte[]? Photo {  get; set; }
-
 
 
     }

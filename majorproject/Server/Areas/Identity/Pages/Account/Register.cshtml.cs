@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Drawing;
 
 namespace majorproject.Server.Areas.Identity.Pages.Account
 {
@@ -104,9 +105,7 @@ namespace majorproject.Server.Areas.Identity.Pages.Account
             [Display (Name="DateOfBirth")]
             public DateTime DateOfBirth { get; set; }
 
-            [Required]
-            [Display (Name ="Photo")]
-            public byte[] Photo { get; set; }
+           
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -150,7 +149,8 @@ namespace majorproject.Server.Areas.Identity.Pages.Account
                 user.Position = Input.Position;
                 user.Gender = Input.Gender;
                 user.DateOfBirth = Input.DateOfBirth;
-                user.Photo = Input.Photo;
+                
+                
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

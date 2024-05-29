@@ -43,24 +43,19 @@
                 <span asp-validation-for="Input.Gender" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.DateOfBirth" class="form-control" type="datetime-local" max="2010-01-01" min="1960-01-01" autocomplete="off" aria-required="true" />
+                <input asp-for="Input.DateOfBirth" class="form-control" type="date" max="2010-01-01" min="1960-01-01" autocomplete="off" aria-required="true" />
                 <label asp-for="Input.DateOfBirth">DateOfBirth</label>
                 <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="Input.Photo" class="control-label"></label>
-                <input asp-for="Input.Photo" class="form-control" type="file" />
-            </div>
-            <br />
             <div class="form-floating">
                 <select asp-for="Input.Position" class="form-select" >
+                    <option value=""></option>
                     <option value="Manager">Manager</option>
                     <option value="Employee">Employee</option>
                 </select>
-                <label for="Positions" class="form-label">Select position (Select one):</label>
+                <label asp-for="Input.Position" class="form-label">Select position (Select one):</label>
                 <span asp-validation-for="Input.Position" class="text-danger"></span>
             </div>
-
             <hr />
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
