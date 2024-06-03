@@ -1,6 +1,6 @@
 ﻿@page "/userroles/edit/{userId}"
 @inject UserRoleService UserRoleService
-@inject NavigationManager NavigationManager
+@inject NavigationManager _navManager
 
 <h3>Edit User</h3>
 
@@ -95,7 +95,7 @@ else
         }
 
         await UserRoleService.UpdateUserAsync(userRole);
-        NavigationManager.NavigateTo("/userroles");
+        _navManager.NavigateTo("/userroles");
     }
 }
 

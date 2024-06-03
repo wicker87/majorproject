@@ -10,12 +10,15 @@ namespace majorproject.Shared.Domain
     public class RiskTeam : BaseDomainModel
     {
         public string? Leader { get; set; }
-        public string? MemberOne { get; set; }
-        public string? MemberTwo { get; set; }
-        public string? MemberThree { get; set; }
-        public string? MemberFour { get; set; }
-        public string? MemberFive { get; set; }
-        public int? FormId { get; set; }
-        public virtual RAF? RAF { get; set; }
+
+        public string? Member1 { get; set; }
+
+        public string? Member2 { get; set; }
+
+        public string? Member3 { get; set; }
+
+        public string? Member4 { get; set; }
+
+        public string? Member5 { get; set; }
     }
 }

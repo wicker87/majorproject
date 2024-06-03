@@ -4,8 +4,10 @@
 @inject UserRoleService UserRoleService
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
+@inject NavigationManager _navManager
 
 <h3>User Roles Data</h3>
+<h5>These users represents the employees that are allowed to access this application.</h5>
 
 <a href="/userroles/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
@@ -85,6 +87,7 @@ else
             await UserRoleService.DeleteUserAsync(userId);
             userRoles = await UserRoleService.GetUserRolesAsync(); // Refresh list
         }    
+        _navManager.NavigateTo("/userroles/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

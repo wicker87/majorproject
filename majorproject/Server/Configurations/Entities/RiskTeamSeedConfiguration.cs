@@ -16,12 +16,32 @@ namespace majorproject.Server.Configurations.Entities
                 new RiskTeam
                 {
                     Id = 1,
-                    Leader = "Mr Tan Cheng Khoon",
-                    MemberOne = "Chai Zhuo Lym Ryan",
-                    MemberTwo = "Peh Jun Jie",
-                    MemberThree= "Lim Yee Zhe",
-                    MemberFour= "",
-                    MemberFive = ""
+                    Leader = "Eliza Ross",
+                    Member1 = "Nina Choo",
+                    Member2 = "Maddie Tay",
+                    Member3 = "Stanley Hall",
+                    Member4 = "Warren Young",
+                    Member5 = "Jake Howard"
+                },
+                new RiskTeam
+                {
+                    Id = 2,
+                    Leader = "Kyle Thomas",
+                    Member1 = "Constance Lee",
+                    Member2 = "Bobby Brooks",
+                    Member3 = null,
+                    Member4 = null,
+                    Member5 = null
+                },
+                new RiskTeam
+                {
+                    Id = 3,
+                    Leader = "Tommy Jones",
+                    Member1 = "Elena Reed",
+                    Member2 = "Ben Danis",
+                    Member3 = "Larry Parker",
+                    Member4 = "Jimmy Baker",
+                    Member5 = null
                 }
                 );
         }

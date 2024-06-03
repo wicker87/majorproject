@@ -1,0 +1,114 @@
+﻿@page "/assessments/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Risk Assessments Data</h3>
+
+<br />
+
+<a href="/assessments/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Risk Assessment
+</a>
+<br />
+<br />
+
+@if (Assessments == null)
+{
+    <div class="alert alert-info">Loading Risk Assessments Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Process</th>
+                <th>Location</th>
+                <th>Assessment Date</th>
+                <th>Last Review Date</th>
+                <th>Next Review Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var assessment in Assessments)
+            {
+                <tr>
+                    <td>@assessment.Name</td>
+                    <td>@assessment.Department</td>
+                    <td>@assessment.Process</td>
+                    <td>@assessment.Location</td>
+                    <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
+                    <td>@assessment.LastReviewDate.ToString("dd/MM/yyyy")</td>
+                    <td>@assessment.NextReviewDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a href="/assessments/edit/@assessment.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <a href="/assessments/view/@assessment.Id" class="btn btn-primary">
+                            <span class="oi oi-eye"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(assessment.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                        <button class="button" id="statusButton" onclick="changeStatus()">Pending Approval</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    function changeStatus() {
+        var statusButton = document.getElementById('statusButton');
+        if (statusButton.innerHTML === "Pending Approval") {
+            statusButton.innerHTML = "Approved";
+        } 
+        else {
+            statusButton.innerHTML = "Pending Approval";
+        }
+    }
+</script>
+
+@code {
+    private List<RiskAssessment>? Assessments;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Assessments = await _client.GetFromJsonAsync<List<RiskAssessment>>($"{Endpoints.RiskAssessmentsEndpoint}");
+    }
+
+    async Task Delete(int assessmentId)
+    {
+        if (Assessments != null)
+        {
+            var assessment = Assessments.First(q => q.Id == assessmentId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {assessment.Name} form?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.RiskAssessmentsEndpoint}/{assessmentId}");
+                await OnInitializedAsync();
+            }
+        }
+        _navManager.NavigateTo("/assessments/", forceLoad: true);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

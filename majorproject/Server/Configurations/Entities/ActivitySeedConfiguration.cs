@@ -16,7 +16,7 @@ namespace majorproject.Server.Configurations.Entities
                 new Activity
                 {
                     Id = 1,
-                    WorkActivity= "Use of MP facility (Lab) (Reference: ENG-TWSH-TS01-RA001)",
+                    Name = "Use of MP facility (Lab) (Reference: ENG-TWSH-TS01-RA001)",
 
                 }
                 );

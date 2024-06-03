@@ -199,6 +199,22 @@ namespace majorproject.Server.Controllers
             return BadRequest(result.Errors);
         }
 
+        [HttpGet("users")]
+        public async Task<ActionResult<IEnumerable<UserRoleDto>>> GetUsers()
+        {
+            var users = await _userManager.Users
+                .Select(user => new UserRoleDto
+                {
+                    UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Designation = user.Designation
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
         // Roles
         [HttpGet("roles")]
         public async Task<ActionResult<IEnumerable<UserRoleDto>>> GetRoles()

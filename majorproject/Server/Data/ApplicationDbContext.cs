@@ -20,7 +20,7 @@ namespace majorproject.Server.Data
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Approval> Approvals { get; set; }
         public DbSet<Hazard> Hazards { get; set; }  
-        public DbSet<RAF> RAFs { get; set; }
+        public DbSet<RiskAssessment> RAFs { get; set; }
         public DbSet<RiskControl> RiskControls { get; set;}
         public DbSet<RiskEvaluation> RiskEvaluations { get; set; }
         public DbSet<RiskTeam> RiskTeams { get; set; }
@@ -28,17 +28,17 @@ namespace majorproject.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new ActivitySeedConfiguration());
+            //builder.ApplyConfiguration(new ActivitySeedConfiguration());
 
-            builder.ApplyConfiguration(new HazardSeedConfiguration());
+            //builder.ApplyConfiguration(new HazardSeedConfiguration());
 
-            builder.ApplyConfiguration(new RiskControlSeedConfiguration());
+            //builder.ApplyConfiguration(new RiskControlSeedConfiguration());
 
-            builder.ApplyConfiguration(new ApprovalSeedConfiguration());
+            //builder.ApplyConfiguration(new ApprovalSeedConfiguration());
 
-            builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
+            //builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
 
-            builder.ApplyConfiguration(new RAFSeedConfiguration());
+            //builder.ApplyConfiguration(new RiskAssessmentSeedConfiguration());
 
             builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
 

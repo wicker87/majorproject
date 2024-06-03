@@ -8,8 +8,8 @@ namespace majorproject.Shared.Domain
 {
     public class Activity : BaseDomainModel
     {
-        public string? WorkActivity {  get; set; }
-        public int? FormId {  get; set; }
-        public virtual RAF? RAF { get; set; }
+        public string? Name {  get; set; }
+        public int? AssessmentId {  get; set; }
+        public virtual RiskAssessment? RiskAssessment { get; set; }
     }
 }

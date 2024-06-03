@@ -13,7 +13,7 @@ namespace majorproject.Server.IRepository
         IGenericRepository<Activity> Activities { get; }
         IGenericRepository<Approval> Approvals { get; }
         IGenericRepository<Hazard> Hazards { get; }
-        IGenericRepository<RAF> RAFs { get; }
+        IGenericRepository<RiskAssessment> RiskAssessments { get; }
         IGenericRepository<RiskControl> RiskControls { get; }
         IGenericRepository<RiskEvaluation> RiskEvaluations { get; }
         IGenericRepository<RiskTeam> RiskTeams { get; }

@@ -16,7 +16,6 @@ namespace majorproject.Server.Configurations.Entities
                 new Approval
                 {
                     Id = 1,
-                    Approved = true,
                     Name = "tom",
                     DateOfApproval= DateTime.Now,
 

@@ -1,18 +1,25 @@
 ﻿@page "/riskteams/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject UserRoleService UserRoleService
 
 <h3 class="card-title">Edit Risk Team</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditRiskTeam" riskteam="riskteam" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditRiskTeam" riskteam="riskteam" Users="Users" />
 
 @code {
     [Parameter] public int id { get; set; }
     RiskTeam? riskteam = new RiskTeam();
+    List<UserRoleDto>? Users;
 
     protected async override Task OnParametersSetAsync()
     {
         riskteam = await _client.GetFromJsonAsync<RiskTeam>($"{Endpoints.RiskTeamsEndpoint}/{id}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await UserRoleService.GetUsersAsync();
     }
 
     async Task EditRiskTeam()

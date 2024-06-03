@@ -1,6 +1,6 @@
 ﻿@page "/userroles/create"
 @inject UserRoleService UserRoleService
-@inject NavigationManager NavigationManager
+@inject NavigationManager _navManager
 
 <h3>Create User</h3>
 
@@ -64,7 +64,7 @@
         </InputSelect>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Create User</button>
     <BackToList Target="userroles" />
 </EditForm>
 
@@ -94,7 +94,7 @@
     private async Task HandleValidSubmit()
     {
         await UserRoleService.CreateUserAsync(userRole);
-        NavigationManager.NavigateTo("/userroles");
+        _navManager.NavigateTo("/userroles");
     }
 }
 

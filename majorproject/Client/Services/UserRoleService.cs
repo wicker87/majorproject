@@ -46,6 +46,11 @@ namespace majorproject.Client.Services
             response.EnsureSuccessStatusCode();
         }
 
+        // Get all users (Risk Teams)
+        public async Task<List<UserRoleDto>> GetUsersAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<List<UserRoleDto>>("api/userroles/users");
+        }
 
         //Get Roles
         public async Task<List<UserRoleDto>> GetRolesAsync()
