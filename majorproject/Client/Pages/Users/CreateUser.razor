@@ -1,0 +1,100 @@
+﻿@page "/userroles/create"
+@inject UserRoleService UserRoleService
+@inject NavigationManager NavigationManager
+
+<h3>Create User</h3>
+
+<EditForm Model="userRole" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div style="display: flex; gap: 60px">
+        <div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <InputText id="firstName" class="form-control" style="width: 300px" @bind-Value="userRole.FirstName" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="designation">Designation</label>
+                <InputText id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <InputText id="userName" class="form-control" style="width: 300px" @bind-Value="userRole.UserName" @oninput="UpdateUserName" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="employeeID">Employee ID</label>
+                <InputNumber id="employeeID" class="form-control" style="width: 300px" @bind-Value="userRole.EmployeeID" />
+            </div>
+            <br />
+        </div>
+        <div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <InputText id="lastName" class="form-control" style="width: 300px" @bind-Value="userRole.LastName" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <InputText id="phoneNumber" class="form-control" style="width: 300px" @bind-Value="userRole.PhoneNumber" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="email">Email</label>
+                <InputText id="email" class="form-control" style="width: 300px" @bind-Value="userRole.Email" @oninput="UpdateEmail" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText id="password" type="password" class="form-control" style="width: 300px" @bind-Value="userRole.Password" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="role">Role</label>
+        <InputSelect id="role" class="form-control" style="width: 300px" @bind-Value="userRole.RoleName">
+            <option value="">-- Select Role --</option>
+            @foreach (var role in roles)
+            {
+                <option value="@role.RoleName">@role.RoleName</option>
+            }
+        </InputSelect>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Create</button>
+    <BackToList Target="userroles" />
+</EditForm>
+
+@code {
+    UserRoleDto userRole = new UserRoleDto();
+    List<UserRoleDto> roles = new List<UserRoleDto>();
+
+    private void UpdateUserName(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        userRole.UserName = value;
+        userRole.Email = value;
+    }
+
+    private void UpdateEmail(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        userRole.Email = value;
+        userRole.UserName = value;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        roles = await UserRoleService.GetRolesAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await UserRoleService.CreateUserAsync(userRole);
+        NavigationManager.NavigateTo("/userroles");
+    }
+}
+

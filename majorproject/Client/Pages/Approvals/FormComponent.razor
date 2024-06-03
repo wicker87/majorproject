@@ -1,0 +1,107 @@
+﻿@* @inject IJSRuntime js
+@inject HttpClient _client
+
+<h6>Note that the signature pad will be in place instead of image file upload.</h6>
+<EditForm Model="@approval" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div style="display: flex; gap: 40px">
+            <div>
+                <div class="form-group">
+                    <label> Signature: </label>
+                    <div>
+                        <InputFile @bind-Value="approval.Signature" class="form-control" style="width: 500px;" OnChange="HandleFileSelected" />
+                        <ValidationMessage For="@(() => approval.Signature)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <InputSelect @bind-Value="approval.ManagerId" class="form-control" style="width: 500px;">
+                        <option value="">-- Select Manager --</option>
+                        @if (Employees != null)
+                        {
+                            var projectManagers = Employees.Where(e => e.Designation == "Project Manager")
+                            .OrderBy(e => e.FullName);
+                            foreach (var employee in projectManagers)
+                            {
+                                <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => approval.ManagerId)" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Approval Date: </label>
+                    <div>
+                        <InputDate @bind-Value="approval.Date" class="form-control" style="width: 500px;" />
+                        <ValidationMessage For="@(() => approval.Date)" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>Signature:</p>
+                @if (!string.IsNullOrEmpty(approval.Signature))
+                {
+                    <img src="@($"data:image/jpeg;base64,{approval.Signature}")"
+                         width="160"
+                         height="160" />
+                }
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 80px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-success btn-block">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        <div>
+            <BackToList Target="approvals" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Approval? approval { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+
+    private IList<Employee>? Employees;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Employees = await _client.GetFromJsonAsync<List<Employee>>($"{Endpoints.EmployeesEndpoint}");
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+
+        // Check the file size (max 200 KB)
+        var maxFileSize = 200 * 1024;
+        // Check the file type (only jpg or jpeg)
+        var allowedTypes = new[] { "image/jpg", "image/jpeg" };
+        if (imageFile.Size > maxFileSize || !allowedTypes.Contains(imageFile.ContentType))
+        {
+            // Show an error message
+            var alert = await js.InvokeAsync<bool>("confirm", $"The image does not meet the requirements");
+            return;
+        }
+        else
+        {
+            // Read the file content into a byte array and convert to base64-encoded string
+            using (MemoryStream ms = new MemoryStream())
+            {
+                await imageFile.OpenReadStream().CopyToAsync(ms);
+                approval.Signature = Convert.ToBase64String(ms.ToArray());
+            }
+        } 
+    }
+} *@

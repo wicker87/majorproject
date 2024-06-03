@@ -1,0 +1,28 @@
+﻿@* @page "/approvals/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Approval</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Approval" approval="approval" OnValidSubmit="@CreateApproval" />
+
+
+
+@code {
+    Approval approval = new Approval();
+
+    private IList<Employee>? Employees;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Employees = await _client.GetFromJsonAsync<List<Employee>>($"{Endpoints.EmployeesEndpoint}");
+    }
+
+    private async Task CreateApproval()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ApprovalsEndpoint, approval);
+        _navManager.NavigateTo("/approvals/");
+    }
+} *@

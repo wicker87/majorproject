@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Users\CreateUser.razor" />
+    <None Include="Pages\Users\EditUser.razor" />
+    <None Include="Pages\Users\UserRoles.razor" />
     <None Include="wwwroot\scripts\datatable.js" />
   </ItemGroup>
 
