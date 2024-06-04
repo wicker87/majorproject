@@ -3,7 +3,7 @@
 @inject NavigationManager _navManager
 
 <h3>Edit User</h3>
-
+<br />
 @if (userRole == null)
 {
     <div class="alert alert-info">Loading...</div>
@@ -20,7 +20,11 @@ else
             <div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <InputText id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation" />
+                    <InputSelect id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation">
+                        <option value="IT Manager">IT Manager</option>
+                        <option value="Safety Manager">Safety Manager</option>
+                        <option value="Safety Inspector">Safety Inspector</option>
+                    </InputSelect>
                 </div>
                 <br />
                 <div class="form-group">

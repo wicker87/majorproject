@@ -1,5 +1,6 @@
 ﻿@inject IJSRuntime js
 @inject HttpClient _client
+@inject UserRoleService UserRoleService
 
 <h6>Note that a riskteam must have minimum 3 members.</h6>
 <EditForm Model="@riskteam" OnValidSubmit="@OnValidSubmit">
@@ -138,8 +139,14 @@
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public RiskTeam? riskteam { get; set; }
-    [Parameter] public List<UserRoleDto>? Users { get; set; }
+    [Parameter] public RiskTeam? riskteam { get; set; }   
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<UserRoleDto>? Users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await UserRoleService.GetUsersAsync();
+    }
 }

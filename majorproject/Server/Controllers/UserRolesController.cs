@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using majorproject.Server.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace majorproject.Server.Controllers
 {

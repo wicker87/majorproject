@@ -16,7 +16,7 @@ namespace majorproject.Server.Configurations.Entities
                 new RiskControl
                 {
                     Id = 1,
-                    AddControl="",
+                    AdditionalControls="",
                     Severity = 0,
                     Likelihood = 0,
                     RPN = 0,

@@ -1,24 +1,17 @@
 ﻿@page "/riskteams/create"
 @inject HttpClient _client
 @inject NavigationManager _navManager
-@inject UserRoleService UserRoleService
 
-<h3 class="card-title">Create</h3>
+<h3 class="card-title">Create Risk Team</h3>
 <hr />
 <br /> 
 
-<FormComponent ButtonText="Create RiskTeam" riskteam="riskteam" Users="Users" OnValidSubmit="@CreateRiskTeam" />
+<FormComponent ButtonText="Create RiskTeam" riskteam="riskteam" OnValidSubmit="@CreateRiskTeam" />
 
 
 
 @code {
     RiskTeam riskteam = new RiskTeam();
-    List<UserRoleDto> Users;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Users = await UserRoleService.GetUsersAsync();
-    }
 
     private async Task CreateRiskTeam()
     {

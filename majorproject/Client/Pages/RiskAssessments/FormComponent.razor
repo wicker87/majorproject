@@ -1,0 +1,169 @@
+﻿@inject HttpClient _client
+@inject UserRoleService UserRoleService
+
+<EditForm Model="@assessment" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div style="display: flex; gap: 40px">
+            @* First Column *@
+            <div>
+                <div class="form-group">
+                    <label> Name: </label>
+                    <div>
+                        <InputText @bind-Value="assessment.Name" class="form-control" style="width: 300px;" />
+                        <ValidationMessage For="@(() => assessment.Name)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Department: </label>
+                    <div>
+                        <InputText @bind-Value="assessment.Department" class="form-control" style="width: 300px;" />
+                        <ValidationMessage For="@(() => assessment.Department)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Process: </label>
+                    <div>
+                        <InputTextArea @bind-Value="assessment.Process" class="form-control" style="width: 300px; height: 100px; resize: none;" />
+                        <ValidationMessage For="@(() => assessment.Process)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Process/Activity Location: </label>
+                    <div>
+                        <InputTextArea @bind-Value="assessment.Location" class="form-control" style="width: 300px; height: 100px; resize: none;" />
+                        <ValidationMessage For="@(() => assessment.Location)" />
+                    </div>
+                </div>
+            </div>
+            @* Second Column *@
+            <div>
+                <div class="form-group">
+                    <label> Assessment Date: </label>
+                    <div>
+                        <InputDate @bind-Value="assessment.AssessmentDate" class="form-control" style="width: 160px;" />
+                        <ValidationMessage For="@(() => assessment.AssessmentDate)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Last Review Date: </label>
+                    <div>
+                        <InputDate @bind-Value="assessment.LastReviewDate" class="form-control" style="width: 160px;" />
+                        <ValidationMessage For="@(() => assessment.LastReviewDate)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Next Review Date: </label>
+                    <div>
+                        <InputDate @bind-Value="assessment.NextReviewDate" class="form-control" style="width: 160px;" />
+                        <ValidationMessage For="@(() => assessment.NextReviewDate)" />
+                    </div>
+                </div>               
+            </div>
+            @* Third Column *@
+            <div>
+                <div class="form-group">
+                    <label> Approver: </label>
+                    <div>
+                        <InputSelect @bind-Value="assessment.Approver" class="form-control" style="width: 300px;">
+                            <option value="">-- Select Approver --</option>
+                            @if (Users != null)
+                            {
+                                var safetyManagers = Users.Where(e => e.Designation == "Safety Manager")
+                                .OrderBy(e => e.FirstName);
+                                foreach (var user in safetyManagers)
+                                {
+                                    <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName (@user.Designation)</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => assessment.Approver)" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label> Risk Team: </label>
+                    <div>
+                        <InputSelect @bind-Value="assessment.RiskTeamId" class="form-control" style="width: 300px; height: 34px;">
+                            <option value="">-- Select Team --</option>
+                            @if (Teams != null)
+                            {
+                                foreach (var team in Teams)
+                                {
+                                    <option value="@team.Id">Team Leader: @team.Leader</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(() => assessment.RiskTeamId)" />
+                    </div>
+                </div>
+                @if (Teams != null && assessment.RiskTeamId.HasValue)
+                {
+                    var selectedTeam = Teams.FirstOrDefault(t => t.Id == assessment.RiskTeamId.Value);
+                    if (selectedTeam != null)
+                    {
+                        <div>
+                            <span>Member 1: @(selectedTeam.Member1 ?? string.Empty)</span>
+                        </div>
+                        <div>
+                            <span>Member 2: @(selectedTeam.Member2 ?? string.Empty)</span>
+                        </div>
+                        <div>
+                            <span>Member 3: @(selectedTeam.Member3 ?? string.Empty)</span>
+                        </div>
+                        <div>
+                            <span>Member 4: @(selectedTeam.Member4 ?? string.Empty)</span>
+                        </div>
+                        <div>
+                            <span>Member 5: @(selectedTeam.Member5 ?? string.Empty)</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    @* Buttons *@
+    <div style="display: flex; gap: 80px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-success btn-block">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        <div>
+            <BackToList Target="assessments" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public RiskAssessment? assessment { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+
+    private IList<RiskTeam>? Teams;
+    private IList<UserRoleDto>? Users;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Teams = await _client.GetFromJsonAsync<List<RiskTeam>>($"{Endpoints.RiskTeamsEndpoint}");
+        Users = await UserRoleService.GetUsersAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        assessment.AssessmentDate = DateTime.Now;
+        assessment.LastReviewDate = DateTime.Now;
+        assessment.NextReviewDate = assessment.LastReviewDate.AddYears(3);
+    }
+}

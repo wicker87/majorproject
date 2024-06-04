@@ -26,36 +26,40 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskAssessments()
         {
-            var RiskAssessments = await _unitOfWork.RiskAssessments.GetAll();
-            return Ok(RiskAssessments);
+            var riskassessments = await _unitOfWork.RiskAssessments.GetAll(includes: q => q.Include(x => x.RiskTeam));
+
+            if (riskassessments == null)
+            {
+                return NotFound();
+            }
+            return Ok(riskassessments);
         }
 
         // GET: api/RiskAssessments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskAssessment(int id)
         {
-            var RiskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
+            var riskassessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
 
-            if (RiskAssessment == null)
+            if (riskassessment == null)
             {
                 return NotFound();
             }
-
-            return Ok(RiskAssessment);
+            return Ok(riskassessment);
         }
 
         // PUT: api/RiskAssessments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRiskAssessment(int id, RiskAssessment RiskAssessment)
+        public async Task<IActionResult> PutRiskAssessment(int id, RiskAssessment riskAssessment)
         {
-            if (id != RiskAssessment.Id)
+            if (id != riskAssessment.Id)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(RiskAssessment).State = EntityState.Modified;
-            _unitOfWork.RiskAssessments.Update(RiskAssessment);
+            _unitOfWork.RiskAssessments.Update(riskAssessment);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -78,40 +82,34 @@ namespace majorproject.Server.Controllers
         // POST: api/RiskAssessments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RiskAssessment>> PostRiskAssessment(RiskAssessment RiskAssessment)
+        public async Task<ActionResult<RiskAssessment>> PostRiskAssessment(RiskAssessment riskAssessment)
         {
-
-            //_context.RiskAssessments.Add(RiskAssessment);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.RiskAssessments.Insert(RiskAssessment);
+            await _unitOfWork.RiskAssessments.Insert(riskAssessment);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetRiskAssessment", new { id = RiskAssessment.Id }, RiskAssessment);
+            return CreatedAtAction("GetRiskAssessment", new { id = riskAssessment.Id }, riskAssessment);
         }
 
         // DELETE: api/RiskAssessments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskAssessment(int id)
         {
-
-            var RiskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
-            if (RiskAssessment == null)
+            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
+            if (riskAssessment == null)
             {
                 return NotFound();
             }
 
-            //_context.RiskAssessments.Remove(RiskAssessment);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskAssessments.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> RiskAssessmentExists(int id)
         {
-            //return (_context.RiskAssessments?.Any(e => e.Id == id)).GetValueOrDefault();
-            var RiskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
-            return RiskAssessment != null;
+            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
+            return riskAssessment != null;
         }
     }
 }

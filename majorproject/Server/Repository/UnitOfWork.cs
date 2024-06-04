@@ -17,7 +17,6 @@ namespace majorproject.Server.Repository
     {
         private readonly ApplicationDbContext _context;
         private IGenericRepository<Activity> _activities;
-        private IGenericRepository<Approval> _approvals;
         private IGenericRepository<Hazard> _hazards;
         private IGenericRepository<RiskAssessment> _riskAssessments;
         private IGenericRepository<RiskControl> _riskControls;
@@ -34,8 +33,6 @@ namespace majorproject.Server.Repository
 
         public IGenericRepository<Activity> Activities
             => _activities ??= new GenericRepository<Activity>(_context);
-        public IGenericRepository<Approval> Approvals
-            => _approvals ??= new GenericRepository<Approval>(_context);
         public IGenericRepository<Hazard> Hazards
             => _hazards ??= new GenericRepository<Hazard>(_context);
         public IGenericRepository<RiskAssessment> RiskAssessments

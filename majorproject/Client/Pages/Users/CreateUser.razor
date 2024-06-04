@@ -3,7 +3,7 @@
 @inject NavigationManager _navManager
 
 <h3>Create User</h3>
-
+<br />
 <EditForm Model="userRole" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -16,7 +16,12 @@
             <br />
             <div class="form-group">
                 <label for="designation">Designation</label>
-                <InputText id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation" />
+                <InputSelect id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation">
+                    <option value="">-- Select Designation --</option>
+                    <option value="IT Manager">IT Manager</option>
+                    <option value="Safety Manager">Safety Manager</option>
+                    <option value="Safety Inspector">Safety Inspector</option>
+                </InputSelect>
             </div>
             <br />
             <div class="form-group">

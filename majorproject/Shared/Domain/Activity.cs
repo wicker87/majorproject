@@ -11,5 +11,6 @@ namespace majorproject.Shared.Domain
         public string? Name {  get; set; }
         public int? AssessmentId {  get; set; }
         public virtual RiskAssessment? RiskAssessment { get; set; }
+        public virtual ICollection<Hazard>? Hazards { get; set; }
     }
 }

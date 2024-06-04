@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using majorproject.Server.IRepository;
 using majorproject.Server.Repository;
+using majorproject.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

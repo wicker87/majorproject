@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace majorproject.Shared.Domain
 {
-    public class UserRoleDto : BaseDomainModel
+    public class UserRoleDto 
     {
         public string? UserId { get; set; }
         public int EmployeeID { get; set; }

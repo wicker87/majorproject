@@ -31,8 +31,6 @@ else
                 <th>Process</th>
                 <th>Location</th>
                 <th>Assessment Date</th>
-                <th>Last Review Date</th>
-                <th>Next Review Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -45,8 +43,6 @@ else
                     <td>@assessment.Process</td>
                     <td>@assessment.Location</td>
                     <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
-                    <td>@assessment.LastReviewDate.ToString("dd/MM/yyyy")</td>
-                    <td>@assessment.NextReviewDate.ToString("dd/MM/yyyy")</td>
                     <td>
                         <a href="/assessments/edit/@assessment.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
@@ -69,7 +65,7 @@ else
     function changeStatus() {
         var statusButton = document.getElementById('statusButton');
         if (statusButton.innerHTML === "Pending Approval") {
-            statusButton.innerHTML = "Approved";
+            statusButton.innerHTML = "Form Approved";
         } 
         else {
             statusButton.innerHTML = "Pending Approval";

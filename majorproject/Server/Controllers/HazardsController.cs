@@ -26,8 +26,13 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHazards()
         {
-            var activities = await _unitOfWork.Hazards.GetAll();
-            return Ok(activities);
+            var hazards = await _unitOfWork.Hazards.GetAll();
+
+            if (hazards == null)
+            {
+                return NotFound();
+            }
+            return Ok(hazards);
         }
 
         // GET: api/Hazards/5
@@ -40,7 +45,6 @@ namespace majorproject.Server.Controllers
             {
                 return NotFound();
             }
-
             return Ok(hazard);
         }
 
@@ -54,8 +58,8 @@ namespace majorproject.Server.Controllers
                 return BadRequest();
             }
 
-            //_context.Entry(hazard).State = EntityState.Modified;
             _unitOfWork.Hazards.Update(hazard);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -80,9 +84,6 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Hazard>> PostHazard(Hazard hazard)
         {
-
-            //_context.Hazards.Add(hazard);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.Hazards.Insert(hazard);
             await _unitOfWork.Save(HttpContext);
 
@@ -93,23 +94,20 @@ namespace majorproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHazard(int id)
         {
-
             var hazard = await _unitOfWork.Hazards.Get(q => q.Id == id);
             if (hazard == null)
             {
                 return NotFound();
             }
 
-            //_context.Hazards.Remove(hazard);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.Hazards.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> HazardExists(int id)
         {
-            //return (_context.Hazards?.Any(e => e.Id == id)).GetValueOrDefault();
             var hazard = await _unitOfWork.Hazards.Get(q => q.Id == id);
             return hazard != null;
         }

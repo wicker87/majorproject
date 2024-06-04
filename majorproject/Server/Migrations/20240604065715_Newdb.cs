@@ -114,24 +114,6 @@ namespace majorproject.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RAFs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Process = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssessmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NextReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RAFs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RiskTeams",
                 columns: table => new
                 {
@@ -256,44 +238,50 @@ namespace majorproject.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RiskAssessments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApprovedStatus = table.Column<bool>(type: "bit", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Process = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssessmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NextReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RiskTeamId = table.Column<int>(type: "int", nullable: true),
+                    Approver = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RiskAssessments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RiskAssessments_RiskTeams_RiskTeamId",
+                        column: x => x.RiskTeamId,
+                        principalTable: "RiskTeams",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Activities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WorkActivity = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FormId = table.Column<int>(type: "int", nullable: true),
-                    RAFId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssessmentId = table.Column<int>(type: "int", nullable: true),
+                    RiskAssessmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Activities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Activities_RAFs_RAFId",
-                        column: x => x.RAFId,
-                        principalTable: "RAFs",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Approvals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Approved = table.Column<bool>(type: "bit", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfApproval = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FormId = table.Column<int>(type: "int", nullable: true),
-                    RAFId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Approvals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Approvals_RAFs_RAFId",
-                        column: x => x.RAFId,
-                        principalTable: "RAFs",
+                        name: "FK_Activities_RiskAssessments_RiskAssessmentId",
+                        column: x => x.RiskAssessmentId,
+                        principalTable: "RiskAssessments",
                         principalColumn: "Id");
                 });
 
@@ -345,14 +333,14 @@ namespace majorproject.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AddControl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdditionalControls = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Severity = table.Column<int>(type: "int", nullable: true),
                     Likelihood = table.Column<int>(type: "int", nullable: true),
                     RPN = table.Column<int>(type: "int", nullable: true),
                     ImplementingPerson = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RiskEId = table.Column<int>(type: "int", nullable: true),
+                    EvaluationId = table.Column<int>(type: "int", nullable: true),
                     RiskEvaluationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -380,26 +368,36 @@ namespace majorproject.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Designation", "Email", "EmailConfirmed", "EmployeeID", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc", 0, "abb08e54-cc86-4e1f-a9e4-3201634d386a", "IT Manager", "janedoe@gmail.com", false, 1003, "Jane", "Doe", false, null, "JANEDOE@GMAIL.COM", "JANEDOE@GMAIL.COM", "AQAAAAIAAYagAAAAEJOZgtbzttvOMHPcs8AZaHciZbkyFkEYhs+nHHY80/vM0LQWnqWPa6eG4KPOfeujEQ==", "64841415", false, "f15100ca-dffc-4bac-80c3-915d37fdf287", false, "janedoe@gmail.com" },
-                    { "1519fcce-c355-4cad-8b22-01b76b762ffc", 0, "5e9bee21-f59f-44a9-af24-47b15173367d", "Safety Inspector", "tommyjones@gmail.com", false, 1886, "Tommy", "Jones", false, null, "TOMMYJONES@GMAIL.COM", "TOMMYJONES@GMAIL.COM", "AQAAAAIAAYagAAAAEHOG5MROLN2/6F+daT1y3XB/8mox0a1vwu49zhbsniVR9vpOR0Lug1PszGCaNwfkhA==", "65325334", false, "9d5bd219-c794-49e2-9bf7-849f71f64925", false, "tommyjones@gmail.com" },
-                    { "23cdf685-e508-4fc6-84cc-c860af2dd301", 0, "e65279e9-3a09-4f66-9eea-ceb1c28f0495", "Safety Manager", "johnsmith@gmail.com", false, 2010, "John", "Smith", false, null, "JOHNSMITH@GMAIL.COM", "JOHNSMITH@GMAIL.COM", "AQAAAAIAAYagAAAAEHqCV67+V7TRIvimzhZWSG0c2lGRLpIxfCkBhLBD9w4K/mkVx7+Nuim/CdjpRgdCTA==", "67349033", false, "22bddebf-8903-4782-a927-52bcc958d592", false, "johnsmith@gmail.com" },
-                    { "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5", 0, "0e3ebd51-f13c-4e88-84cd-d911c3c6661b", "Safety Manager", "benjaminscott@gmail.com", false, 1794, "Benjamin", "Scott", false, null, "BENJAMINSCOTT@GMAIL.COM", "BENJAMINSCOTT@GMAIL.COM", "AQAAAAIAAYagAAAAEPGsr66SADl/9qSXQMroy2PkrEEPSNfvI7qqvIqJNE3U0LfZmeFYJOSiWRZvYqSq7g==", "62610071", false, "41f2a2e9-5a6d-4524-b4b3-bb2eff5bcaa5", false, "benjaminscott@gmail.com" },
-                    { "33a4bc04-9b10-49a5-8cb6-8dea48b122c4", 0, "41333700-a4e3-414d-b402-2890b5df233f", "Safety Inspector", "ninachoo@gmail.com", false, 1170, "Nina", "Choo", false, null, "NINACHOO@GMAIL.COM", "NINACHOO@GMAIL.COM", "AQAAAAIAAYagAAAAEHyyZGhSYxTAx6C1wIB0igyoKoNbxAHLLJxHdwUCrynJKiZJV9CJQ5E24NtlL+OaAg==", "65366623", false, "c818bc77-2489-4163-8849-d6b67e1c652c", false, "ninachoo@gmail.com" },
-                    { "5258daf7-0bf7-4460-a854-4b3f427312c7", 0, "fd8246d7-86e0-494c-8f67-c3715d6cf5f3", "Safety Inspector", "warrenyoung@gmail.com", false, 1331, "Warren", "Young", false, null, "WARRENYOUNG@GMAIL.COM", "WARRENYOUNG@GMAIL.COM", "AQAAAAIAAYagAAAAEMyy/ZAQ97GEEAdwP6dn7Abdt5kNX8hEP07bA9cpxcEfNsv3fCeyXOF8pyJ7MJ538g==", "63388585", false, "3c1b60c4-f04d-4542-ae48-3c5613174458", false, "warrenyoung@gmail.com" },
-                    { "5859b058-1d6e-4b79-8040-9bbd204c0dc5", 0, "d7bd2ec8-0865-4820-9451-65ee8be52df6", "Safety Inspector", "stanleyhall@gmail.com", false, 1243, "Stanley", "Hall", false, null, "STANLEYHALL@GMAIL.COM", "STANLEYHALL@GMAIL.COM", "AQAAAAIAAYagAAAAEJc+3SOSS/SiTg/53Ey12+U30uXcHEdlGUwbB3lntQmPeN3+603W0Z6DEDZNFiJMKQ==", "63960815", false, "7581e2fa-97aa-4d9c-9ba3-2d10f729b557", false, "stanleyhall@gmail.com" },
-                    { "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28", 0, "014145c8-d389-4c01-b11b-802ea8ecb7e9", "Safety Inspector", "kylethomas@gmail.com", false, 1426, "Kyle", "Thomas", false, null, "KYLETHOMAS@GMAIL.COM", "KYLETHOMAS@GMAIL.COM", "AQAAAAIAAYagAAAAEGYS80J7RNdVODmAG+SjO2MaLDOEfbGjXWirbZCUhbBVHTosklzX/WL+98EfLydd3g==", "67361183", false, "f8d6aa1a-7b7b-4290-bae0-9217a5edb879", false, "kylethomas@gmail.com" },
-                    { "63929151-0e12-4c5c-a03c-01c34642856a", 0, "58e7565b-d140-4ac7-b8e5-735c2b2ec3e2", "Safety Inspector", "elizaross@gmail.com", false, 1140, "Eliza", "Ross", false, null, "ELIZAROSS@GMAIL.COM", "ELIZAROSS@GMAIL.COM", "AQAAAAIAAYagAAAAEH59rLMkIe7hMrQksZQ23J8F7MW3G7ZaK3681TLAdavOi2cbWlnGzfD/1sFCKh8DlA==", "67780373", false, "c0386d88-6e6f-431a-a8bc-91217c95db8a", false, "elizaross@gmail.com" },
-                    { "6f84b324-5cc8-48b6-a348-57c74b3d5294", 0, "ee4dc9a3-120a-433d-a3e6-45ffe0020d13", "Safety Inspector", "larryparker@gmail.com", false, 2144, "Larry", "Parker", false, null, "LARRYPARKER@GMAIL.COM", "LARRYPARKER@GMAIL.COM", "AQAAAAIAAYagAAAAEAq+pJXxcve01GbNdtcYfikLoLElCK3Di2RkGcFFfP7q2WpXFgqGfRgY2Qi5N050eQ==", "67771504", false, "19eafbdb-d43c-47e5-88d0-51226906d870", false, "larryparker@gmail.com" },
-                    { "77ea0c8c-fa62-4e13-980a-63ed5336f0b2", 0, "b1bb9110-8b1e-42b7-a28b-ca6c8cc7869a", "Safety Inspector", "constancelee@gmail.com", false, 1483, "Constance", "Lee", false, null, "CONSTANCELEE@GMAIL.COM", "CONSTANCELEE@GMAIL.COM", "AQAAAAIAAYagAAAAEJoXPKOnpcAOIYmaM3WVKff6KkQFrt/SFx4UDqMdXARYnw34lPcYlOQZdLozBkL3sw==", "67457717", false, "52266161-f1dd-4d13-97de-3bf37e65fa90", false, "constancelee@gmail.com" },
-                    { "8d06620d-3d31-4c1c-9449-7eaac032f6bd", 0, "3ad6b258-20e0-4e6f-a140-bf4805168d58", "Safety Manager", "jennielow@gmail.com", false, 1748, "Jennie", "Low", false, null, "JENNIELOW@GMAIL.COM", "JENNIELOW@GMAIL.COM", "AQAAAAIAAYagAAAAEIu+/BdJyqqyicEOfWakjkzIRJipjBdjDcmEEOQX/XeVh8QLROwQsxxSVbsuQ+Ex5Q==", "62247473", false, "02a8ad39-cd12-425a-9cde-7a348d439bda", false, "jennielow@gmail.com" },
-                    { "911dd5ac-5093-444e-bd8d-b6fed36dcada", 0, "d873bd80-93d5-4015-b1ab-8ab091062371", "Safety Manager", "emilybrown@gmail.com", false, 1061, "Emily", "Brown", false, null, "EMILYBROWN@GMAIL.COM", "EMILYBROWN@GMAIL.COM", "AQAAAAIAAYagAAAAENxzuk3bah66szjrzGPVVJ67Th7zsIP4lwwvWgTcOTmI05uvSVf0ksYkPZRcqs2Sug==", "67528856", false, "d1a01757-5c3b-48fc-9c6b-49538e784a88", false, "emilybrown@gmail.com" },
-                    { "b57e892b-0bdb-4469-afd9-e6522fea2f25", 0, "de0e1e89-1951-4044-a85a-21a40d3663e4", "Safety Inspector", "jimmybaker@gmail.com", false, 2156, "Jimmy", "Baker", false, null, "JIMMYBAKER@GMAIL.COM", "JIMMYBAKER@GMAIL.COM", "AQAAAAIAAYagAAAAEBJ4OXozbTUjzGrJudQjzYZnFZP8I4eqPkiFxIzez9h+xHSXbqtGcjJ2QlL1bgFSEQ==", "67789981", false, "b7aa9aa6-1b9a-4bfb-9482-4be44c448471", false, "jimmybaker@gmail.com" },
-                    { "cda313e3-33c1-4e6e-982b-3c5eb9ff9565", 0, "0fc0e5eb-b2e8-4952-bab4-9d990c0cfdf0", "Safety Inspector", "bobbybrooks@gmail.com", false, 1507, "Bobby", "Brooks", false, null, "BOBBYBROOKS@GMAIL.COM", "BOBBYBROOKS@GMAIL.COM", "AQAAAAIAAYagAAAAEFB+tAAFRKc2dhsBeWNOgd3yVtWSfpky/b4Cm4HzohssgQkk+6nqdB8VmZflnrUoGA==", "62570046", false, "2647c284-6524-4875-8310-c3bc94ba4d51", false, "bobbybrooks@gmail.com" },
-                    { "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563", 0, "a61527dd-1715-46ae-b8f7-2b60652f9ea5", "Safety Inspector", "bendanis@gmail.com", false, 2024, "Ben", "Danis", false, null, "BENDANIS@GMAIL.COM", "BENDANIS@GMAIL.COM", "AQAAAAIAAYagAAAAELBJULNS6/1hzmCe8xvPs5pOjoe6egNOflQnnExT3DLYAa4LCkWIRmxJXUR+kHI9iw==", "68626846", false, "f93b3f95-be51-410e-a5f6-d3b0fc517b8d", false, "bendanis@gmail.com" },
-                    { "e5e8acfe-c59a-4b4d-bba4-d40057aecef4", 0, "0cbe4e19-17c8-4798-8749-4240ff4a7775", "Safety Inspector", "maddietay@gmail.com", false, 1224, "Maddie", "Tay", false, null, "MADDIETAY@GMAIL.COM", "MADDIETAY@GMAIL.COM", "AQAAAAIAAYagAAAAEP9l0aYl/Yl9utGfWQMSmecyPiiGn8jNTihz6lgiIs0OCSVqofK5N9k11z4FAtzmyg==", "63457266", false, "bc22b3c5-30c2-4f9d-8eb0-2837622d60a9", false, "maddietay@gmail.com" },
-                    { "e7b4016a-fa59-4669-969f-36601182f51c", 0, "64b6ea00-60c1-41bd-bae3-548cba090894", "Safety Manager", "kevinjones@gmail.com", false, 1991, "Kevin", "Jones", false, null, "KEVINJONES@GMAIL.COM", "KEVINJONES@GMAIL.COM", "AQAAAAIAAYagAAAAEONW4HBaReSm5gtrABq8EL4qI0e+osXsQy9BE1j56bu735qEIPo3n3UjEP1BPX18Fw==", "68999888", false, "3713ca3b-34fe-4184-b0dc-80a4f66c8190", false, "kevinjones@gmail.com" },
-                    { "f53bf9d9-95d1-42af-804e-e5edacdc9c74", 0, "1f5e2941-e5aa-4688-8ccb-31b16de598c4", "Safety Inspector", "elenareed@gmail.com", false, 1953, "Elena", "Reed", false, null, "ELENAREED@GMAIL.COM", "ELENAREED@GMAIL.COM", "AQAAAAIAAYagAAAAEHiZ0Wts9C7f97ATwgmHCdFtsK4ERmXoUgeV8UE6jiVIyJ5IrMbfEB3p7C0PXxstmA==", "63450508", false, "fd8022c3-da38-4ca3-a66b-411a188769b8", false, "elenareed@gmail.com" },
-                    { "fe8964fa-aac1-4db1-97bb-017e0905242f", 0, "f107e725-d7e8-4abf-b26e-d702f56138b9", "Safety Inspector", "jakehoward@gmail.com", false, 1397, "Jake", "Howard", false, null, "JAKEHOWARD@GMAIL.COM", "JAKEHOWARD@GMAIL.COM", "AQAAAAIAAYagAAAAEG8GXENJaqGDS2+2hwKNEK1WioDgjpz+bGL1STInpFRdJCQJ1aSJBKxO0bjmmDLRHA==", "62678901", false, "ccfc3f86-4c98-4448-b8f6-45a834f50641", false, "jakehoward@gmail.com" }
+                    { "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc", 0, "e2fc5c8b-05b9-470e-aa0f-344fc356cc24", "IT Manager", "janedoe@gmail.com", false, 1003, "Jane", "Doe", false, null, "JANEDOE@GMAIL.COM", "JANEDOE@GMAIL.COM", "AQAAAAIAAYagAAAAEHkPne/ww9M3uBiMyloRZw6s8b/mzL/UuALw9bbjpjVVJ8Aqh0g81j3zmgCiVsYVaA==", "64841415", false, "38aae0f3-b9ba-46dd-a9ec-b88f4e15c93e", false, "janedoe@gmail.com" },
+                    { "1519fcce-c355-4cad-8b22-01b76b762ffc", 0, "55c6b882-9a85-4a05-a843-29aab7d1a079", "Safety Inspector", "tommyjones@gmail.com", false, 1886, "Tommy", "Jones", false, null, "TOMMYJONES@GMAIL.COM", "TOMMYJONES@GMAIL.COM", "AQAAAAIAAYagAAAAENwQ2ba7phOpi9A+e8rKIDlma/aC0a1P1zpZK2w0bJmZg1qogNOgdhQRUz/DLMnzpA==", "65325334", false, "8c23ceaf-a9c0-458f-a408-5137c6a2c2c8", false, "tommyjones@gmail.com" },
+                    { "23cdf685-e508-4fc6-84cc-c860af2dd301", 0, "26e5f4dc-2d10-4fab-a6b9-426076fb5224", "Safety Manager", "johnsmith@gmail.com", false, 2010, "John", "Smith", false, null, "JOHNSMITH@GMAIL.COM", "JOHNSMITH@GMAIL.COM", "AQAAAAIAAYagAAAAEOAuWG58yu5SAmI/fmWpZ9ySirkg0o1c4lbA+IU1qi9DBv0wR5edvfd/NVVYeE3Tog==", "67349033", false, "72e468df-bca4-41e3-b33b-983bb69be3bf", false, "johnsmith@gmail.com" },
+                    { "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5", 0, "f1e95e21-6d92-4152-a565-9c7742d216ba", "Safety Manager", "benjaminscott@gmail.com", false, 1794, "Benjamin", "Scott", false, null, "BENJAMINSCOTT@GMAIL.COM", "BENJAMINSCOTT@GMAIL.COM", "AQAAAAIAAYagAAAAEJCrxZdGPnHRmNfgVLpe8kpoZyjARqLv65uZzn6D+nL2ma3wAwvo6CFZrJz1EARfiA==", "62610071", false, "2f9ef320-e4dd-4453-adee-6ae2396b141d", false, "benjaminscott@gmail.com" },
+                    { "33a4bc04-9b10-49a5-8cb6-8dea48b122c4", 0, "d5091170-8a0b-4dbe-a63d-d69fc4df0c13", "Safety Inspector", "ninachoo@gmail.com", false, 1170, "Nina", "Choo", false, null, "NINACHOO@GMAIL.COM", "NINACHOO@GMAIL.COM", "AQAAAAIAAYagAAAAEFPxekOfppNCku4kxya7mE0WKcCWNCo6y5TACiv49WDLVPkiAH8V6zF62FHA57PQ2g==", "65366623", false, "e37a8047-6492-4fb7-89ae-1c8e3df3dbf8", false, "ninachoo@gmail.com" },
+                    { "5258daf7-0bf7-4460-a854-4b3f427312c7", 0, "967a58ae-86d6-49a2-a4d3-24992d68545a", "Safety Inspector", "warrenyoung@gmail.com", false, 1331, "Warren", "Young", false, null, "WARRENYOUNG@GMAIL.COM", "WARRENYOUNG@GMAIL.COM", "AQAAAAIAAYagAAAAEK/U8UrxKXc35JHg9J5+3Z0avvbL76oQ576LZZu2WCqgIAlipXDv/Lvn2YOmhNbdPQ==", "63388585", false, "1c44ff07-da7a-4c75-a956-d011f34f97a5", false, "warrenyoung@gmail.com" },
+                    { "5859b058-1d6e-4b79-8040-9bbd204c0dc5", 0, "4fd4a6d6-d3b9-4460-9bd4-2733e9337358", "Safety Inspector", "stanleyhall@gmail.com", false, 1243, "Stanley", "Hall", false, null, "STANLEYHALL@GMAIL.COM", "STANLEYHALL@GMAIL.COM", "AQAAAAIAAYagAAAAEIST+SeTDhSXnVoteEL12SN4oxSKHmJjtW4nkW6xwoBhT76/UPa0mKx3w/LJfNSg9g==", "63960815", false, "9feee28e-f633-40d2-a7e0-9551ed71b7f8", false, "stanleyhall@gmail.com" },
+                    { "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28", 0, "d52ec7ca-d939-40dc-acfd-ef358ab265e3", "Safety Inspector", "kylethomas@gmail.com", false, 1426, "Kyle", "Thomas", false, null, "KYLETHOMAS@GMAIL.COM", "KYLETHOMAS@GMAIL.COM", "AQAAAAIAAYagAAAAEJ53aXepwknZm8yD+8zNBL1gwzE1HVduWOx5qE9sazReSkol6FMNIxY3QintEbdILw==", "67361183", false, "11906851-5e60-46c6-967a-bd8d7dda50e4", false, "kylethomas@gmail.com" },
+                    { "63929151-0e12-4c5c-a03c-01c34642856a", 0, "8e76e174-2d2d-4368-910f-6d75eb7b0c8c", "Safety Inspector", "elizaross@gmail.com", false, 1140, "Eliza", "Ross", false, null, "ELIZAROSS@GMAIL.COM", "ELIZAROSS@GMAIL.COM", "AQAAAAIAAYagAAAAEMwDnxRHPBCSHgf6e7ISntU2mOLlla5mo/vyYvkTRL0il7u6ppZJ2NMKFimfhEkCrw==", "67780373", false, "220e0f0a-7436-4e72-bb1c-6e818c6bf97b", false, "elizaross@gmail.com" },
+                    { "6f84b324-5cc8-48b6-a348-57c74b3d5294", 0, "301b8f3f-056d-4e1d-96c0-39ffebf7426f", "Safety Inspector", "larryparker@gmail.com", false, 2144, "Larry", "Parker", false, null, "LARRYPARKER@GMAIL.COM", "LARRYPARKER@GMAIL.COM", "AQAAAAIAAYagAAAAENIq+Vz80qlGBiFvUL9Lw5S6VhGrZX6kGH4Bgy/O+leR/V7wAEwuHUik4P59QBmucw==", "67771504", false, "d1d19e2b-778a-444a-aa0e-7ba2c5a9e855", false, "larryparker@gmail.com" },
+                    { "77ea0c8c-fa62-4e13-980a-63ed5336f0b2", 0, "29a4ca84-ed45-45d2-8199-292fb9dcc0ee", "Safety Inspector", "constancelee@gmail.com", false, 1483, "Constance", "Lee", false, null, "CONSTANCELEE@GMAIL.COM", "CONSTANCELEE@GMAIL.COM", "AQAAAAIAAYagAAAAEDXItgdWPOh5odmKiYqPITugzXrZ/S6SPfjgIOb2MNhTQcuYywwsse5RbnsO0fSFyQ==", "67457717", false, "48a1c097-f0bb-4e24-b96d-3de1e008ea22", false, "constancelee@gmail.com" },
+                    { "8d06620d-3d31-4c1c-9449-7eaac032f6bd", 0, "218691a2-2ac9-44b0-932c-c71786c86178", "Safety Manager", "jennielow@gmail.com", false, 1748, "Jennie", "Low", false, null, "JENNIELOW@GMAIL.COM", "JENNIELOW@GMAIL.COM", "AQAAAAIAAYagAAAAEC+7fLsBiHpBPdxRlWFVPsJX8yu0laDcQvLDAstRJvWLcn9rAXuQEEPk7lEcmm3lNw==", "62247473", false, "939125e9-751e-41cf-a43a-a62d0472a67e", false, "jennielow@gmail.com" },
+                    { "911dd5ac-5093-444e-bd8d-b6fed36dcada", 0, "35ab4f3e-6abd-427a-860f-149534ba41c4", "Safety Manager", "emilybrown@gmail.com", false, 1061, "Emily", "Brown", false, null, "EMILYBROWN@GMAIL.COM", "EMILYBROWN@GMAIL.COM", "AQAAAAIAAYagAAAAEE4DHwV6uawYPp+y4Yig0Wizmd2/0TEOltuu3bleXEX0L6nlvWPZ6wLJpjy6I6g9mw==", "67528856", false, "26859201-941a-4850-b255-9045638ab955", false, "emilybrown@gmail.com" },
+                    { "b57e892b-0bdb-4469-afd9-e6522fea2f25", 0, "1443257b-b1a0-4f93-84fd-9e78355d1723", "Safety Inspector", "jimmybaker@gmail.com", false, 2156, "Jimmy", "Baker", false, null, "JIMMYBAKER@GMAIL.COM", "JIMMYBAKER@GMAIL.COM", "AQAAAAIAAYagAAAAEKYDTKNLqf7Jjtl/Q7vpNU9WA5PwYbnyXp0KSr/IrtduAKve8xxnQn32NtgNjX3s5A==", "67789981", false, "b3fa1f07-e82d-4182-a719-ac97b5e5bda4", false, "jimmybaker@gmail.com" },
+                    { "cda313e3-33c1-4e6e-982b-3c5eb9ff9565", 0, "8f1417bf-86a7-476e-bb22-1f086f1b6650", "Safety Inspector", "bobbybrooks@gmail.com", false, 1507, "Bobby", "Brooks", false, null, "BOBBYBROOKS@GMAIL.COM", "BOBBYBROOKS@GMAIL.COM", "AQAAAAIAAYagAAAAED2XdvVTpZI2UYsvOjhy6ndBwIImggyPk8anN50d/kSyfvCBeb5XK2Flprwn3Cd4Wg==", "62570046", false, "35d530ba-c751-4d1a-b0f8-24fd0d2e07d6", false, "bobbybrooks@gmail.com" },
+                    { "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563", 0, "ec37b001-33eb-4033-a2b3-a4789bcb673b", "Safety Inspector", "bendanis@gmail.com", false, 2024, "Ben", "Danis", false, null, "BENDANIS@GMAIL.COM", "BENDANIS@GMAIL.COM", "AQAAAAIAAYagAAAAEJqPN4bWrvyowM0QZK0v/rtJ0COp+6B2vQLlLRBQkYIs1ozJ0bsc0GNUnG0w2nDnDQ==", "68626846", false, "9bb23b6d-76d8-478f-ad09-35f6b76bf4be", false, "bendanis@gmail.com" },
+                    { "e5e8acfe-c59a-4b4d-bba4-d40057aecef4", 0, "26bd16b3-7da6-469d-a55a-cfebb607eb32", "Safety Inspector", "maddietay@gmail.com", false, 1224, "Maddie", "Tay", false, null, "MADDIETAY@GMAIL.COM", "MADDIETAY@GMAIL.COM", "AQAAAAIAAYagAAAAEBd3xHQzcffcH+vioStMYFtvqPAKUIiWqXtrn8JiYy103DqJC77HTGUd5yD4VYxZvA==", "63457266", false, "e1df1aa1-8b7c-45e1-b638-c2ead3e53a01", false, "maddietay@gmail.com" },
+                    { "e7b4016a-fa59-4669-969f-36601182f51c", 0, "10f9f04d-d02d-429c-a605-2645b9610580", "Safety Manager", "kevinjones@gmail.com", false, 1991, "Kevin", "Jones", false, null, "KEVINJONES@GMAIL.COM", "KEVINJONES@GMAIL.COM", "AQAAAAIAAYagAAAAEKXfoEym3qwm+RGXoD67A9Z/U/smLPBjvtyEDJeSHsSibvKsunDV62UQL9sZcoc+Xg==", "68999888", false, "c79d3a94-028c-45b6-8051-b4c3d4b550d3", false, "kevinjones@gmail.com" },
+                    { "f53bf9d9-95d1-42af-804e-e5edacdc9c74", 0, "d58b6b20-e07c-4245-8d4b-4e5590ef3694", "Safety Inspector", "elenareed@gmail.com", false, 1953, "Elena", "Reed", false, null, "ELENAREED@GMAIL.COM", "ELENAREED@GMAIL.COM", "AQAAAAIAAYagAAAAEOEwzNAUDumsqhF6KKHwod2tOAVpr06j8LGbW1NFFP1gH/AAoSe24VU8+4BCVpYT6A==", "63450508", false, "a46ca23c-4ffe-4c2e-b6b6-59aa18cb4f1f", false, "elenareed@gmail.com" },
+                    { "fe8964fa-aac1-4db1-97bb-017e0905242f", 0, "f7542cd8-7abf-4384-9cc8-ed3eea54b50e", "Safety Inspector", "jakehoward@gmail.com", false, 1397, "Jake", "Howard", false, null, "JAKEHOWARD@GMAIL.COM", "JAKEHOWARD@GMAIL.COM", "AQAAAAIAAYagAAAAEKsdl/y/Ez9MQFmIEPaXKtoMuokony2TBTW+x90bS92mFwvxoIrwNpbObfLtmTcpZw==", "62678901", false, "74f5f6ad-99f0-4e4a-ad5f-98f015242c31", false, "jakehoward@gmail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RiskTeams",
+                columns: new[] { "Id", "Leader", "Member1", "Member2", "Member3", "Member4", "Member5" },
+                values: new object[,]
+                {
+                    { 1, "Eliza Ross", "Nina Choo", "Maddie Tay", "Stanley Hall", "Warren Young", "Jake Howard" },
+                    { 2, "Kyle Thomas", "Constance Lee", "Bobby Brooks", null, null, null },
+                    { 3, "Tommy Jones", "Elena Reed", "Ben Danis", "Larry Parker", "Jimmy Baker", null }
                 });
 
             migrationBuilder.InsertData(
@@ -430,14 +428,9 @@ namespace majorproject.Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Activities_RAFId",
+                name: "IX_Activities_RiskAssessmentId",
                 table: "Activities",
-                column: "RAFId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Approvals_RAFId",
-                table: "Approvals",
-                column: "RAFId");
+                column: "RiskAssessmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -520,6 +513,11 @@ namespace majorproject.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_RiskAssessments_RiskTeamId",
+                table: "RiskAssessments",
+                column: "RiskTeamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RiskControls_RiskEvaluationId",
                 table: "RiskControls",
                 column: "RiskEvaluationId");
@@ -533,9 +531,6 @@ namespace majorproject.Server.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Approvals");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -564,9 +559,6 @@ namespace majorproject.Server.Migrations
                 name: "RiskControls");
 
             migrationBuilder.DropTable(
-                name: "RiskTeams");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -582,7 +574,10 @@ namespace majorproject.Server.Migrations
                 name: "Activities");
 
             migrationBuilder.DropTable(
-                name: "RAFs");
+                name: "RiskAssessments");
+
+            migrationBuilder.DropTable(
+                name: "RiskTeams");
         }
     }
 }

@@ -9,7 +9,8 @@ namespace majorproject.Shared.Domain
 {
     public class RiskAssessment : BaseDomainModel
     {
-        public bool? Approved { get; set; }
+        public bool? ApprovedStatus { get; set; }
+
         public string? Name { get; set; }
         public string? Department { get; set; }
         public string? Process {  get; set; }
@@ -22,7 +23,7 @@ namespace majorproject.Shared.Domain
         public virtual RiskTeam? RiskTeam { get; set; }
 
         public string? Approver { get; set; }
-        public DateTime ApprovalDate { get; set; }
+        public DateTime? ApprovalDate { get; set; }
 
         public virtual ICollection<Activity>? Activities { get; set; }
     }

@@ -1,0 +1,51 @@
+﻿@page "/assessments/{assessmentId:int}/activities/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Add Work Activity</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Activity" activity="activity" OnValidSubmit="@CreateActivity" />
+<br />
+<ol>
+    @foreach (var activity in activities)
+    {
+        <li>@activity.Name</li>
+    }
+</ol>
+<br />
+<hr />
+<button @onclick="CompleteActivities" class="btn btn-secondary">Next</button>
+
+@code {
+    [Parameter] public int assessmentId { get; set; }
+
+    private Activity activity;
+    private List<Activity> activities = new List<Activity>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        activity = new Activity { AssessmentId = assessmentId };
+        activities = await _client.GetFromJsonAsync<List<Activity>>($"api/activities/assessment/{assessmentId}"); 
+    }
+
+    private async Task CreateActivity()
+    {
+        var response = await _client.PostAsJsonAsync("api/activities", activity);
+        if (response.IsSuccessStatusCode)
+        {
+            activities.Add(activity);
+            activity = new Activity { AssessmentId = assessmentId }; // Reset the form for the next activity
+        }
+    }
+
+    private void CompleteActivities()
+    {
+        // _navManager.NavigateTo($"/forms/{formId}/identifications/create");
+        _navManager.NavigateTo($"/assessments/"); // temporary
+    }
+}
+
+
+

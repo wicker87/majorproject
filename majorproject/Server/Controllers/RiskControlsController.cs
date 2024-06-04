@@ -26,22 +26,26 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskControls()
         {
-            var riskControls = await _unitOfWork.RiskControls.GetAll();
-            return Ok(riskControls);
+            var riskcontrols = await _unitOfWork.RiskControls.GetAll();
+
+            if (riskcontrols == null)
+            {
+                return NotFound();
+            }
+            return Ok(riskcontrols);
         }
 
         // GET: api/RiskControls/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskControl(int id)
         {
-            var riskControl = await _unitOfWork.RiskControls.Get(q => q.Id == id);
+            var riskcontrol = await _unitOfWork.RiskControls.Get(q => q.Id == id);
 
-            if (riskControl == null)
+            if (riskcontrol == null)
             {
                 return NotFound();
             }
-
-            return Ok(riskControl);
+            return Ok(riskcontrol);
         }
 
         // PUT: api/RiskControls/5
@@ -54,8 +58,8 @@ namespace majorproject.Server.Controllers
                 return BadRequest();
             }
 
-            //_context.Entry(riskControl).State = EntityState.Modified;
             _unitOfWork.RiskControls.Update(riskControl);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -80,9 +84,6 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<RiskControl>> PostRiskControl(RiskControl riskControl)
         {
-
-            //_context.RiskControls.Add(riskControl);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskControls.Insert(riskControl);
             await _unitOfWork.Save(HttpContext);
 
@@ -93,23 +94,20 @@ namespace majorproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskControl(int id)
         {
-
             var riskControl = await _unitOfWork.RiskControls.Get(q => q.Id == id);
             if (riskControl == null)
             {
                 return NotFound();
             }
 
-            //_context.RiskControls.Remove(riskControl);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskControls.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> RiskControlExists(int id)
         {
-            //return (_context.RiskControls?.Any(e => e.Id == id)).GetValueOrDefault();
             var riskControl = await _unitOfWork.RiskControls.Get(q => q.Id == id);
             return riskControl != null;
         }

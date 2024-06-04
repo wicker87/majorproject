@@ -10,6 +10,15 @@
     {
         returnUrl = existingUrl;
     }
+
+    // added
+    ApplicationUser user = null;
+    IList<string> roles = new List<string>();
+    if (SignInManager.IsSignedIn(User))
+    {
+        user = await UserManager.GetUserAsync(User);
+        roles = await UserManager.GetRolesAsync(user);
+    }
 }
 
 <ul class="navbar-nav">
@@ -19,8 +28,17 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome, @User.Identity?.Name</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                @user?.FirstName @user?.LastName
+                @if (roles.Any())
+                {
+                    <span>(@string.Join(", ", roles))</span>
+                }
+            </a>
+        </li>
+        <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="btn btn-primary">Logout</button>
             </form>
         </li>
     }

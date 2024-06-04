@@ -10,32 +10,20 @@
   <ItemGroup>
     <Compile Remove="Pages\Controls\**" />
     <Compile Remove="Pages\Evaluations\**" />
-    <Compile Remove="Pages\Hazards\**" />
     <Compile Remove="Pages\Members\**" />
     <Compile Remove="Pages\RAFs\**" />
-    <Compile Remove="Pages\RiskControls\**" />
-    <Compile Remove="Pages\RiskEvaluations\**" />
     <Content Remove="Pages\Controls\**" />
     <Content Remove="Pages\Evaluations\**" />
-    <Content Remove="Pages\Hazards\**" />
     <Content Remove="Pages\Members\**" />
     <Content Remove="Pages\RAFs\**" />
-    <Content Remove="Pages\RiskControls\**" />
-    <Content Remove="Pages\RiskEvaluations\**" />
     <EmbeddedResource Remove="Pages\Controls\**" />
     <EmbeddedResource Remove="Pages\Evaluations\**" />
-    <EmbeddedResource Remove="Pages\Hazards\**" />
     <EmbeddedResource Remove="Pages\Members\**" />
     <EmbeddedResource Remove="Pages\RAFs\**" />
-    <EmbeddedResource Remove="Pages\RiskControls\**" />
-    <EmbeddedResource Remove="Pages\RiskEvaluations\**" />
     <None Remove="Pages\Controls\**" />
     <None Remove="Pages\Evaluations\**" />
-    <None Remove="Pages\Hazards\**" />
     <None Remove="Pages\Members\**" />
     <None Remove="Pages\RAFs\**" />
-    <None Remove="Pages\RiskControls\**" />
-    <None Remove="Pages\RiskEvaluations\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,13 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Approvals\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Pages\Approvals\Index.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
+    <Folder Include="Pages\RiskControls\" />
+    <Folder Include="Pages\RiskEvaluations\" />
   </ItemGroup>
 
 </Project>

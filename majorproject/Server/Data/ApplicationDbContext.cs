@@ -2,6 +2,7 @@
 using majorproject.Shared.Domain;
 using majorproject.Server.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
@@ -17,12 +18,11 @@ namespace majorproject.Server.Data
         {
         }
 
+        public DbSet<RiskAssessment> RiskAssessments { get; set; }
         public DbSet<Activity> Activities { get; set; }
-        public DbSet<Approval> Approvals { get; set; }
-        public DbSet<Hazard> Hazards { get; set; }  
-        public DbSet<RiskAssessment> RAFs { get; set; }
-        public DbSet<RiskControl> RiskControls { get; set;}
+        public DbSet<Hazard> Hazards { get; set; }
         public DbSet<RiskEvaluation> RiskEvaluations { get; set; }
+        public DbSet<RiskControl> RiskControls { get; set;}       
         public DbSet<RiskTeam> RiskTeams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -33,8 +33,6 @@ namespace majorproject.Server.Data
             //builder.ApplyConfiguration(new HazardSeedConfiguration());
 
             //builder.ApplyConfiguration(new RiskControlSeedConfiguration());
-
-            //builder.ApplyConfiguration(new ApprovalSeedConfiguration());
 
             //builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
 

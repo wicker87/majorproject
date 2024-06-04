@@ -8,7 +8,7 @@ namespace majorproject.Shared.Domain
 {
     public class RiskEvaluation : BaseDomainModel
     {
-        public string? ExistingRiskControls{ get; set; }
+        public string? ExistingRiskControls { get; set; }
         public int? Severity { get; set; }
         public int? Likelihood { get; set; }
         public int? RPN { get; set; }
