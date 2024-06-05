@@ -11,7 +11,7 @@
 else
 {
     <h4>Assessment Details</h4>
-    <div style="display: flex; gap: 40px">
+    <div style="display: flex; gap: 80px">
         <div>
             <p><strong>Name:</strong> @assessment.Name</p>
             <p><strong>Department:</strong> @assessment.Department</p>
@@ -42,7 +42,7 @@ else
 
     <div>
         <h4>Activities</h4>
-        <ul>
+        @* <ul>
             @if (assessment.Activities != null)
             {
                 @foreach (var activity in assessment.Activities)
@@ -54,7 +54,7 @@ else
             {
                 <span>No activities available</span>
             }
-        </ul>
+        </ul> *@
     </div>
 }
 

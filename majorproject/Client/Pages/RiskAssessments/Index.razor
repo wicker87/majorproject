@@ -31,6 +31,7 @@ else
                 <th>Process</th>
                 <th>Location</th>
                 <th>Assessment Date</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -44,6 +45,16 @@ else
                     <td>@assessment.Location</td>
                     <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
                     <td>
+                        @if(assessment.ApprovedStatus == true)
+                        {
+                            <span style="color: darkgreen">Form Approved</span>
+                        }
+                        else
+                        {
+                            <span style="color: orange">Pending Approval</span>
+                        }
+                    </td>
+                    <td>
                         <a href="/assessments/edit/@assessment.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
@@ -53,7 +64,7 @@ else
                         <button class="btn btn-danger" @onclick="@(()=>Delete(assessment.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
-                        <button class="button" id="statusButton" onclick="changeStatus()">Pending Approval</button>
+                        @* <button class="button" id="statusButton" onclick="changeStatus()">Pending Approval</button> *@
                     </td>
                 </tr>
             }

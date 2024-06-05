@@ -26,26 +26,24 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskAssessments()
         {
-            var riskassessments = await _unitOfWork.RiskAssessments.GetAll(includes: q => q.Include(x => x.RiskTeam));
-
-            if (riskassessments == null)
-            {
-                return NotFound();
-            }
-            return Ok(riskassessments);
+            var riskAssessments = await _unitOfWork.RiskAssessments.GetAll(includes: q => q.Include(x => x.RiskTeam));
+            return Ok(riskAssessments);
         }
 
         // GET: api/RiskAssessments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskAssessment(int id)
         {
-            var riskassessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
+            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskTeam.Leader)
+            .Include(x => x.RiskTeam.Member1).Include(x => x.RiskTeam.Member2).Include(x => x.RiskTeam.Member3)
+            .Include(x => x.RiskTeam.Member4).Include(x => x.RiskTeam.Member5).Include(x => x.Activities));
 
-            if (riskassessment == null)
+            if (riskAssessment == null)
             {
                 return NotFound();
             }
-            return Ok(riskassessment);
+
+            return Ok(riskAssessment);
         }
 
         // PUT: api/RiskAssessments/5
@@ -94,6 +92,7 @@ namespace majorproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskAssessment(int id)
         {
+
             var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id);
             if (riskAssessment == null)
             {

@@ -12,7 +12,7 @@ using majorproject.Server.Data;
 namespace majorproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240604065715_Newdb")]
+    [Migration("20240605040351_Newdb")]
     partial class Newdb
     {
         /// <inheritdoc />
@@ -506,421 +506,421 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e2fc5c8b-05b9-470e-aa0f-344fc356cc24",
+                            ConcurrencyStamp = "4e6c4eae-8b93-4a65-aebc-58bc6d7f5065",
                             Designation = "IT Manager",
-                            Email = "janedoe@gmail.com",
+                            Email = "janedoe@admin.com",
                             EmailConfirmed = false,
                             EmployeeID = 1003,
                             FirstName = "Jane",
                             LastName = "Doe",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JANEDOE@GMAIL.COM",
-                            NormalizedUserName = "JANEDOE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHkPne/ww9M3uBiMyloRZw6s8b/mzL/UuALw9bbjpjVVJ8Aqh0g81j3zmgCiVsYVaA==",
+                            NormalizedEmail = "JANEDOE@ADMIN.COM",
+                            NormalizedUserName = "JANEDOE@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDz47XhkxFvY65bdFMiQViuT+w0mARm62GzA8Zs3J6HP2YChAKRPpstJZRg5Hmb+uA==",
                             PhoneNumber = "64841415",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "38aae0f3-b9ba-46dd-a9ec-b88f4e15c93e",
+                            SecurityStamp = "6e5b91b5-bbb0-44fd-8a15-479105d67439",
                             TwoFactorEnabled = false,
-                            UserName = "janedoe@gmail.com"
+                            UserName = "janedoe@admin.com"
                         },
                         new
                         {
                             Id = "23cdf685-e508-4fc6-84cc-c860af2dd301",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26e5f4dc-2d10-4fab-a6b9-426076fb5224",
+                            ConcurrencyStamp = "f1920fe9-7ea9-41da-a3e2-196b5b915323",
                             Designation = "Safety Manager",
-                            Email = "johnsmith@gmail.com",
+                            Email = "johnsmith@manager.com",
                             EmailConfirmed = false,
                             EmployeeID = 2010,
                             FirstName = "John",
                             LastName = "Smith",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JOHNSMITH@GMAIL.COM",
-                            NormalizedUserName = "JOHNSMITH@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOAuWG58yu5SAmI/fmWpZ9ySirkg0o1c4lbA+IU1qi9DBv0wR5edvfd/NVVYeE3Tog==",
+                            NormalizedEmail = "JOHNSMITH@MANAGER.COM",
+                            NormalizedUserName = "JOHNSMITH@MANAGER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENCK2CaG9is/TapQK38gS1cGKUpIO5qWfVnLVZI/xUSFTO+Z+zXr3C/8wuDtT2TzZg==",
                             PhoneNumber = "67349033",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "72e468df-bca4-41e3-b33b-983bb69be3bf",
+                            SecurityStamp = "25f49a79-82db-48ee-9791-3c9254d0f9ec",
                             TwoFactorEnabled = false,
-                            UserName = "johnsmith@gmail.com"
+                            UserName = "johnsmith@manager.com"
                         },
                         new
                         {
                             Id = "5859b058-1d6e-4b79-8040-9bbd204c0dc5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fd4a6d6-d3b9-4460-9bd4-2733e9337358",
+                            ConcurrencyStamp = "806ce044-aa6f-409f-97e1-0030147108df",
                             Designation = "Safety Inspector",
-                            Email = "stanleyhall@gmail.com",
+                            Email = "stanleyhall@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1243,
                             FirstName = "Stanley",
                             LastName = "Hall",
                             LockoutEnabled = false,
-                            NormalizedEmail = "STANLEYHALL@GMAIL.COM",
-                            NormalizedUserName = "STANLEYHALL@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIST+SeTDhSXnVoteEL12SN4oxSKHmJjtW4nkW6xwoBhT76/UPa0mKx3w/LJfNSg9g==",
+                            NormalizedEmail = "STANLEYHALL@EMPLOYEE.COM",
+                            NormalizedUserName = "STANLEYHALL@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENoOoUtJUSOB5KySKXfjMHmnhhay4keoQW4Tng8z1NxzKEDVMyoNnghZRLgdNOkyYw==",
                             PhoneNumber = "63960815",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9feee28e-f633-40d2-a7e0-9551ed71b7f8",
+                            SecurityStamp = "d4fee67a-e68f-4afc-83cf-ba596077d653",
                             TwoFactorEnabled = false,
-                            UserName = "stanleyhall@gmail.com"
+                            UserName = "stanleyhall@employee.com"
                         },
                         new
                         {
                             Id = "f53bf9d9-95d1-42af-804e-e5edacdc9c74",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d58b6b20-e07c-4245-8d4b-4e5590ef3694",
+                            ConcurrencyStamp = "74d7ede5-5db0-4589-9580-f666111ace17",
                             Designation = "Safety Inspector",
-                            Email = "elenareed@gmail.com",
+                            Email = "elenareed@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1953,
                             FirstName = "Elena",
                             LastName = "Reed",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ELENAREED@GMAIL.COM",
-                            NormalizedUserName = "ELENAREED@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOEwzNAUDumsqhF6KKHwod2tOAVpr06j8LGbW1NFFP1gH/AAoSe24VU8+4BCVpYT6A==",
+                            NormalizedEmail = "ELENAREED@EMPLOYEE.COM",
+                            NormalizedUserName = "ELENAREED@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELgUbKOEZTeOhMacLaFgkO7F+OHWV7fjGctCVn+64LhIq3gUS92/Xp49dzk13SFJOA==",
                             PhoneNumber = "63450508",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a46ca23c-4ffe-4c2e-b6b6-59aa18cb4f1f",
+                            SecurityStamp = "771f4bf8-d1a0-486a-839c-16720852d427",
                             TwoFactorEnabled = false,
-                            UserName = "elenareed@gmail.com"
+                            UserName = "elenareed@employee.com"
                         },
                         new
                         {
                             Id = "5258daf7-0bf7-4460-a854-4b3f427312c7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "967a58ae-86d6-49a2-a4d3-24992d68545a",
+                            ConcurrencyStamp = "f8274eb6-4c3d-4356-ac57-d8b67a96f73e",
                             Designation = "Safety Inspector",
-                            Email = "warrenyoung@gmail.com",
+                            Email = "warrenyoung@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1331,
                             FirstName = "Warren",
                             LastName = "Young",
                             LockoutEnabled = false,
-                            NormalizedEmail = "WARRENYOUNG@GMAIL.COM",
-                            NormalizedUserName = "WARRENYOUNG@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEK/U8UrxKXc35JHg9J5+3Z0avvbL76oQ576LZZu2WCqgIAlipXDv/Lvn2YOmhNbdPQ==",
+                            NormalizedEmail = "WARRENYOUNG@EMPLOYEE.COM",
+                            NormalizedUserName = "WARRENYOUNG@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECwqdTKUw3D9e5vFMAAujh/8QBF5zsP5Uv4pC4qMbRb4bgT9JUc/H4EGdFL05/hfGQ==",
                             PhoneNumber = "63388585",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1c44ff07-da7a-4c75-a956-d011f34f97a5",
+                            SecurityStamp = "95004486-30ce-4eb2-9716-89966bfd31d1",
                             TwoFactorEnabled = false,
-                            UserName = "warrenyoung@gmail.com"
+                            UserName = "warrenyoung@employee.com"
                         },
                         new
                         {
                             Id = "e7b4016a-fa59-4669-969f-36601182f51c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "10f9f04d-d02d-429c-a605-2645b9610580",
+                            ConcurrencyStamp = "f676e8f8-9d0c-47a5-96c3-abfbdb04eb24",
                             Designation = "Safety Manager",
-                            Email = "kevinjones@gmail.com",
+                            Email = "kevinjones@manager.com",
                             EmailConfirmed = false,
                             EmployeeID = 1991,
                             FirstName = "Kevin",
                             LastName = "Jones",
                             LockoutEnabled = false,
-                            NormalizedEmail = "KEVINJONES@GMAIL.COM",
-                            NormalizedUserName = "KEVINJONES@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKXfoEym3qwm+RGXoD67A9Z/U/smLPBjvtyEDJeSHsSibvKsunDV62UQL9sZcoc+Xg==",
+                            NormalizedEmail = "KEVINJONES@MANAGER.COM",
+                            NormalizedUserName = "KEVINJONES@MANAGER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENcdwsltsbDNnb0w+noKpI86S288DPmRT6wfxXDd/u+JLlZUuhiy3T2fuUyVw1LqXg==",
                             PhoneNumber = "68999888",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c79d3a94-028c-45b6-8051-b4c3d4b550d3",
+                            SecurityStamp = "9bfc0f8b-688e-421d-af79-de7680dc3196",
                             TwoFactorEnabled = false,
-                            UserName = "kevinjones@gmail.com"
+                            UserName = "kevinjones@manager.com"
                         },
                         new
                         {
                             Id = "cda313e3-33c1-4e6e-982b-3c5eb9ff9565",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f1417bf-86a7-476e-bb22-1f086f1b6650",
+                            ConcurrencyStamp = "c154e9c9-cefa-4a32-932b-d09f0ade5478",
                             Designation = "Safety Inspector",
-                            Email = "bobbybrooks@gmail.com",
+                            Email = "bobbybrooks@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1507,
                             FirstName = "Bobby",
                             LastName = "Brooks",
                             LockoutEnabled = false,
-                            NormalizedEmail = "BOBBYBROOKS@GMAIL.COM",
-                            NormalizedUserName = "BOBBYBROOKS@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAED2XdvVTpZI2UYsvOjhy6ndBwIImggyPk8anN50d/kSyfvCBeb5XK2Flprwn3Cd4Wg==",
+                            NormalizedEmail = "BOBBYBROOKS@EMPLOYEE.COM",
+                            NormalizedUserName = "BOBBYBROOKS@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOeEGTWIFSl450ZcQhEJkRfv4VbpA00diS8EeF+l3eQ1enwHpJMtksvB4rUbivkxaw==",
                             PhoneNumber = "62570046",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "35d530ba-c751-4d1a-b0f8-24fd0d2e07d6",
+                            SecurityStamp = "16d721bd-8968-4074-abae-a9ff88f68f74",
                             TwoFactorEnabled = false,
-                            UserName = "bobbybrooks@gmail.com"
+                            UserName = "bobbybrooks@employee.com"
                         },
                         new
                         {
                             Id = "8d06620d-3d31-4c1c-9449-7eaac032f6bd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "218691a2-2ac9-44b0-932c-c71786c86178",
+                            ConcurrencyStamp = "4713b2c4-4c2f-47ca-860d-c31867f266d6",
                             Designation = "Safety Manager",
-                            Email = "jennielow@gmail.com",
+                            Email = "jennielow@manager.com",
                             EmailConfirmed = false,
                             EmployeeID = 1748,
                             FirstName = "Jennie",
                             LastName = "Low",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JENNIELOW@GMAIL.COM",
-                            NormalizedUserName = "JENNIELOW@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC+7fLsBiHpBPdxRlWFVPsJX8yu0laDcQvLDAstRJvWLcn9rAXuQEEPk7lEcmm3lNw==",
+                            NormalizedEmail = "JENNIELOW@MANAGER.COM",
+                            NormalizedUserName = "JENNIELOW@MANAGER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEcQDl/KUPgK7ioJhTRB3OwZ0/CrMgm/dg9nL9K1XfHE7cwfrzl9hSVDzviMLxJbSA==",
                             PhoneNumber = "62247473",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "939125e9-751e-41cf-a43a-a62d0472a67e",
+                            SecurityStamp = "4a87e3f6-663b-4865-870c-b1495e8bf750",
                             TwoFactorEnabled = false,
-                            UserName = "jennielow@gmail.com"
+                            UserName = "jennielow@manager.com"
                         },
                         new
                         {
                             Id = "77ea0c8c-fa62-4e13-980a-63ed5336f0b2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "29a4ca84-ed45-45d2-8199-292fb9dcc0ee",
+                            ConcurrencyStamp = "6bc0bd7e-2845-46f8-99ae-7e2d77fd42cc",
                             Designation = "Safety Inspector",
-                            Email = "constancelee@gmail.com",
+                            Email = "constancelee@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1483,
                             FirstName = "Constance",
                             LastName = "Lee",
                             LockoutEnabled = false,
-                            NormalizedEmail = "CONSTANCELEE@GMAIL.COM",
-                            NormalizedUserName = "CONSTANCELEE@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDXItgdWPOh5odmKiYqPITugzXrZ/S6SPfjgIOb2MNhTQcuYywwsse5RbnsO0fSFyQ==",
+                            NormalizedEmail = "CONSTANCELEE@EMPLOYEE.COM",
+                            NormalizedUserName = "CONSTANCELEE@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHS6J9n7xDn3dLa6eFfIbMslFvaWFYIM+/p5fvZ+q7zYzdNIFSdyUvrhHmczH9Gp8w==",
                             PhoneNumber = "67457717",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "48a1c097-f0bb-4e24-b96d-3de1e008ea22",
+                            SecurityStamp = "eae41ba6-6def-45d3-b08e-76cdbc06fdfc",
                             TwoFactorEnabled = false,
-                            UserName = "constancelee@gmail.com"
+                            UserName = "constancelee@employee.com"
                         },
                         new
                         {
                             Id = "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec37b001-33eb-4033-a2b3-a4789bcb673b",
+                            ConcurrencyStamp = "e8ff129c-44d9-4bfa-afb8-afb154e4969c",
                             Designation = "Safety Inspector",
-                            Email = "bendanis@gmail.com",
+                            Email = "bendanis@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 2024,
                             FirstName = "Ben",
                             LastName = "Danis",
                             LockoutEnabled = false,
-                            NormalizedEmail = "BENDANIS@GMAIL.COM",
-                            NormalizedUserName = "BENDANIS@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJqPN4bWrvyowM0QZK0v/rtJ0COp+6B2vQLlLRBQkYIs1ozJ0bsc0GNUnG0w2nDnDQ==",
+                            NormalizedEmail = "BENDANIS@EMPLOYEE.COM",
+                            NormalizedUserName = "BENDANIS@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELrVyi+S3/ozYqcpGVXwv9du164ovIV17akyByPY6q91XX6oty6F7CYVoQeGFSY47g==",
                             PhoneNumber = "68626846",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9bb23b6d-76d8-478f-ad09-35f6b76bf4be",
+                            SecurityStamp = "35141fee-adc2-4ebe-8da5-0bbfdee9eb3d",
                             TwoFactorEnabled = false,
-                            UserName = "bendanis@gmail.com"
+                            UserName = "bendanis@employee.com"
                         },
                         new
                         {
                             Id = "b57e892b-0bdb-4469-afd9-e6522fea2f25",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1443257b-b1a0-4f93-84fd-9e78355d1723",
+                            ConcurrencyStamp = "11b7f026-710c-42ac-8f3c-2bb8063de2f3",
                             Designation = "Safety Inspector",
-                            Email = "jimmybaker@gmail.com",
+                            Email = "jimmybaker@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 2156,
                             FirstName = "Jimmy",
                             LastName = "Baker",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JIMMYBAKER@GMAIL.COM",
-                            NormalizedUserName = "JIMMYBAKER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKYDTKNLqf7Jjtl/Q7vpNU9WA5PwYbnyXp0KSr/IrtduAKve8xxnQn32NtgNjX3s5A==",
+                            NormalizedEmail = "JIMMYBAKER@EMPLOYEE.COM",
+                            NormalizedUserName = "JIMMYBAKER@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELg00fNP84oXrAHIW0pOtMbyx46XJyEjQmAwUTqOlJNcTDaebI58VdqJpaWsqrqXGQ==",
                             PhoneNumber = "67789981",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b3fa1f07-e82d-4182-a719-ac97b5e5bda4",
+                            SecurityStamp = "f4f8994c-eded-4326-9f55-50556ce41685",
                             TwoFactorEnabled = false,
-                            UserName = "jimmybaker@gmail.com"
+                            UserName = "jimmybaker@employee.com"
                         },
                         new
                         {
                             Id = "fe8964fa-aac1-4db1-97bb-017e0905242f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f7542cd8-7abf-4384-9cc8-ed3eea54b50e",
+                            ConcurrencyStamp = "2872e025-0af9-407d-a996-aab340eb2213",
                             Designation = "Safety Inspector",
-                            Email = "jakehoward@gmail.com",
+                            Email = "jakehoward@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1397,
                             FirstName = "Jake",
                             LastName = "Howard",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JAKEHOWARD@GMAIL.COM",
-                            NormalizedUserName = "JAKEHOWARD@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKsdl/y/Ez9MQFmIEPaXKtoMuokony2TBTW+x90bS92mFwvxoIrwNpbObfLtmTcpZw==",
+                            NormalizedEmail = "JAKEHOWARD@EMPLOYEE.COM",
+                            NormalizedUserName = "JAKEHOWARD@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBCW2nPYnilbEBDg8Z/fZCSurkb8bDMtaJT02dxvcdc7gC/cE8pnsICeanPShMp/VQ==",
                             PhoneNumber = "62678901",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "74f5f6ad-99f0-4e4a-ad5f-98f015242c31",
+                            SecurityStamp = "3b690b9e-38a7-4adb-a436-800667f25b56",
                             TwoFactorEnabled = false,
-                            UserName = "jakehoward@gmail.com"
+                            UserName = "jakehoward@employee.com"
                         },
                         new
                         {
                             Id = "33a4bc04-9b10-49a5-8cb6-8dea48b122c4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d5091170-8a0b-4dbe-a63d-d69fc4df0c13",
+                            ConcurrencyStamp = "8ea6276e-4021-48b9-9acb-2f61c8218760",
                             Designation = "Safety Inspector",
-                            Email = "ninachoo@gmail.com",
+                            Email = "ninachoo@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1170,
                             FirstName = "Nina",
                             LastName = "Choo",
                             LockoutEnabled = false,
-                            NormalizedEmail = "NINACHOO@GMAIL.COM",
-                            NormalizedUserName = "NINACHOO@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFPxekOfppNCku4kxya7mE0WKcCWNCo6y5TACiv49WDLVPkiAH8V6zF62FHA57PQ2g==",
+                            NormalizedEmail = "NINACHOO@EMPLOYEE.COM",
+                            NormalizedUserName = "NINACHOO@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECq9dqozJVif92NKMtoQkdedI6qBV7IHRJIVRSETIXdb+0e890QRZoo1RGVA+S1TSQ==",
                             PhoneNumber = "65366623",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e37a8047-6492-4fb7-89ae-1c8e3df3dbf8",
+                            SecurityStamp = "f14fca18-b10c-461e-9914-28c8dae3b8b2",
                             TwoFactorEnabled = false,
-                            UserName = "ninachoo@gmail.com"
+                            UserName = "ninachoo@employee.com"
                         },
                         new
                         {
                             Id = "1519fcce-c355-4cad-8b22-01b76b762ffc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "55c6b882-9a85-4a05-a843-29aab7d1a079",
+                            ConcurrencyStamp = "57c37621-4951-432c-9033-3da75c27411c",
                             Designation = "Safety Inspector",
-                            Email = "tommyjones@gmail.com",
+                            Email = "tommyjones@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1886,
                             FirstName = "Tommy",
                             LastName = "Jones",
                             LockoutEnabled = false,
-                            NormalizedEmail = "TOMMYJONES@GMAIL.COM",
-                            NormalizedUserName = "TOMMYJONES@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENwQ2ba7phOpi9A+e8rKIDlma/aC0a1P1zpZK2w0bJmZg1qogNOgdhQRUz/DLMnzpA==",
+                            NormalizedEmail = "TOMMYJONES@EMPLOYEE.COM",
+                            NormalizedUserName = "TOMMYJONES@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAELBszb0wKTP1jUZQti5DhuAUL7GBKcxbdV2wmOnucZg8BTIB5PHuLHpgBefspTIYHA==",
                             PhoneNumber = "65325334",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c23ceaf-a9c0-458f-a408-5137c6a2c2c8",
+                            SecurityStamp = "8a0f20da-c8d2-4887-8e15-de1f58bedc30",
                             TwoFactorEnabled = false,
-                            UserName = "tommyjones@gmail.com"
+                            UserName = "tommyjones@employee.com"
                         },
                         new
                         {
                             Id = "63929151-0e12-4c5c-a03c-01c34642856a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e76e174-2d2d-4368-910f-6d75eb7b0c8c",
+                            ConcurrencyStamp = "fdd84fde-9550-4c42-b35d-0b9f2955a182",
                             Designation = "Safety Inspector",
-                            Email = "elizaross@gmail.com",
+                            Email = "elizaross@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1140,
                             FirstName = "Eliza",
                             LastName = "Ross",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ELIZAROSS@GMAIL.COM",
-                            NormalizedUserName = "ELIZAROSS@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMwDnxRHPBCSHgf6e7ISntU2mOLlla5mo/vyYvkTRL0il7u6ppZJ2NMKFimfhEkCrw==",
+                            NormalizedEmail = "ELIZAROSS@EMPLOYEE.COM",
+                            NormalizedUserName = "ELIZAROSS@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhi8xspntONwkGS6zYnZVFhO+5+aKqwMxvf17igUDS3mrp+crdFSpHkzoh7teN4gw==",
                             PhoneNumber = "67780373",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "220e0f0a-7436-4e72-bb1c-6e818c6bf97b",
+                            SecurityStamp = "13fc9a8a-a148-4e0f-a958-eea6a8d477b6",
                             TwoFactorEnabled = false,
-                            UserName = "elizaross@gmail.com"
+                            UserName = "elizaross@employee.com"
                         },
                         new
                         {
                             Id = "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1e95e21-6d92-4152-a565-9c7742d216ba",
+                            ConcurrencyStamp = "292b412c-74d3-47c5-aa77-6b0f8c75a805",
                             Designation = "Safety Manager",
-                            Email = "benjaminscott@gmail.com",
+                            Email = "benjaminscott@manager.com",
                             EmailConfirmed = false,
                             EmployeeID = 1794,
                             FirstName = "Benjamin",
                             LastName = "Scott",
                             LockoutEnabled = false,
-                            NormalizedEmail = "BENJAMINSCOTT@GMAIL.COM",
-                            NormalizedUserName = "BENJAMINSCOTT@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJCrxZdGPnHRmNfgVLpe8kpoZyjARqLv65uZzn6D+nL2ma3wAwvo6CFZrJz1EARfiA==",
+                            NormalizedEmail = "BENJAMINSCOTT@MANAGER.COM",
+                            NormalizedUserName = "BENJAMINSCOTT@MANAGER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJnLMUEu3PdzvXv4LUDkHwFTWdFZRe5aTXKm5IEp4IM/Puy2oz5Z6uSVmER9praF3Q==",
                             PhoneNumber = "62610071",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2f9ef320-e4dd-4453-adee-6ae2396b141d",
+                            SecurityStamp = "b9d56a5d-44ab-4469-ba35-0459496d102a",
                             TwoFactorEnabled = false,
-                            UserName = "benjaminscott@gmail.com"
+                            UserName = "benjaminscott@manager.com"
                         },
                         new
                         {
                             Id = "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d52ec7ca-d939-40dc-acfd-ef358ab265e3",
+                            ConcurrencyStamp = "f375248b-114e-46e5-8ca9-5309496a7869",
                             Designation = "Safety Inspector",
-                            Email = "kylethomas@gmail.com",
+                            Email = "kylethomas@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1426,
                             FirstName = "Kyle",
                             LastName = "Thomas",
                             LockoutEnabled = false,
-                            NormalizedEmail = "KYLETHOMAS@GMAIL.COM",
-                            NormalizedUserName = "KYLETHOMAS@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ53aXepwknZm8yD+8zNBL1gwzE1HVduWOx5qE9sazReSkol6FMNIxY3QintEbdILw==",
+                            NormalizedEmail = "KYLETHOMAS@EMPLOYEE.COM",
+                            NormalizedUserName = "KYLETHOMAS@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDnKTDrwSQEKXmQOT5KxiC3129QXaTMUGCdAt42b0fQVf1SN5JyhzyGIHjoobV8V5Q==",
                             PhoneNumber = "67361183",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "11906851-5e60-46c6-967a-bd8d7dda50e4",
+                            SecurityStamp = "21c2af01-a31b-4c92-82ca-774f5f0aa97f",
                             TwoFactorEnabled = false,
-                            UserName = "kylethomas@gmail.com"
+                            UserName = "kylethomas@employee.com"
                         },
                         new
                         {
                             Id = "e5e8acfe-c59a-4b4d-bba4-d40057aecef4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26bd16b3-7da6-469d-a55a-cfebb607eb32",
+                            ConcurrencyStamp = "1b6ddb99-da90-4ab7-a029-ea9ee0859444",
                             Designation = "Safety Inspector",
-                            Email = "maddietay@gmail.com",
+                            Email = "maddietay@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 1224,
                             FirstName = "Maddie",
                             LastName = "Tay",
                             LockoutEnabled = false,
-                            NormalizedEmail = "MADDIETAY@GMAIL.COM",
-                            NormalizedUserName = "MADDIETAY@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBd3xHQzcffcH+vioStMYFtvqPAKUIiWqXtrn8JiYy103DqJC77HTGUd5yD4VYxZvA==",
+                            NormalizedEmail = "MADDIETAY@EMPLOYEE.COM",
+                            NormalizedUserName = "MADDIETAY@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB+ErsLJYxeBZkNTIyjc/14KYldE6J0cFAJQJcxghvR92xK45crwuDUcFT20xeCfWg==",
                             PhoneNumber = "63457266",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e1df1aa1-8b7c-45e1-b638-c2ead3e53a01",
+                            SecurityStamp = "3dc4770a-01d2-42e5-9fe6-f29e2ddcb77e",
                             TwoFactorEnabled = false,
-                            UserName = "maddietay@gmail.com"
+                            UserName = "maddietay@employee.com"
                         },
                         new
                         {
                             Id = "6f84b324-5cc8-48b6-a348-57c74b3d5294",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "301b8f3f-056d-4e1d-96c0-39ffebf7426f",
+                            ConcurrencyStamp = "2ccda4cf-8fa1-4077-9105-a6032741e58d",
                             Designation = "Safety Inspector",
-                            Email = "larryparker@gmail.com",
+                            Email = "larryparker@employee.com",
                             EmailConfirmed = false,
                             EmployeeID = 2144,
                             FirstName = "Larry",
                             LastName = "Parker",
                             LockoutEnabled = false,
-                            NormalizedEmail = "LARRYPARKER@GMAIL.COM",
-                            NormalizedUserName = "LARRYPARKER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENIq+Vz80qlGBiFvUL9Lw5S6VhGrZX6kGH4Bgy/O+leR/V7wAEwuHUik4P59QBmucw==",
+                            NormalizedEmail = "LARRYPARKER@EMPLOYEE.COM",
+                            NormalizedUserName = "LARRYPARKER@EMPLOYEE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK0aLsdHnOnRR4UOBBZ8mSAyUXJJV86TyoBcvSqm0QPCzLq7grSf/Y/jxsPCl4z0Og==",
                             PhoneNumber = "67771504",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d1d19e2b-778a-444a-aa0e-7ba2c5a9e855",
+                            SecurityStamp = "b613544d-5019-4f14-a10f-96b1a1684074",
                             TwoFactorEnabled = false,
-                            UserName = "larryparker@gmail.com"
+                            UserName = "larryparker@employee.com"
                         },
                         new
                         {
                             Id = "911dd5ac-5093-444e-bd8d-b6fed36dcada",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35ab4f3e-6abd-427a-860f-149534ba41c4",
+                            ConcurrencyStamp = "039806aa-72c7-4384-afdd-bcef17d23490",
                             Designation = "Safety Manager",
-                            Email = "emilybrown@gmail.com",
+                            Email = "emilybrown@manager.com",
                             EmailConfirmed = false,
                             EmployeeID = 1061,
                             FirstName = "Emily",
                             LastName = "Brown",
                             LockoutEnabled = false,
-                            NormalizedEmail = "EMILYBROWN@GMAIL.COM",
-                            NormalizedUserName = "EMILYBROWN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEE4DHwV6uawYPp+y4Yig0Wizmd2/0TEOltuu3bleXEX0L6nlvWPZ6wLJpjy6I6g9mw==",
+                            NormalizedEmail = "EMILYBROWN@MANAGER.COM",
+                            NormalizedUserName = "EMILYBROWN@MANAGER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOXl681yPQHnkr6UP6mqG9RyaE/nfcQmfP07cKuIM642eyT4Y/mgwlbvuvtClFMQUQ==",
                             PhoneNumber = "67528856",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "26859201-941a-4850-b255-9045638ab955",
+                            SecurityStamp = "dc43d1ed-b030-439b-ace4-3a1dd45789bb",
                             TwoFactorEnabled = false,
-                            UserName = "emilybrown@gmail.com"
+                            UserName = "emilybrown@manager.com"
                         });
                 });
 
@@ -946,6 +946,32 @@ namespace majorproject.Server.Migrations
                     b.HasIndex("RiskAssessmentId");
 
                     b.ToTable("Activities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AssessmentId = 1,
+                            Name = "Use of MP facility"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssessmentId = 1,
+                            Name = "Use of BYOD Notebooks, PCs, Equipment"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssessmentId = 1,
+                            Name = "Use of soldering iron in MP labs for hardware related projects"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AssessmentId = 1,
+                            Name = "Handling of hand tools in MP Labs for hardware related projects"
+                        });
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
@@ -970,6 +996,64 @@ namespace majorproject.Server.Migrations
                     b.HasIndex("ActivityId");
 
                     b.ToTable("Hazards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ActivityId = 1,
+                            Name = "Trip and fall due to loose network and power extension cables, damaged floor tiles and wet floor",
+                            PossibleInjury = "Bodily Injuries"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ActivityId = 1,
+                            Name = "Falling ceiling board and and lights holding",
+                            PossibleInjury = "Head & Bodily Injuries"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ActivityId = 2,
+                            Name = "Contact with electrical parts and faulty cables with live exposed wires",
+                            PossibleInjury = "Electrocution"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ActivityId = 3,
+                            Name = "Contact with hot surface / soldering iron",
+                            PossibleInjury = "Burns to exposed skin"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ActivityId = 3,
+                            Name = "Piercing by soldering iron tip",
+                            PossibleInjury = "Minor Cuts"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ActivityId = 3,
+                            Name = "Inhaling fumes from soldering",
+                            PossibleInjury = "Eye, nose and throat irritation"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ActivityId = 4,
+                            Name = "Contact with sharp edges and pointed tips",
+                            PossibleInjury = "Injury to exposed skin/hand"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ActivityId = 4,
+                            Name = "Trip and fall due to hand tools/equipment on the floor",
+                            PossibleInjury = "Head & Bodily Injuries"
+                        });
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskAssessment", b =>
@@ -1018,6 +1102,23 @@ namespace majorproject.Server.Migrations
                     b.HasIndex("RiskTeamId");
 
                     b.ToTable("RiskAssessments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ApprovalDate = new DateTime(2024, 4, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ApprovedStatus = true,
+                            Approver = "John Smith",
+                            AssessmentDate = new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Department = "Temasek Poly (ENG)",
+                            LastReviewDate = new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "EN10-2-15",
+                            Name = "CEN MP Risk Assessment",
+                            NextReviewDate = new DateTime(2027, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Process = "CEN MP - April 2024",
+                            RiskTeamId = 2
+                        });
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskControl", b =>
@@ -1060,6 +1161,19 @@ namespace majorproject.Server.Migrations
                     b.HasIndex("RiskEvaluationId");
 
                     b.ToTable("RiskControls");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AdditionalControls = "",
+                            DueDate = new DateTime(2024, 6, 5, 12, 3, 50, 797, DateTimeKind.Local).AddTicks(5481),
+                            ImplementingPerson = "",
+                            Likelihood = 0,
+                            RPN = 0,
+                            Remarks = "",
+                            Severity = 0
+                        });
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskEvaluation", b =>
