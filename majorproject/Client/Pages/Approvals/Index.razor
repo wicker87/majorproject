@@ -1,9 +1,10 @@
-﻿@*@page "/approvals/"
+﻿@page "/approvals/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor 
 @implements IDisposable 
+
 
 <h3 class="card-title">Approvals Data</h3>
 
@@ -37,16 +38,9 @@ else
             {
                 <tr>
                     <td>@approval.Id</td>
-                    @if (approval.Signature != null)
-                    {
-                        <img src="@($"data:image/jpeg;base64,{approval.Signature}")" width="80" height="80" />
-                    }
-                    else
-                    {
-                        <span>No signature</span>
-                    }
-                    <td>@approval.Manager.FullName</td>
-                    <td>@approval.Date.ToString("dd/MM/yyyy")</td>
+                   
+                    <td>@approval.Name</td>
+                    <td>@approval.DateOfApproval.ToString("dd/MM/yyyy")</td>
                     <td>
                         <a href="/approvals/edit/@approval.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
@@ -65,6 +59,8 @@ else
 }
 
 @code {
+   
+
     private List<Approval>? Approvals;
 
     protected async override Task OnInitializedAsync()
@@ -78,7 +74,7 @@ else
         if (Approvals != null)
         {
             var approval = Approvals.First(q => q.Id == approvalId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {approval.Manager.FullName}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {approval.Name}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.ApprovalsEndpoint}/{approvalId}");
@@ -97,4 +93,9 @@ else
         _interceptor.DisposeEvent();
         js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
     }
-}*@
+
+    
+    
+        
+    
+}

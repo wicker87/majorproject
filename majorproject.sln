@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "majorproject.Server", "majorproject\Server\majorproject.Server.csproj", "{7FFE3C80-AC83-49F3-B2DF-AF31239C2FA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "majorproject.Server", "majorproject\Server\majorproject.Server.csproj", "{7FFE3C80-AC83-49F3-B2DF-AF31239C2FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "majorproject.Client", "majorproject\Client\majorproject.Client.csproj", "{C49C43BB-D43F-4B62-AFB9-13C1FAD67083}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "majorproject.Client", "majorproject\Client\majorproject.Client.csproj", "{C49C43BB-D43F-4B62-AFB9-13C1FAD67083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "majorproject.Shared", "majorproject\Shared\majorproject.Shared.csproj", "{B22627D0-600E-4012-91BC-B991FE7C21D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "majorproject.Shared", "majorproject\Shared\majorproject.Shared.csproj", "{B22627D0-600E-4012-91BC-B991FE7C21D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
