@@ -57,7 +57,7 @@ else
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
-        /Activities = await _client.GetFromJsonAsync<List<Activity>>($"{Endpoints.ActivitiesEndpoint}");
+        Activities = await _client.GetFromJsonAsync<List<Activity>>($"{Endpoints.ActivitiesEndpoint}");
     }
 
     async Task Delete(int activityId)
