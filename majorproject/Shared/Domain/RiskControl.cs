@@ -8,14 +8,14 @@ namespace majorproject.Shared.Domain
 {
     public class RiskControl : BaseDomainModel
     {
-        public string? AddControl { get; set; }
+        public string? AdditionalControls { get; set; }
         public int? Severity { get; set; }
         public int? Likelihood { get; set; }
         public int? RPN { get; set; }
         public string? ImplementingPerson { get; set; }
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
         public string? Remarks { get; set; }
-        public int? RiskEId { get; set; }
+        public int? EvaluationId { get; set; }
         public virtual RiskEvaluation? RiskEvaluation { get; set; }
 
     }

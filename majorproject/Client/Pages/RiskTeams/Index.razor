@@ -4,14 +4,15 @@
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor 
 @implements IDisposable 
+@inject NavigationManager _navManager
 
-<h3 class="card-title">Risk teams Data</h3>
+<h3 class="card-title">Risk Teams Data</h3>
 
 <br />
 
 <a href="/riskteams/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
-    Create New Risk team
+    Create New Team
 </a>
 <br />
 <br />
@@ -25,7 +26,6 @@ else
     <table class="table table-responsive" id="bookingsTable">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Leader</th>
                 <th>Member 1</th>
                 <th>Member 2</th>
@@ -39,14 +39,13 @@ else
             @foreach (var riskteam in RiskTeams)
             {
                 <tr>
-                    <td>@riskteam.Id</td>
                     <td>@riskteam.Leader</td>
-                    <td>@riskteam.MemberOne</td>
-                    <td>@riskteam.MemberTwo</td>
+                    <td>@riskteam.Member1</td>
+                    <td>@riskteam.Member2</td>
                     <td>
-                        @if (riskteam.MemberThree != null)
+                        @if (riskteam.Member3 != null)
                         {
-                            @riskteam.MemberThree
+                            @riskteam.Member3
                         }
                         else
                         {
@@ -54,9 +53,9 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.MemberFour != null)
+                        @if (riskteam.Member4 != null)
                         {
-                            @riskteam.MemberFour
+                            @riskteam.Member4
                         }
                         else
                         {
@@ -64,9 +63,9 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.MemberFive != null)
+                        @if (riskteam.Member5 != null)
                         {
-                            @riskteam.MemberFive
+                            @riskteam.Member5
                         }
                         
                         else
@@ -78,9 +77,6 @@ else
                         <a href="/riskteams/edit/@riskteam.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <a href="/riskteams/view/@riskteam.Id" class="btn btn-primary">
-                            <span class="oi oi-eye"></span>
-                        </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(riskteam.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
@@ -89,7 +85,6 @@ else
             }
         </tbody>
     </table>
-    <BottomInfo />
 }
 
 @code {
@@ -106,13 +101,14 @@ else
         if (RiskTeams != null)
         {
             var riskteam = RiskTeams.First(q => q.Id == riskteamId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {riskteam.Leader}'s riskteam?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {riskteam.Leader}'s team?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.RiskTeamsEndpoint}/{riskteamId}");
                 await OnInitializedAsync();
             }
         }
+        _navManager.NavigateTo("/riskteams/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

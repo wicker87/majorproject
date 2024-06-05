@@ -1,0 +1,105 @@
+﻿@page "/userroles/edit/{userId}"
+@inject UserRoleService UserRoleService
+@inject NavigationManager _navManager
+
+<h3>Edit User</h3>
+<br />
+@if (userRole == null)
+{
+    <div class="alert alert-info">Loading...</div>
+}
+else
+{
+    <h6><strong>Name:</strong> @userRole.FirstName @userRole.LastName</h6>
+    <h6><strong>Employee ID:</strong> @userRole.EmployeeID</h6>
+
+    <EditForm Model="userRole" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div style="display: flex; gap: 60px">
+            <div>
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <InputSelect id="designation" class="form-control" style="width: 300px" @bind-Value="userRole.Designation">
+                        <option value="IT Manager">IT Manager</option>
+                        <option value="Safety Manager">Safety Manager</option>
+                        <option value="Safety Inspector">Safety Inspector</option>
+                    </InputSelect>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="userName">User Name</label>
+                    <InputText id="userName" class="form-control" style="width: 300px" @bind-Value="userRole.UserName" @oninput="UpdateUserName" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <InputSelect id="role" class="form-control" style="width: 300px" @bind-Value="userRole.RoleName">
+                        @foreach (var role in roles)
+                        {
+                            <option value="@role.RoleName">@role.RoleName</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <InputText id="phoneNumber" class="form-control" style="width: 300px" @bind-Value="userRole.PhoneNumber" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <InputText id="email" class="form-control" style="width: 300px" @bind-Value="userRole.Email" @oninput="UpdateEmail" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <InputText id="password" type="password" class="form-control" style="width: 300px" @bind-Value="newPassword" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Update</button>
+        <BackToList Target="userroles" />
+    </EditForm>
+}
+
+@code {
+    [Parameter] public string userId { get; set; }
+    UserRoleDto userRole = new UserRoleDto();
+    List<UserRoleDto> roles = new List<UserRoleDto>();
+    private string newPassword;
+
+    protected override async Task OnInitializedAsync()
+    {
+        roles = await UserRoleService.GetRolesAsync();
+        userRole = await UserRoleService.GetUserRoleByIdAsync(userId);
+    }
+
+    private void UpdateUserName(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        userRole.UserName = value;
+        userRole.Email = value;
+    }
+
+    private void UpdateEmail(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        userRole.Email = value;
+        userRole.UserName = value;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (!string.IsNullOrWhiteSpace(newPassword))
+        {
+            userRole.Password = newPassword;
+        }
+
+        await UserRoleService.UpdateUserAsync(userRole);
+        _navManager.NavigateTo("/userroles");
+    }
+}
+

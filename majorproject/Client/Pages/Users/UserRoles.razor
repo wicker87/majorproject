@@ -1,0 +1,103 @@
+﻿@page "/userroles"
+@attribute [Authorize]
+@inject IJSRuntime js
+@inject UserRoleService UserRoleService
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3>User Roles Data</h3>
+<h5>These users represents the employees that are allowed to access this application.</h5>
+
+<a href="/userroles/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New User
+</a>
+<br />
+<br />
+@if (userRoles == null)
+{
+    <div class="alert alert-info">Loading Users Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>EmployeeID</th>
+                <th>Full Name</th>
+                <th>Designation</th>
+                <th>Email/User Name</th>                
+                <th>Phone Number</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userRole in userRoles)
+            {
+                <tr>
+                    <td>@userRole.EmployeeID</td>
+                    <td>@userRole.FirstName @userRole.LastName</td>
+                    <td>@userRole.Designation</td>
+                    <td>@userRole.Email</td>
+                    <td>@userRole.PhoneNumber</td>
+                    <td>
+                        @if (userRole.RoleName == "Administrator")
+                        {
+                            <span style="color: #cc0000">@userRole.RoleName</span>
+                        }
+                        else if (userRole.RoleName == "Manager")
+                        {
+                            <span style="color: #0033cc">@userRole.RoleName</span>
+                        }
+                        else
+                        {
+                            <span style="color: #cccc00">@userRole.RoleName</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/userroles/edit/@userRole.UserId" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="() => Delete(userRole.UserId)">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<UserRoleDto> userRoles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userRoles = await UserRoleService.GetUserRolesAsync();
+    }
+
+    private async Task Delete(string userId)
+    {
+        var user = userRoles.First(q => q.UserId == userId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete the user, {user.FirstName +" "+ user.LastName}?");
+        if (confirm)
+        {
+            await UserRoleService.DeleteUserAsync(userId);
+            userRoles = await UserRoleService.GetUserRolesAsync(); // Refresh list
+        }    
+        _navManager.NavigateTo("/userroles/", forceLoad: true);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

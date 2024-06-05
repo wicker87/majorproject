@@ -26,22 +26,26 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskEvaluations()
         {
-            var riskEvaluations = await _unitOfWork.RiskEvaluations.GetAll();
-            return Ok(riskEvaluations);
+            var riskevaluations = await _unitOfWork.RiskEvaluations.GetAll();
+
+            if (riskevaluations == null)
+            {
+                return NotFound();
+            }
+            return Ok(riskevaluations);
         }
 
         // GET: api/RiskEvaluations/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskEvaluation(int id)
         {
-            var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
+            var riskevaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
 
-            if (riskEvaluation == null)
+            if (riskevaluation == null)
             {
                 return NotFound();
             }
-
-            return Ok(riskEvaluation);
+            return Ok(riskevaluation);
         }
 
         // PUT: api/RiskEvaluations/5
@@ -54,8 +58,8 @@ namespace majorproject.Server.Controllers
                 return BadRequest();
             }
 
-            //_context.Entry(riskEvaluation).State = EntityState.Modified;
             _unitOfWork.RiskEvaluations.Update(riskEvaluation);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -80,9 +84,6 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<RiskEvaluation>> PostRiskEvaluation(RiskEvaluation riskEvaluation)
         {
-
-            //_context.RiskEvaluations.Add(riskEvaluation);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskEvaluations.Insert(riskEvaluation);
             await _unitOfWork.Save(HttpContext);
 
@@ -93,23 +94,20 @@ namespace majorproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskEvaluation(int id)
         {
-
             var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
             if (riskEvaluation == null)
             {
                 return NotFound();
             }
 
-            //_context.RiskEvaluations.Remove(riskEvaluation);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskEvaluations.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> RiskEvaluationExists(int id)
         {
-            //return (_context.RiskEvaluations?.Any(e => e.Id == id)).GetValueOrDefault();
             var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
             return riskEvaluation != null;
         }

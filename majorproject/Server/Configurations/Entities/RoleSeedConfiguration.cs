@@ -11,17 +11,23 @@ namespace majorproject.Server.Configurations.Entities
             builder.HasData(
                 new IdentityRole
                 {
-                    Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                    Id = "ce6c922d-a075-41ba-928b-ab718da843f4",
                     Name = "Administrator",
                     NormalizedName = "ADMINISTRATOR"
                 },
                 new IdentityRole
                 {
-                    Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                    Name = "User",
-                    NormalizedName = "USER"
+                    Id = "b61949be-76be-449f-bc66-535bddbf7b90",
+                    Name = "Manager",
+                    NormalizedName = "MANAGER"
+                },
+                new IdentityRole
+                {
+                    Id = "a7b95d75-9c36-45cf-993f-504090b554cc",
+                    Name = "Employee",
+                    NormalizedName = "EMPLOYEE"
                 }
-                );
+            );
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿@page "/assessments/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Risk Assessment</h3>
+<hr />
+<br /> 
+
+<FormComponent ButtonText="Next" assessment="assessment" OnValidSubmit="@CreateAssessment" />
+
+
+
+@code {
+    RiskAssessment assessment = new RiskAssessment();
+
+    private async Task CreateAssessment()
+    {
+        HttpResponseMessage response = await _client.PostAsJsonAsync(Endpoints.RiskAssessmentsEndpoint, assessment);
+        if (response.IsSuccessStatusCode)
+        {
+            var createdAssessment = await response.Content.ReadFromJsonAsync<RiskAssessment>();
+            _navManager.NavigateTo($"/assessments/{createdAssessment.Id}/activities/create");
+        }
+    }
+}

@@ -1,7 +1,8 @@
 ﻿@inject IJSRuntime js
 @inject HttpClient _client
+@inject UserRoleService UserRoleService
 
-<h6>Note that a riskteam must have between 3 to 5 people.</h6>
+<h6>Note that a riskteam must have minimum 3 members.</h6>
 <EditForm Model="@riskteam" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -11,15 +12,15 @@
             <div>
                 <InputSelect @bind-Value="riskteam.Leader" class="form-control" style="width: 500px;">
                     <option value="">-- Select Leader --</option>
-                    @*  @if (E != null)
+                     @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);///
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>                           
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    } *@
+                    }
                 </InputSelect>
                 <ValidationMessage For="@(() => riskteam.Leader)" />
             </div>  
@@ -28,95 +29,95 @@
         <div class="form-group">
             <label> Member 1: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.MemberOne" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Member1" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 1 --</option>
-                    @*@if (Employees != null)
+                    @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    }*@
+                    }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.MemberOne)" />
+                <ValidationMessage For="@(() => riskteam.Member1)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 2: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.MemberTwo" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Member2" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 2 --</option>
-                    @*@if (Employees != null)
+                    @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    }*@
+                    }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.MemberTwo)" />
+                <ValidationMessage For="@(() => riskteam.Member2)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 3: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.MemberThree" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Member3" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 3 --</option>
-                    @*@if (Employees != null)
+                    @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    }*@
+                    }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.MemberThree)" />
+                <ValidationMessage For="@(() => riskteam.Member3)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 4: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.MemberFour" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Member4" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 4 --</option>
-                    @*@if (Employees != null)
+                    @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    }*@
+                    }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.MemberFour)" />
+                <ValidationMessage For="@(() => riskteam.Member4)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 5: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.MemberFive" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="riskteam.Member5" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 5 --</option>
-                   @* @if (Employees != null)
+                   @if (Users != null)
                     {
-                        var safetyInspectors = Employees.Where(e => e.Designation == "Safety Inspector")
-                        .OrderBy(e => e.FullName);
-                        foreach (var employee in safetyInspectors)
+                        var safetyInspectors = Users.Where(e => e.Designation == "Safety Inspector")
+                        .OrderBy(e => e.FirstName);
+                        foreach (var user in safetyInspectors)
                         {
-                            <option value="@employee.Id">@employee.FullName (ID: @employee.EmployeeID)</option>
+                            <option value="@user.FirstName @user.LastName">@user.FirstName @user.LastName</option>
                         }
-                    }*@
+                    }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.MemberFive)" />
+                <ValidationMessage For="@(() => riskteam.Member5)" />
             </div>
         </div>
     </fieldset>
@@ -135,13 +136,17 @@
         </div>
     </div>
 </EditForm>
-<BottomInfo /> 
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public RiskTeam? riskteam { get; set; } 
+    [Parameter] public RiskTeam? riskteam { get; set; }   
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
 
-    
+    private IList<UserRoleDto>? Users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Users = await UserRoleService.GetUsersAsync();
+    }
 }

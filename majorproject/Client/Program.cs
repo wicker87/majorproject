@@ -25,6 +25,8 @@ builder.Services.AddHttpClientInterceptor();
 
 builder.Services.AddScoped<HttpInterceptorService>();
 
+builder.Services.AddScoped<UserRoleService>();
+
 builder.Services.AddApiAuthorization();
 
 await builder.Build().RunAsync();

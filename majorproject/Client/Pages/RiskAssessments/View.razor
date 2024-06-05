@@ -1,0 +1,72 @@
+﻿@page "/assessments/view/{assessmentId:int}"
+@inject HttpClient _client
+
+<h3 class="card-title">View Assessment Details</h3>
+<hr />
+
+@if (assessment == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h4>Assessment Details</h4>
+    <div style="display: flex; gap: 40px">
+        <div>
+            <p><strong>Name:</strong> @assessment.Name</p>
+            <p><strong>Department:</strong> @assessment.Department</p>
+            <p><strong>Process:</strong> @assessment.Process</p>
+            <p><strong>Location:</strong> @assessment.Location</p>
+        </div>
+        <div>
+            <p><strong>Assessment Date:</strong> @assessment.AssessmentDate.ToString("dd/MM/yyyy")</p>
+            <p><strong>Last Review Date:</strong> @assessment.LastReviewDate.ToString("dd/MM/yyyy")</p>
+            <p><strong>Next Review Date:</strong> @assessment.NextReviewDate.ToString("dd/MM/yyyy")</p>
+        </div>
+        <div>
+            <p><strong>RA Leader:</strong> @assessment.RiskTeam?.Leader</p>
+            <p><strong>RA Member 1:</strong> @assessment.RiskTeam?.Member1</p>
+            <p><strong>RA Member 2:</strong> @assessment.RiskTeam?.Member2</p>                   
+        </div>
+        <div>
+            <p><strong>RA Member 3:</strong> @assessment.RiskTeam?.Member3</p>
+            <p><strong>RA Member 4:</strong> @assessment.RiskTeam?.Member4</p>
+            <p><strong>RA Member 5:</strong> @assessment.RiskTeam?.Member5</p>
+        </div>
+        <div>
+            <p><strong>Approver:</strong> @assessment.Approver</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div>
+        <h4>Activities</h4>
+        <ul>
+            @if (assessment.Activities != null)
+            {
+                @foreach (var activity in assessment.Activities)
+                {
+                    <li>@activity.Name</li>
+                }
+            }
+            else
+            {
+                <span>No activities available</span>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+
+    [Parameter] public int assessmentId { get; set; }
+    private RiskAssessment assessment;
+
+    protected async override Task OnParametersSetAsync()
+    {
+        assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{assessmentId}");
+    }
+
+}
+

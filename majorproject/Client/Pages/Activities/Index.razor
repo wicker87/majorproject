@@ -4,6 +4,7 @@
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor 
 @implements IDisposable 
+@inject NavigationManager _navManager
 
 <h3 class="card-title">Activities Data</h3>
 
@@ -34,14 +35,11 @@ else
             @foreach (var activity in Activities)
             {
                 <tr>
-                    <td>@activity.WorkActivity</td>
-                    <td>@activity.FormId</td>                
+                    <td>@activity.Name</td>
+                    <td>@activity.AssessmentId</td>                
                     <td>
                         <a href="/activities/edit/@activity.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
-                        </a>
-                        <a href="/activities/view/@activity.Id" class="btn btn-primary">
-                            <span class="oi oi-eye"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(activity.Id))">
                             <span class="oi oi-trash"></span>
@@ -67,13 +65,14 @@ else
         if (Activities != null)
         {
             var activity = Activities.First(q => q.Id == activityId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activity.WorkActivity}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activity.Name}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.ActivitiesEndpoint}/{activityId}");
                 await OnInitializedAsync();
             }
         }
+        _navManager.NavigateTo("/activities/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

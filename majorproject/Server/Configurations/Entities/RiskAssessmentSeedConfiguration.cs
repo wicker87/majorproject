@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace majorproject.Server.Configurations.Entities
 {
-    public class RAFSeedConfiguration : IEntityTypeConfiguration<RAF>
+    public class RiskAssessmentSeedConfiguration : IEntityTypeConfiguration<RiskAssessment>
     {
-        public void Configure(EntityTypeBuilder<RAF> builder)
+        public void Configure(EntityTypeBuilder<RiskAssessment> builder)
         {
             builder.HasData(
-                new RAF
+                new RiskAssessment
                 {
                     Id = 1,
                     Department="TP Staff",

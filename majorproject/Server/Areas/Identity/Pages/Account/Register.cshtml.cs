@@ -146,9 +146,9 @@ namespace majorproject.Server.Areas.Identity.Pages.Account
                 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                user.Position = Input.Position;
-                user.Gender = Input.Gender;
-                user.DateOfBirth = Input.DateOfBirth;
+                //user.Position = Input.Position;
+                //user.Gender = Input.Gender;
+                //user.DateOfBirth = Input.DateOfBirth;
                 
                 
 

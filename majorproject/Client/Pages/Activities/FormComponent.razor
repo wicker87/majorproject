@@ -1,0 +1,35 @@
+﻿<EditForm Model="@activity" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label> Name: </label>
+            <div>
+                <InputText @bind-Value="activity.Name" class="form-control" style="width: 500px;" />
+                <ValidationMessage For="@(() => activity.Name)" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 80px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-success btn-block">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        @* <div>
+            <BackToList Target="activities" />
+        </div> *@
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Activity? activity { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+
+}

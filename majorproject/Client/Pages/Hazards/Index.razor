@@ -1,0 +1,90 @@
+﻿@page "/hazards/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Hazards Data</h3>
+
+<br />
+
+<a href="/hazards/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Hazard
+</a>
+<br />
+<br />
+
+@if (Hazards == null)
+{
+    <div class="alert alert-info">Loading Hazards Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Possible Injury/Ill-health</th>
+                <th>Hazard Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hazard in Hazards)
+            {
+                <tr>
+                    <td>@hazard.Name</td>
+                    <td>@hazard.PossibleInjury</td>
+                    <td>@hazard.ActivityId</td>
+                    <td>
+                        <a href="/hazards/edit/@hazard.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(hazard.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Hazard>? Hazards;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Hazards = await _client.GetFromJsonAsync<List<Hazard>>($"{Endpoints.HazardsEndpoint}");
+    }
+
+    async Task Delete(int hazardId)
+    {
+        if (Hazards != null)
+        {
+            var hazard = Hazards.First(q => q.Id == hazardId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {hazard.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.HazardsEndpoint}/{hazardId}");
+                await OnInitializedAsync();
+            }
+        }
+        _navManager.NavigateTo("/hazards/", forceLoad: true);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

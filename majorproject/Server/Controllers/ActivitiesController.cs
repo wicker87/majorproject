@@ -11,8 +11,6 @@ using majorproject.Server.IRepository;
 
 namespace majorproject.Server.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ActivitiesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -24,9 +22,14 @@ namespace majorproject.Server.Controllers
 
         // GET: api/Activities
         [HttpGet]
-        public async Task<IActionResult>GetActivities()
+        public async Task<IActionResult> GetActivities()
         {
             var activities = await _unitOfWork.Activities.GetAll();
+
+            if (activities == null)
+            {
+                return NotFound();
+            }
             return Ok(activities);
         }
 
@@ -34,13 +37,12 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(int id)
         {
-            var activity = await _unitOfWork.Activities.Get(q=>q.Id==id);
+            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
 
             if (activity == null)
             {
                 return NotFound();
             }
-
             return Ok(activity);
         }
 
@@ -54,8 +56,8 @@ namespace majorproject.Server.Controllers
                 return BadRequest();
             }
 
-            //_context.Entry(activity).State = EntityState.Modified;
             _unitOfWork.Activities.Update(activity);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -80,9 +82,6 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Activity>> PostActivity(Activity activity)
         {
-          
-            //_context.Activities.Add(activity);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.Activities.Insert(activity);
             await _unitOfWork.Save(HttpContext);
 
@@ -93,24 +92,21 @@ namespace majorproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(int id)
         {
-            
-            var activity = await _unitOfWork.Activities.Get(q=>q.Id==id);
+            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
             if (activity == null)
             {
                 return NotFound();
             }
 
-            //_context.Activities.Remove(activity);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.Activities.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> ActivityExists(int id)
         {
-            //return (_context.Activities?.Any(e => e.Id == id)).GetValueOrDefault();
-            var activity= await _unitOfWork.Activities.Get(q=>q.Id== id);
+            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
             return activity != null;
         }
     }

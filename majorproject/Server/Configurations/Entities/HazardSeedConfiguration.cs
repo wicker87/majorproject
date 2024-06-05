@@ -17,7 +17,7 @@ namespace majorproject.Server.Configurations.Entities
                 new Hazard
                 {
                     Id = 1,
-                    HazardName = "Trip and fall due to loose network and power extension cables, damaged floor tiles and wet floor",
+                    Name = "Trip and fall due to loose network and power extension cables, damaged floor tiles and wet floor",
                     PossibleInjury = "Bodily Injuries"
                 }
                 );
