@@ -16,13 +16,14 @@ namespace majorproject.Server.Configurations.Entities
                 new RiskControl
                 {
                     Id = 1,
-                    AdditionalControls="",
-                    Severity = 0,
-                    Likelihood = 0,
-                    RPN = 0,
-                    ImplementingPerson="",
-                    DueDate = DateTime.Now,
-                    Remarks="",
+                    AdditionalControls="All electrical appliances have proper electrical insulation.",
+                    Severity = 2,
+                    Likelihood = 1,
+                    RPN = 2,
+                    ImplementingPerson= "David Young",
+                    DueDate = new DateTime(2024, 5, 3),
+                    Remarks= null,
+                    EvaluationId = 5,
                 }
                 );
         }

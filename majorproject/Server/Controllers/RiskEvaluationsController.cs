@@ -26,26 +26,26 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskEvaluations()
         {
-            var riskevaluations = await _unitOfWork.RiskEvaluations.GetAll();
+            var riskEvaluations = await _unitOfWork.RiskEvaluations.GetAll();
 
-            if (riskevaluations == null)
+            if (riskEvaluations == null)
             {
                 return NotFound();
             }
-            return Ok(riskevaluations);
+            return Ok(riskEvaluations);
         }
 
         // GET: api/RiskEvaluations/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskEvaluation(int id)
         {
-            var riskevaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
+            var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
 
-            if (riskevaluation == null)
+            if (riskEvaluation == null)
             {
                 return NotFound();
             }
-            return Ok(riskevaluation);
+            return Ok(riskEvaluation);
         }
 
         // PUT: api/RiskEvaluations/5

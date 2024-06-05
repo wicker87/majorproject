@@ -49,9 +49,4 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\RiskControls\" />
-    <Folder Include="Pages\RiskEvaluations\" />
-  </ItemGroup>
-
 </Project>

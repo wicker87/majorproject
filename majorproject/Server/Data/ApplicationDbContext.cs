@@ -34,7 +34,7 @@ namespace majorproject.Server.Data
 
             builder.ApplyConfiguration(new RiskControlSeedConfiguration());
 
-            //builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
+            builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
 
             builder.ApplyConfiguration(new RiskAssessmentSeedConfiguration());
 

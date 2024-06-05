@@ -24,7 +24,7 @@ namespace majorproject.Server.Configurations.Entities
                     AssessmentDate = new DateTime(2024, 4, 26),
                     LastReviewDate= new DateTime(2024, 4, 26),
                     NextReviewDate = new DateTime(2027, 4, 26),
-                    RiskTeamId= 2,
+                    TeamId= 2,
                     Approver = "John Smith",
                     ApprovalDate= new DateTime(2024, 4, 28),
                 }

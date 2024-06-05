@@ -54,7 +54,7 @@ namespace majorproject.Server.Configurations.Entities
                new RiskEvaluation
                {
                    Id = 5,
-                   ExistingRiskControls = "Do not touch electricial appliances with wet hands",
+                   ExistingRiskControls = "Do not touch electrical appliances with wet hands",
                    Severity = 5,
                    Likelihood = 1,
                    RPN = 5,
@@ -63,7 +63,7 @@ namespace majorproject.Server.Configurations.Entities
                new RiskEvaluation
                {
                    Id = 6,
-                   ExistingRiskControls = "Ensure there is no frayed or exposed wiring, report EFM @ 67805955 or Staff-in-charge immedialtely",
+                   ExistingRiskControls = "Ensure there is no frayed or exposed wiring, report EFM @ 67805955 or Staff-in-charge immediately",
                    Severity = 5,
                    Likelihood = 1,
                    RPN = 5,
@@ -117,7 +117,7 @@ namespace majorproject.Server.Configurations.Entities
                new RiskEvaluation
                {
                    Id = 12,
-                   ExistingRiskControls = "Avoid the “head-bentover-project” soldering posture.",
+                   ExistingRiskControls = "Avoid the “head-bent-over-project” soldering posture.",
                    Severity = 2,
                    Likelihood = 3,
                    RPN = 6,

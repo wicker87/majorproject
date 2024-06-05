@@ -13,6 +13,7 @@ namespace majorproject.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ActivitiesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -46,14 +47,6 @@ namespace majorproject.Server.Controllers
                 return NotFound();
             }
             return Ok(activity);
-        }
-
-        // GET: api/Activities/assessment/5 - Newly added 
-        [HttpGet("assessment/{assessmentId}")]
-        public async Task<IActionResult> GetActivitiesByAssessment(int assessmentId)
-        {
-            var activities = await _unitOfWork.Activities.GetAll(q => q.AssessmentId == assessmentId);
-            return Ok(activities);
         }
 
         // PUT: api/Activities/5

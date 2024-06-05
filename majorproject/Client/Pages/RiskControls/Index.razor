@@ -1,0 +1,100 @@
+﻿@page "/controls/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Risk Controls Data</h3>
+
+<br />
+
+<a href="/controls/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Risk Control
+</a>
+<br />
+<br />
+
+@if (Controls == null)
+{
+    <div class="alert alert-info">Loading Risk Controls Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Evaluation Id</th>
+                <th>Additional Controls</th>
+                <th>Likelihood</th>
+                <th>Severity</th>
+                <th>RPN</th>
+                <th>Implementor</th>
+                <th>Due Date</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var control in Controls)
+            {
+                <tr>
+                    <td>@control.EvaluationId</td>
+                    <td>@control.AdditionalControls</td>
+                    <td>@control.Likelihood</td>
+                    <td>@control.Severity</td>
+                    <td>@control.RPN</td>
+                    <td>@control.ImplementingPerson</td>
+                    <td>@control.DueDate.ToString("dd/MM/yyyy")</td>
+                    <td>@control.Remarks</td>
+                    <td>
+                        <a href="/controls/edit/@control.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(control.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<RiskControl>? Controls;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Controls = await _client.GetFromJsonAsync<List<RiskControl>>($"{Endpoints.RiskControlsEndpoint}");
+    }
+
+    async Task Delete(int controlId)
+    {
+        if (Controls != null)
+        {
+            var control = Controls.First(q => q.Id == controlId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {control.AdditionalControls} form?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.RiskControlsEndpoint}/{controlId}");
+                await OnInitializedAsync();
+            }
+        }
+        _navManager.NavigateTo("/controls/", forceLoad: true);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

@@ -7,6 +7,7 @@
 @inject NavigationManager _navManager
 
 <h3 class="card-title">Activities Data</h3>
+
 <br />
 
 <a href="/activities/create" class="btn btn-secondary">
@@ -25,7 +26,7 @@ else
     <table class="table table-responsive" id="bookingsTable">
         <thead>
             <tr>
-                <th>Form Id</th>
+                <th>Assessment Id</th>
                 <th>Name</th>
                 <th>Actions</th>
             </tr>
@@ -56,7 +57,7 @@ else
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
-        Activities = await _client.GetFromJsonAsync<List<Activity>>($"{Endpoints.ActivitiesEndpoint}");
+        /Activities = await _client.GetFromJsonAsync<List<Activity>>($"{Endpoints.ActivitiesEndpoint}");
     }
 
     async Task Delete(int activityId)
@@ -64,7 +65,7 @@ else
         if (Activities != null)
         {
             var activity = Activities.First(q => q.Id == activityId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete activity {activity.Name}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activity.Name}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.ActivitiesEndpoint}/{activityId}");

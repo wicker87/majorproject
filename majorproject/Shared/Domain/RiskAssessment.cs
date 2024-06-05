@@ -19,11 +19,11 @@ namespace majorproject.Shared.Domain
         public DateTime LastReviewDate { get; set; }
         public DateTime NextReviewDate { get; set;}
 
-        public int? RiskTeamId { get; set; }
+        public int? TeamId { get; set; }
         public virtual RiskTeam? RiskTeam { get; set; }
 
         public string? Approver { get; set; }
-        public DateTime? ApprovalDate { get; set; }
+        public DateTime ApprovalDate { get; set; }
 
         public virtual ICollection<Activity>? Activities { get; set; }
     }

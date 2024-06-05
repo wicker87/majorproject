@@ -1,0 +1,94 @@
+﻿@page "/evaluations/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Risk Evaluations Data</h3>
+
+<br />
+
+<a href="/evaluations/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Risk Evaluation
+</a>
+<br />
+<br />
+
+@if (Evaluations == null)
+{
+    <div class="alert alert-info">Loading Risk Evaluations Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Hazard Id</th>
+                <th>Existing Controls</th>
+                <th>Likelihood</th>
+                <th>Severity</th>
+                <th>RPN</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evaluation in Evaluations)
+            {
+                <tr>
+                    <td>@evaluation.HazardId</td>
+                    <td>@evaluation.ExistingRiskControls</td>
+                    <td>@evaluation.Likelihood</td>
+                    <td>@evaluation.Severity</td>
+                    <td>@evaluation.RPN</td>
+                    <td>
+                        <a href="/evaluations/edit/@evaluation.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(evaluation.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<RiskEvaluation>? Evaluations;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Evaluations = await _client.GetFromJsonAsync<List<RiskEvaluation>>($"{Endpoints.RiskEvaluationsEndpoint}");
+    }
+
+    async Task Delete(int evaluationId)
+    {
+        if (Evaluations != null)
+        {
+            var evaluation = Evaluations.First(q => q.Id == evaluationId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {evaluation.ExistingRiskControls} form?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.RiskEvaluationsEndpoint}/{evaluationId}");
+                await OnInitializedAsync();
+            }
+        }
+        _navManager.NavigateTo("/evaluations/", forceLoad: true);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}

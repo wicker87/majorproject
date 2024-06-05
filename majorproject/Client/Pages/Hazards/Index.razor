@@ -26,9 +26,9 @@ else
     <table class="table table-responsive" id="bookingsTable">
         <thead>
             <tr>
+                <th>Activity Id</th>
                 <th>Name</th>
-                <th>Possible Injury/Ill-health</th>
-                <th>Hazard Date</th>
+                <th>Possible Injury/Ill-health</th>               
                 <th>Actions</th>
             </tr>
         </thead>
@@ -36,9 +36,9 @@ else
             @foreach (var hazard in Hazards)
             {
                 <tr>
-                    <td>@hazard.Name</td>
-                    <td>@hazard.PossibleInjury</td>
                     <td>@hazard.ActivityId</td>
+                    <td>@hazard.Name</td>
+                    <td>@hazard.PossibleInjury</td>                  
                     <td>
                         <a href="/hazards/edit/@hazard.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
