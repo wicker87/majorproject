@@ -25,6 +25,6 @@ namespace majorproject.Shared.Domain
         public string? Approver { get; set; }
         public DateTime ApprovalDate { get; set; }
 
-        public virtual ICollection<Activity>? Activities { get; set; }
+        public virtual ICollection<WorkActivity>? WorkActivities { get; set; }
     }
 }

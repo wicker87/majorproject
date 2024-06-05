@@ -11,8 +11,8 @@ namespace majorproject.Server.IRepository
     {
         Task Save(HttpContext httpContext);       
         IGenericRepository<RiskAssessment> RiskAssessments { get; }
-        IGenericRepository<Activity> Activities { get; }
-        IGenericRepository<Hazard> Hazards { get; }
+        IGenericRepository<WorkActivity> WorkActivities { get; }
+        IGenericRepository<Identification> Identifications { get; }
         IGenericRepository<RiskEvaluation> RiskEvaluations { get; }
         IGenericRepository<RiskControl> RiskControls { get; }      
         IGenericRepository<RiskTeam> RiskTeams { get; }

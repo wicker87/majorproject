@@ -1,4 +1,4 @@
-﻿@page "/hazards/"
+﻿@page "/activities/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -6,44 +6,42 @@
 @implements IDisposable
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Hazards Data</h3>
+<h3 class="card-title">Activities Data</h3>
 
 <br />
 
-<a href="/hazards/create" class="btn btn-secondary">
+<a href="/activities/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
-    Create New Hazard
+    Create New Activity
 </a>
 <br />
 <br />
 
-@if (Hazards == null)
+@if (Activities == null)
 {
-    <div class="alert alert-info">Loading Hazards Data...</div>
+    <div class="alert alert-info">Loading Activities Data...</div>
 }
 else
 {
     <table class="table table-responsive" id="bookingsTable">
         <thead>
             <tr>
-                <th>Activity Id</th>
+                <th>Assessment Id</th>
                 <th>Name</th>
-                <th>Possible Injury/Ill-health</th>               
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var hazard in Hazards)
+            @foreach (var activity in Activities)
             {
                 <tr>
-                    <td>@hazard.ActivityId</td>
-                    <td>@hazard.Name</td>
-                    <td>@hazard.PossibleInjury</td>                  
+                    <td>@activity.AssessmentId</td>
+                    <td>@activity.Name</td>
                     <td>
-                        <a href="/hazards/edit/@hazard.Id" class="btn btn-warning">
+                        <a href="/activities/edit/@activity.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(hazard.Id))">
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(activity.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -54,27 +52,27 @@ else
 }
 
 @code {
-    private List<Hazard>? Hazards;
+    private List<WorkActivity>? Activities;
 
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
-        Hazards = await _client.GetFromJsonAsync<List<Hazard>>($"{Endpoints.HazardsEndpoint}");
+        Activities = await _client.GetFromJsonAsync<List<WorkActivity>>($"{Endpoints.WorkActivitiesEndpoint}");
     }
 
-    async Task Delete(int hazardId)
+    async Task Delete(int activityId)
     {
-        if (Hazards != null)
+        if (Activities != null)
         {
-            var hazard = Hazards.First(q => q.Id == hazardId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {hazard.Name}?");
+            var activity = Activities.First(q => q.Id == activityId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activity.Name}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.HazardsEndpoint}/{hazardId}");
+                await _client.DeleteAsync($"{Endpoints.WorkActivitiesEndpoint}/{activityId}");
                 await OnInitializedAsync();
             }
         }
-        _navManager.NavigateTo("/hazards/", forceLoad: true);
+        _navManager.NavigateTo("/activities/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

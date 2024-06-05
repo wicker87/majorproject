@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace majorproject.Shared.Domain
 {
-    public class Activity : BaseDomainModel
+    public class WorkActivity : BaseDomainModel
     {
         public string? Name {  get; set; }
         public int? AssessmentId {  get; set; }
         public virtual RiskAssessment? RiskAssessment { get; set; }
-        public virtual ICollection<Hazard>? Hazards { get; set; }
+        public virtual ICollection<Identification>? Identifications { get; set; }
     }
 }

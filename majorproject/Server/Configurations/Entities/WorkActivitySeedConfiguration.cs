@@ -8,30 +8,30 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace majorproject.Server.Configurations.Entities
 {
-    public class ActivitySeedConfiguration: IEntityTypeConfiguration<Activity>
+    public class WorkActivitySeedConfiguration: IEntityTypeConfiguration<WorkActivity>
     {
-        public void Configure(EntityTypeBuilder<Activity> builder)
+        public void Configure(EntityTypeBuilder<WorkActivity> builder)
         {
             builder.HasData(
-                new Activity
+                new WorkActivity
                 {
                     Id = 1,
                     Name = "Use of MP facility",
                     AssessmentId = 1,
                 },
-                new Activity
+                new WorkActivity
                 {
                     Id = 2,
                     Name = "Use of BYOD Notebooks, PCs, Equipment",
                     AssessmentId = 1,
                 },
-                new Activity
+                new WorkActivity
                 {
                     Id = 3,
                     Name = "Use of soldering iron in MP labs for hardware related projects",
                     AssessmentId = 1,
                 },
-                new Activity
+                new WorkActivity
                 {
                     Id = 4,
                     Name = "Handling of hand tools in MP Labs for hardware related projects",

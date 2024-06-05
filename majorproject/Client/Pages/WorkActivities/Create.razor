@@ -21,13 +21,13 @@
 @code {
     [Parameter] public int assessmentId { get; set; }
 
-    private Activity activity;
-    private List<Activity> activities = new List<Activity>();
+    private WorkActivity activity;
+    private List<WorkActivity> activities = new List<WorkActivity>();
 
     protected override async Task OnInitializedAsync()
     {
-        activity = new Activity { AssessmentId = assessmentId };
-        activities = await _client.GetFromJsonAsync<List<Activity>>($"api/activities/form/{assessmentId}");
+        activity = new WorkActivity { AssessmentId = assessmentId };
+        activities = await _client.GetFromJsonAsync<List<WorkActivity>>($"api/activities/form/{assessmentId}");
     }
 
     private async Task CreateActivity()
@@ -36,7 +36,7 @@
         if (response.IsSuccessStatusCode)
         {
             activities.Add(activity);
-            activity = new Activity { AssessmentId = assessmentId }; // Reset the form for the next activity
+            activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form for the next activity
         }
     }
 

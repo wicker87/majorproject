@@ -19,8 +19,8 @@ namespace majorproject.Server.Data
         }
 
         public DbSet<RiskAssessment> RiskAssessments { get; set; }
-        public DbSet<Activity> Activities { get; set; }
-        public DbSet<Hazard> Hazards { get; set; }
+        public DbSet<WorkActivity> WorkActivities { get; set; }
+        public DbSet<Identification> Identifications { get; set; }
         public DbSet<RiskEvaluation> RiskEvaluations { get; set; }
         public DbSet<RiskControl> RiskControls { get; set;}       
         public DbSet<RiskTeam> RiskTeams { get; set; }
@@ -28,9 +28,9 @@ namespace majorproject.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new ActivitySeedConfiguration());
+            builder.ApplyConfiguration(new WorkActivitySeedConfiguration());
 
-            builder.ApplyConfiguration(new HazardSeedConfiguration());
+            builder.ApplyConfiguration(new IdentificationSeedConfiguration());
 
             builder.ApplyConfiguration(new RiskControlSeedConfiguration());
 

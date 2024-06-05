@@ -16,8 +16,8 @@ namespace majorproject.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IGenericRepository<Activity> _activities;
-        private IGenericRepository<Hazard> _hazards;
+        private IGenericRepository<WorkActivity> _workActivities;
+        private IGenericRepository<Identification> _identifications;
         private IGenericRepository<RiskAssessment> _riskAssessments;
         private IGenericRepository<RiskControl> _riskControls;
         private IGenericRepository<RiskEvaluation> _riskEvaluations;
@@ -31,10 +31,10 @@ namespace majorproject.Server.Repository
             _userManager = userManager;
         }
 
-        public IGenericRepository<Activity> Activities
-            => _activities ??= new GenericRepository<Activity>(_context);
-        public IGenericRepository<Hazard> Hazards
-            => _hazards ??= new GenericRepository<Hazard>(_context);
+        public IGenericRepository<WorkActivity> WorkActivities
+            => _workActivities ??= new GenericRepository<WorkActivity>(_context);
+        public IGenericRepository<Identification> Identifications
+            => _identifications ??= new GenericRepository<Identification>(_context);
         public IGenericRepository<RiskAssessment> RiskAssessments
             => _riskAssessments ??= new GenericRepository<RiskAssessment>(_context);
         public IGenericRepository<RiskControl> RiskControls

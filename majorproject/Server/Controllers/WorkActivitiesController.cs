@@ -13,53 +13,48 @@ namespace majorproject.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class ActivitiesController : ControllerBase
+    public class WorkActivitiesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ActivitiesController(IUnitOfWork unitOfWork)
+        public WorkActivitiesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Activities
+        // GET: api/WorkActivities
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetWorkActivities()
         {
-            var activities = await _unitOfWork.Activities.GetAll();
-
-            if (activities == null)
-            {
-                return NotFound();
-            }
-            return Ok(activities);
+            var workActivities = await _unitOfWork.WorkActivities.GetAll();
+            return Ok(workActivities);
         }
 
-        // GET: api/Activities/5
+        // GET: api/WorkActivities/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetActivity(int id)
+        public async Task<IActionResult> GetWorkActivity(int id)
         {
-            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
+            var workActivity = await _unitOfWork.WorkActivities.Get(q => q.Id == id);
 
-            if (activity == null)
+            if (workActivity == null)
             {
                 return NotFound();
             }
-            return Ok(activity);
+
+            return Ok(workActivity);
         }
 
-        // PUT: api/Activities/5
+        // PUT: api/WorkActivities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActivity(int id, Activity activity)
+        public async Task<IActionResult> PutWorkActivity(int id, WorkActivity workActivity)
         {
-            if (id != activity.Id)
+            if (id != workActivity.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Activities.Update(activity);
+            _unitOfWork.WorkActivities.Update(workActivity);
 
             try
             {
@@ -67,7 +62,7 @@ namespace majorproject.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await ActivityExists(id))
+                if (!await WorkActivityExists(id))
                 {
                     return NotFound();
                 }
@@ -80,37 +75,38 @@ namespace majorproject.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Activities
+        // POST: api/WorkActivities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Activity>> PostActivity(Activity activity)
+        public async Task<ActionResult<WorkActivity>> PostWorkActivity(WorkActivity workActivity)
         {
-            await _unitOfWork.Activities.Insert(activity);
+            await _unitOfWork.WorkActivities.Insert(workActivity);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetActivity", new { id = activity.Id }, activity);
+            return CreatedAtAction("GetWorkActivity", new { id = workActivity.Id }, workActivity);
         }
 
-        // DELETE: api/Activities/5
+        // DELETE: api/WorkActivities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(int id)
+        public async Task<IActionResult> DeleteWorkActivity(int id)
         {
-            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
-            if (activity == null)
+
+            var workActivity = await _unitOfWork.WorkActivities.Get(q => q.Id == id);
+            if (workActivity == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.Activities.Delete(id);
+            await _unitOfWork.WorkActivities.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private async Task<bool> ActivityExists(int id)
+        private async Task<bool> WorkActivityExists(int id)
         {
-            var activity = await _unitOfWork.Activities.Get(q => q.Id == id);
-            return activity != null;
+            var workActivity = await _unitOfWork.WorkActivities.Get(q => q.Id == id);
+            return workActivity != null;
         }
     }
 }

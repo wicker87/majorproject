@@ -36,7 +36,7 @@ namespace majorproject.Server.Controllers
         {
             var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskTeam.Leader)
             .Include(x => x.RiskTeam.Member1).Include(x => x.RiskTeam.Member2).Include(x => x.RiskTeam.Member3)
-            .Include(x => x.RiskTeam.Member4).Include(x => x.RiskTeam.Member5).Include(x => x.Activities));
+            .Include(x => x.RiskTeam.Member4).Include(x => x.RiskTeam.Member5).Include(x => x.WorkActivities));
 
             if (riskAssessment == null)
             {

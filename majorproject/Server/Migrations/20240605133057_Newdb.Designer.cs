@@ -12,7 +12,7 @@ using majorproject.Server.Data;
 namespace majorproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240605090411_Newdb")]
+    [Migration("20240605133057_Newdb")]
     partial class Newdb
     {
         /// <inheritdoc />
@@ -506,7 +506,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2f79ed68-a189-435f-9bde-7a162e278605",
+                            ConcurrencyStamp = "05c10dd6-89e1-4abf-860d-1972171c76cf",
                             Designation = "IT Manager",
                             Email = "janedoe@admin.com",
                             EmailConfirmed = false,
@@ -516,10 +516,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JANEDOE@ADMIN.COM",
                             NormalizedUserName = "JANEDOE@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHkafXLaZjy6tIg9nbLLS5xpL69jnRj4peCPFMNpRlq4hKSdriee8WH5kW3YtQfS+w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECAYDITteblWcDhiqZaLHrCibykRipXoMvF0L8sNZcXGulNn2JekxE8rSoH+FzfUwg==",
                             PhoneNumber = "64841415",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2c67acb4-089d-40dd-b90d-4ec22b0b789c",
+                            SecurityStamp = "55d46a47-6076-4ccb-9be3-5c36e896e2c5",
                             TwoFactorEnabled = false,
                             UserName = "janedoe@admin.com"
                         },
@@ -527,7 +527,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "23cdf685-e508-4fc6-84cc-c860af2dd301",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8ad3028-bf0c-4eb4-a160-eb13a04a203d",
+                            ConcurrencyStamp = "37449d2a-2282-41b5-8401-df6d4517dada",
                             Designation = "Safety Manager",
                             Email = "johnsmith@manager.com",
                             EmailConfirmed = false,
@@ -537,10 +537,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JOHNSMITH@MANAGER.COM",
                             NormalizedUserName = "JOHNSMITH@MANAGER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEO8NWCEoJNp+E7RVv+SnWz4tt5BDaUZrZPr/Gcuq/4fcVZU9PAPLEA4fgle5koU2eg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPUygM17CP0emWu9djSowlS3RZ3OxIqR6mSG8NupmU4qqOyLkfwEOhw1FJvbzVchTQ==",
                             PhoneNumber = "67349033",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eaf424ce-dbba-43a5-b572-4f0443e8e091",
+                            SecurityStamp = "b9d0e11d-088e-4df0-9c7a-9df17a1324c6",
                             TwoFactorEnabled = false,
                             UserName = "johnsmith@manager.com"
                         },
@@ -548,7 +548,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "5859b058-1d6e-4b79-8040-9bbd204c0dc5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7626d50-0eea-4fc3-b2d5-b148c2b7d893",
+                            ConcurrencyStamp = "e960d7e2-e2e7-4062-b0ad-873180a3f253",
                             Designation = "Safety Inspector",
                             Email = "stanleyhall@employee.com",
                             EmailConfirmed = false,
@@ -558,10 +558,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STANLEYHALL@EMPLOYEE.COM",
                             NormalizedUserName = "STANLEYHALL@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG5jDTofQR118pizWSzxPCM+D8FPiQbrA5CFBRdRVgqQbHddxUBraLd/GedKjo5q7Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBpBPCL3NRB4fGWw9lCdo21k+i97dQCx5Y/sDxsuomzbC8icvk4ALDclmATR5Sa0uw==",
                             PhoneNumber = "63960815",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2a756ff7-7104-4e17-8a8c-1f1c1598030f",
+                            SecurityStamp = "7bb84b48-68d5-4bdf-8885-07307803dd1b",
                             TwoFactorEnabled = false,
                             UserName = "stanleyhall@employee.com"
                         },
@@ -569,7 +569,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "f53bf9d9-95d1-42af-804e-e5edacdc9c74",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4996792-beaf-4a05-ba05-a366f42f88d0",
+                            ConcurrencyStamp = "72cbf85a-b138-4e52-8f5b-8607d347735a",
                             Designation = "Safety Inspector",
                             Email = "elenareed@employee.com",
                             EmailConfirmed = false,
@@ -579,10 +579,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ELENAREED@EMPLOYEE.COM",
                             NormalizedUserName = "ELENAREED@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIItqzO+xYc6wZ0xXFHLta9V+6EbXS6X5t9/HTvqsquT7lEp1Gqma0jWqZbiSZ+BTQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL/eEXhaOAEc8NrYPcqDxZLQQqvvtWiHbMQTiqo/AlR/jncGT+ARqO8ukWVfiE75Rw==",
                             PhoneNumber = "63450508",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "69e7994c-a17f-43ca-9690-054dd038ba71",
+                            SecurityStamp = "4eb73ab1-ca34-4c69-a667-280b3a2459cc",
                             TwoFactorEnabled = false,
                             UserName = "elenareed@employee.com"
                         },
@@ -590,7 +590,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "5258daf7-0bf7-4460-a854-4b3f427312c7",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "81aff44e-05a5-4f6a-90b9-6b0e5667a239",
+                            ConcurrencyStamp = "4c5f3648-331e-4b3b-952a-f9a1b482e0d1",
                             Designation = "Safety Inspector",
                             Email = "warrenyoung@employee.com",
                             EmailConfirmed = false,
@@ -600,10 +600,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "WARRENYOUNG@EMPLOYEE.COM",
                             NormalizedUserName = "WARRENYOUNG@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMbu+wShEvoxcUWzSAmuRC+er6P8Rc3ga3DN+V93uV9peQiD2JVDH82tpakj80ph5w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGPG0I1WDmf5F9n8dq975awU3cCu87Dk3wyOlAzw4Q1SQZ6qbZpZc3XDl+aIb4rywg==",
                             PhoneNumber = "63388585",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6d6e4113-d59b-43d3-bb68-aeffbe45cb95",
+                            SecurityStamp = "c8d5cb13-e555-495f-8140-38266b8108e5",
                             TwoFactorEnabled = false,
                             UserName = "warrenyoung@employee.com"
                         },
@@ -611,7 +611,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "e7b4016a-fa59-4669-969f-36601182f51c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b36f4bc6-1171-4273-82a7-b6f3bfdad6ee",
+                            ConcurrencyStamp = "2918d109-5832-4bec-b4be-8f7ee5275f89",
                             Designation = "Safety Manager",
                             Email = "kevinjones@manager.com",
                             EmailConfirmed = false,
@@ -621,10 +621,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "KEVINJONES@MANAGER.COM",
                             NormalizedUserName = "KEVINJONES@MANAGER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECaDFPyIjxkOKsrt/r/AcFxjpBEVa7ldOHi9f/K13e12rp5tyW4AenIvB0/m63Sxlw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKXAgLaX7bqlHQOW0+jyV5iZ0hllt1pyyvqx3fcYq4mHfTmJs0KHKkywJ6j8vazyww==",
                             PhoneNumber = "68999888",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "dde1900a-6851-4f33-b55f-e8e44a0cb82a",
+                            SecurityStamp = "389d2f6c-cd20-4380-afc6-a5d45a06eecd",
                             TwoFactorEnabled = false,
                             UserName = "kevinjones@manager.com"
                         },
@@ -632,7 +632,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "cda313e3-33c1-4e6e-982b-3c5eb9ff9565",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f1fc088-71a9-4b48-b1e3-d41768b1fde1",
+                            ConcurrencyStamp = "77afca09-5ae3-41cb-b1b4-ff578f3c8fcc",
                             Designation = "Safety Inspector",
                             Email = "bobbybrooks@employee.com",
                             EmailConfirmed = false,
@@ -642,10 +642,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BOBBYBROOKS@EMPLOYEE.COM",
                             NormalizedUserName = "BOBBYBROOKS@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFNoa5ks8PLrAfvHW3R0XxP8riBZGaK7anjPSLbV31LaoV8FsrJ7lxoYsGJ4QnO23A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH4auxIXiZVCRvXap1/vvUmBbHuIKEIu5G8MpHgvVOuDtzENiEPICXFwYYuNlla2ew==",
                             PhoneNumber = "62570046",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b1243397-3905-4941-bdd3-b77252d0b041",
+                            SecurityStamp = "0b66f608-eeac-4c64-8855-26d3eba0a12c",
                             TwoFactorEnabled = false,
                             UserName = "bobbybrooks@employee.com"
                         },
@@ -653,7 +653,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "8d06620d-3d31-4c1c-9449-7eaac032f6bd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "88e2993f-6942-4df4-8fd4-fbc5c714e847",
+                            ConcurrencyStamp = "0eb4d1a8-4e2d-4ce7-998d-2869d4b9e864",
                             Designation = "Safety Manager",
                             Email = "jennielow@manager.com",
                             EmailConfirmed = false,
@@ -663,10 +663,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JENNIELOW@MANAGER.COM",
                             NormalizedUserName = "JENNIELOW@MANAGER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECX6cXjuC5UOG5hOMiHIaO/AhLtDCLDDp5XrPzqwPyZjKjkrQQMJYWY8AbOB7CCb1w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEKCChrGxiNr3MwvricW2+o3TNVYIX+pTBydMGRdbM9DLD3FV91zLgo48oKTPf99QA==",
                             PhoneNumber = "62247473",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "93f7be07-bb51-435b-a32d-ed6bdc9c723e",
+                            SecurityStamp = "85063525-a6e1-44e4-8167-7c243e74f899",
                             TwoFactorEnabled = false,
                             UserName = "jennielow@manager.com"
                         },
@@ -674,7 +674,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "77ea0c8c-fa62-4e13-980a-63ed5336f0b2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c0e3e418-2d19-44d8-bb01-9fbc0157a49a",
+                            ConcurrencyStamp = "d6836df6-e65a-43ae-8bc9-c2c2229a9ce0",
                             Designation = "Safety Inspector",
                             Email = "constancelee@employee.com",
                             EmailConfirmed = false,
@@ -684,10 +684,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CONSTANCELEE@EMPLOYEE.COM",
                             NormalizedUserName = "CONSTANCELEE@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENdv1LLG5yb9mmnra4fvO2HjaK7ctccIOi8N4MtyapasMksAukXVnKw48Ua4xZ20DQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBXeBUXnM/caAPkHBeJ90pKxCDd7OSeOjzqgAiZxJeuyjULSJibg8APq/gNt/J9ewQ==",
                             PhoneNumber = "67457717",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0341168c-c6d7-48d3-a982-68e03a103fce",
+                            SecurityStamp = "e89236c7-bac0-4b93-93e9-14e1e820605b",
                             TwoFactorEnabled = false,
                             UserName = "constancelee@employee.com"
                         },
@@ -695,7 +695,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00c97c7e-346d-4aa2-b462-543e83a4e30a",
+                            ConcurrencyStamp = "36acb82c-1ad9-4465-b77f-0e069212b133",
                             Designation = "Safety Inspector",
                             Email = "bendanis@employee.com",
                             EmailConfirmed = false,
@@ -705,10 +705,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BENDANIS@EMPLOYEE.COM",
                             NormalizedUserName = "BENDANIS@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHbLu/C3dbWuArtfu1q7TZytkOe1s2Lmmd/Q+rkSx3F70YBfRIg9sgrnMNHI3neehw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI7QsFUKNKhnSqtRwiz3uI4eoUEl2l2jFfBx9Oh1Ur9S9D09cxMddfje9VkQqSnD5w==",
                             PhoneNumber = "68626846",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b422e53d-a4b6-46d1-9039-3f3aba0c9cfd",
+                            SecurityStamp = "d4f03968-8ccd-444a-914f-46bef6694b81",
                             TwoFactorEnabled = false,
                             UserName = "bendanis@employee.com"
                         },
@@ -716,7 +716,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "b57e892b-0bdb-4469-afd9-e6522fea2f25",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ea25b728-629c-4a04-aa2e-50d28458fcc3",
+                            ConcurrencyStamp = "ae1ebb88-3d78-4796-be73-1638b66bf08f",
                             Designation = "Safety Inspector",
                             Email = "jimmybaker@employee.com",
                             EmailConfirmed = false,
@@ -726,10 +726,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JIMMYBAKER@EMPLOYEE.COM",
                             NormalizedUserName = "JIMMYBAKER@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOVl1+c4jWnYFQ1fcX4iu7ddAn+cDbIr6aW8mbMBj26107CQurlTKu/Ylj94IG1hGw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECKUmL5ndgr/0FDOSjpnfoLEoplLeGuCqHMUJqxdwDaUSGK/nl8w9inTI+zhjg5dsg==",
                             PhoneNumber = "67789981",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c32de75-048b-4b69-a0c2-e079d1c869c5",
+                            SecurityStamp = "679c5982-4920-42b3-a04b-04f5025b6cca",
                             TwoFactorEnabled = false,
                             UserName = "jimmybaker@employee.com"
                         },
@@ -737,7 +737,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "fe8964fa-aac1-4db1-97bb-017e0905242f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e377f99a-a490-43c5-9c28-9e89b90e6af2",
+                            ConcurrencyStamp = "4722bfc3-9bd1-43ad-bf0e-965f8cc5f4f4",
                             Designation = "Safety Inspector",
                             Email = "jakehoward@employee.com",
                             EmailConfirmed = false,
@@ -747,10 +747,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JAKEHOWARD@EMPLOYEE.COM",
                             NormalizedUserName = "JAKEHOWARD@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKcMOfQAKuCj4FvIAQnizGbDwL5HkbWalHHwpUrHz8vazPfqavuAfn3O5JqEQn3mrg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED9OKfQD56fAOnObXFP/r4T5wYIhnYmRcQQonjzM+FebFsyL/knaS6rlBerKaqlSoA==",
                             PhoneNumber = "62678901",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b9a69dbd-e560-4f45-836a-95a0e6c4888b",
+                            SecurityStamp = "9ef03c3a-c28d-442a-bb2f-439918cbae5c",
                             TwoFactorEnabled = false,
                             UserName = "jakehoward@employee.com"
                         },
@@ -758,7 +758,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "33a4bc04-9b10-49a5-8cb6-8dea48b122c4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5cf69ba5-b3f3-40a4-aed4-504422d54554",
+                            ConcurrencyStamp = "b6e987c9-adb0-48ed-be53-8abf3a878935",
                             Designation = "Safety Inspector",
                             Email = "ninachoo@employee.com",
                             EmailConfirmed = false,
@@ -768,10 +768,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "NINACHOO@EMPLOYEE.COM",
                             NormalizedUserName = "NINACHOO@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELUXGl2FjaIYhUD6Wg4laOBvQLsy/jaf4+ZEzMH0jc267iO0VCwksNw4s63Eht2p7A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECHEdBWKRX567QKJiuYdACXuTGulQT9Rk3AIvDYVVbak3uI8bZmCU7fFfbpUlbiT+A==",
                             PhoneNumber = "65366623",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2865923d-ba7c-49cd-b9c9-ebd275797c94",
+                            SecurityStamp = "ee978c49-b884-48fc-b2b2-2af55e6812cc",
                             TwoFactorEnabled = false,
                             UserName = "ninachoo@employee.com"
                         },
@@ -779,7 +779,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "1519fcce-c355-4cad-8b22-01b76b762ffc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c7af709d-2d66-45ba-a0d1-f230f5504546",
+                            ConcurrencyStamp = "e2f83e26-7c99-4bcb-8587-633b07503556",
                             Designation = "Safety Inspector",
                             Email = "tommyjones@employee.com",
                             EmailConfirmed = false,
@@ -789,10 +789,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TOMMYJONES@EMPLOYEE.COM",
                             NormalizedUserName = "TOMMYJONES@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAELm0y9TJg5c1SM4TarBR9swnBBOVWlcLBQC/Foj19t/e0ddeJ0KYF9I2ppdHCf3SuQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENVd3o54T1yQl3SqpbPSM+dkQyJgWcSdDiadWnzzJsFBxv76ppvajNcyN4AeuO9P8g==",
                             PhoneNumber = "65325334",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "14ff60bd-b101-41d4-b774-4866ff8b1076",
+                            SecurityStamp = "f092dedc-464b-4f2e-bcc4-2c89f4705a15",
                             TwoFactorEnabled = false,
                             UserName = "tommyjones@employee.com"
                         },
@@ -800,7 +800,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "63929151-0e12-4c5c-a03c-01c34642856a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3fbe38a0-0360-402f-9f55-0fb43b96a14d",
+                            ConcurrencyStamp = "1aac4b2a-591a-46bc-959e-267a034a2c8a",
                             Designation = "Safety Inspector",
                             Email = "elizaross@employee.com",
                             EmailConfirmed = false,
@@ -810,10 +810,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ELIZAROSS@EMPLOYEE.COM",
                             NormalizedUserName = "ELIZAROSS@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPjKylDQqDBP3EZlAH5e0B1TrtBhfKYWKrSxZrip0yc3eYnA586rpcUBtKROGq+YMg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHqGno3dXU0lyau9RJrMuq9k8LPp513k0WZRl/11uqQmyz9f/SqIdXv3KEob/+0sXw==",
                             PhoneNumber = "67780373",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0fc7ef04-bfea-4c7c-b0ef-8ec12a791117",
+                            SecurityStamp = "07d77504-20c4-4526-a80b-09e15abdc184",
                             TwoFactorEnabled = false,
                             UserName = "elizaross@employee.com"
                         },
@@ -821,7 +821,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1345244e-7cb5-4bb5-a274-b832535acc64",
+                            ConcurrencyStamp = "2c7c56d3-7c5f-43ef-abd4-c68a237b98bb",
                             Designation = "Safety Manager",
                             Email = "benjaminscott@manager.com",
                             EmailConfirmed = false,
@@ -831,10 +831,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BENJAMINSCOTT@MANAGER.COM",
                             NormalizedUserName = "BENJAMINSCOTT@MANAGER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDvlpmgyFEGUzWzYJwhSbmmHs5oCy1LX48fKHBnCUOT0w22RehsiILSB3J1h16TjvQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECkBFGerXpm00qBauploFVGXyQlUzr3vnWDonlOg0txupVJvoGVUBeA1tyZ8a0/Uug==",
                             PhoneNumber = "62610071",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "baf5a2e2-8f50-418f-a7a3-434b0fdcf9c4",
+                            SecurityStamp = "631ef938-ba38-4864-8eb2-ab115b6796da",
                             TwoFactorEnabled = false,
                             UserName = "benjaminscott@manager.com"
                         },
@@ -842,7 +842,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f2256ae9-6043-4fc5-a075-0ef58b738e6e",
+                            ConcurrencyStamp = "36af34e6-10be-427f-b07d-176ec1eb8fa8",
                             Designation = "Safety Inspector",
                             Email = "kylethomas@employee.com",
                             EmailConfirmed = false,
@@ -852,10 +852,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "KYLETHOMAS@EMPLOYEE.COM",
                             NormalizedUserName = "KYLETHOMAS@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKIl09nmrs4VO6e1UOgq+VICCVM+JSnuZFicLNnUXrMhUbFMDhWsKKgOX47IyPXukA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL2nMAO94obRaRi2qfLS7muM1twLI5LKhILcx3abzk9WwXbEAVzWdKY1K7fMEzTfqg==",
                             PhoneNumber = "67361183",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "00f00f95-2558-44b8-a028-402294d269bc",
+                            SecurityStamp = "e585365b-56e3-4335-aacd-a7904ae203bb",
                             TwoFactorEnabled = false,
                             UserName = "kylethomas@employee.com"
                         },
@@ -863,7 +863,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "e5e8acfe-c59a-4b4d-bba4-d40057aecef4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eee40450-20df-4208-88a4-bf554702adae",
+                            ConcurrencyStamp = "a96db0c1-bddd-4f57-8e57-e2e2c6f4ffe9",
                             Designation = "Safety Inspector",
                             Email = "maddietay@employee.com",
                             EmailConfirmed = false,
@@ -873,10 +873,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MADDIETAY@EMPLOYEE.COM",
                             NormalizedUserName = "MADDIETAY@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMdailAt7LtVrPD0Yyei+RtwLmEjs9fzru4dZF/BbR+BhqcOA5KutTepwEnACImpvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEESVLeyHud7LDMUj/kxrSCzH0Do3DvHPmqirtg8TNCz9IrBp+jhHtZcJZobZ0h0beg==",
                             PhoneNumber = "63457266",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "de76b8d2-9f11-4bb0-948b-f55f21225874",
+                            SecurityStamp = "d0194901-329a-454d-a57d-5000a131748e",
                             TwoFactorEnabled = false,
                             UserName = "maddietay@employee.com"
                         },
@@ -884,7 +884,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "6f84b324-5cc8-48b6-a348-57c74b3d5294",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2f07e24c-807b-4a34-8e7a-4870f9168d09",
+                            ConcurrencyStamp = "dc02690b-4208-4a3e-b5dc-c01ca916ec09",
                             Designation = "Safety Inspector",
                             Email = "larryparker@employee.com",
                             EmailConfirmed = false,
@@ -894,10 +894,10 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LARRYPARKER@EMPLOYEE.COM",
                             NormalizedUserName = "LARRYPARKER@EMPLOYEE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB/HnOQeMtQO+sTgMPXlbwLUMdAqpQecVhz5d8DSVAxbeYA3ZVGSv4sXe8OcRIJryQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGOAJK5NRc1wupoD61DeguX41PkMKOQsnUMALrkoOkIeClBMypR2+uOojltEpYnTAA==",
                             PhoneNumber = "67771504",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "60504994-7ef2-4727-8526-33bd60327f7d",
+                            SecurityStamp = "af6fc443-dbb5-4f99-bd06-bcc93e007594",
                             TwoFactorEnabled = false,
                             UserName = "larryparker@employee.com"
                         },
@@ -905,7 +905,7 @@ namespace majorproject.Server.Migrations
                         {
                             Id = "911dd5ac-5093-444e-bd8d-b6fed36dcada",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "45982667-318e-4c7e-bf1e-b5501aaca1bc",
+                            ConcurrencyStamp = "4119f15e-fd1e-4a0c-a813-b88cd203783f",
                             Designation = "Safety Manager",
                             Email = "emilybrown@manager.com",
                             EmailConfirmed = false,
@@ -915,66 +915,16 @@ namespace majorproject.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMILYBROWN@MANAGER.COM",
                             NormalizedUserName = "EMILYBROWN@MANAGER.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAZ9QadKJTlYBD/basmE2v2cZjCUwYHay8ai+XGnN/YM7YTnnRpmtrETN/hShze6tA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFzYh7dYXhdPVcVldswsbOGwQbLqWv85i0ZLi7WRS7/wxotoJmFQCG5NHoeGaMME5w==",
                             PhoneNumber = "67528856",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c7799bb-cb37-4941-85b8-eafe7eae0326",
+                            SecurityStamp = "89b709ee-7fe0-45f3-8d21-09fcae86740d",
                             TwoFactorEnabled = false,
                             UserName = "emilybrown@manager.com"
                         });
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AssessmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RiskAssessmentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RiskAssessmentId");
-
-                    b.ToTable("Activities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AssessmentId = 1,
-                            Name = "Use of MP facility"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AssessmentId = 1,
-                            Name = "Use of BYOD Notebooks, PCs, Equipment"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AssessmentId = 1,
-                            Name = "Use of soldering iron in MP labs for hardware related projects"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AssessmentId = 1,
-                            Name = "Handling of hand tools in MP Labs for hardware related projects"
-                        });
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
+            modelBuilder.Entity("majorproject.Shared.Domain.Identification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -991,11 +941,14 @@ namespace majorproject.Server.Migrations
                     b.Property<string>("PossibleInjury")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WorkActivityId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("WorkActivityId");
 
-                    b.ToTable("Hazards");
+                    b.ToTable("Identifications");
 
                     b.HasData(
                         new
@@ -1414,6 +1367,56 @@ namespace majorproject.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("majorproject.Shared.Domain.WorkActivity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AssessmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RiskAssessmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RiskAssessmentId");
+
+                    b.ToTable("WorkActivities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AssessmentId = 1,
+                            Name = "Use of MP facility"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssessmentId = 1,
+                            Name = "Use of BYOD Notebooks, PCs, Equipment"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssessmentId = 1,
+                            Name = "Use of soldering iron in MP labs for hardware related projects"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AssessmentId = 1,
+                            Name = "Handling of hand tools in MP Labs for hardware related projects"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1465,22 +1468,13 @@ namespace majorproject.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
+            modelBuilder.Entity("majorproject.Shared.Domain.Identification", b =>
                 {
-                    b.HasOne("majorproject.Shared.Domain.RiskAssessment", "RiskAssessment")
-                        .WithMany("Activities")
-                        .HasForeignKey("RiskAssessmentId");
+                    b.HasOne("majorproject.Shared.Domain.WorkActivity", "WorkActivity")
+                        .WithMany("Identifications")
+                        .HasForeignKey("WorkActivityId");
 
-                    b.Navigation("RiskAssessment");
-                });
-
-            modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
-                {
-                    b.HasOne("majorproject.Shared.Domain.Activity", "Activity")
-                        .WithMany("Hazards")
-                        .HasForeignKey("ActivityId");
-
-                    b.Navigation("Activity");
+                    b.Navigation("WorkActivity");
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskAssessment", b =>
@@ -1503,26 +1497,35 @@ namespace majorproject.Server.Migrations
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskEvaluation", b =>
                 {
-                    b.HasOne("majorproject.Shared.Domain.Hazard", "Hazard")
+                    b.HasOne("majorproject.Shared.Domain.Identification", "Hazard")
                         .WithMany("RiskEvaluations")
                         .HasForeignKey("HazardId");
 
                     b.Navigation("Hazard");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Activity", b =>
+            modelBuilder.Entity("majorproject.Shared.Domain.WorkActivity", b =>
                 {
-                    b.Navigation("Hazards");
+                    b.HasOne("majorproject.Shared.Domain.RiskAssessment", "RiskAssessment")
+                        .WithMany("WorkActivities")
+                        .HasForeignKey("RiskAssessmentId");
+
+                    b.Navigation("RiskAssessment");
                 });
 
-            modelBuilder.Entity("majorproject.Shared.Domain.Hazard", b =>
+            modelBuilder.Entity("majorproject.Shared.Domain.Identification", b =>
                 {
                     b.Navigation("RiskEvaluations");
                 });
 
             modelBuilder.Entity("majorproject.Shared.Domain.RiskAssessment", b =>
                 {
-                    b.Navigation("Activities");
+                    b.Navigation("WorkActivities");
+                });
+
+            modelBuilder.Entity("majorproject.Shared.Domain.WorkActivity", b =>
+                {
+                    b.Navigation("Identifications");
                 });
 #pragma warning restore 612, 618
         }
