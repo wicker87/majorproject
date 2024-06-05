@@ -54,8 +54,8 @@ namespace majorproject.Server.Controllers
                 return BadRequest();
             }
 
-            //_context.Entry(riskTeam).State = EntityState.Modified;
             _unitOfWork.RiskTeams.Update(riskTeam);
+
             try
             {
                 await _unitOfWork.Save(HttpContext);
@@ -80,9 +80,6 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<RiskTeam>> PostRiskTeam(RiskTeam riskTeam)
         {
-
-            //_context.RiskTeams.Add(riskTeam);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskTeams.Insert(riskTeam);
             await _unitOfWork.Save(HttpContext);
 
@@ -100,16 +97,14 @@ namespace majorproject.Server.Controllers
                 return NotFound();
             }
 
-            //_context.RiskTeams.Remove(riskTeam);
-            //await _context.SaveChangesAsync();
             await _unitOfWork.RiskTeams.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
             return NoContent();
         }
 
         private async Task<bool> RiskTeamExists(int id)
         {
-            //return (_context.RiskTeams?.Any(e => e.Id == id)).GetValueOrDefault();
             var riskTeam = await _unitOfWork.RiskTeams.Get(q => q.Id == id);
             return riskTeam != null;
         }

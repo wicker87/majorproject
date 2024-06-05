@@ -2,12 +2,11 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
-@inject HttpInterceptorService _interceptor 
-@implements IDisposable 
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 @inject NavigationManager _navManager
 
 <h3 class="card-title">Activities Data</h3>
-
 <br />
 
 <a href="/activities/create" class="btn btn-secondary">
@@ -26,8 +25,8 @@ else
     <table class="table table-responsive" id="bookingsTable">
         <thead>
             <tr>
-                <th>Work Activity</th>
-                <th>Form Id</th>              
+                <th>Form Id</th>
+                <th>Name</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,8 +34,8 @@ else
             @foreach (var activity in Activities)
             {
                 <tr>
+                    <td>@activity.AssessmentId</td>
                     <td>@activity.Name</td>
-                    <td>@activity.AssessmentId</td>                
                     <td>
                         <a href="/activities/edit/@activity.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
@@ -65,7 +64,7 @@ else
         if (Activities != null)
         {
             var activity = Activities.First(q => q.Id == activityId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activity.Name}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete activity {activity.Name}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.ActivitiesEndpoint}/{activityId}");

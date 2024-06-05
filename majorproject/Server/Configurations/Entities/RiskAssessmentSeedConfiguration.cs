@@ -16,13 +16,17 @@ namespace majorproject.Server.Configurations.Entities
                 new RiskAssessment
                 {
                     Id = 1,
-                    Department="TP Staff",
+                    ApprovedStatus = true,
+                    Name = "CEN MP Risk Assessment",
+                    Department="Temasek Poly (ENG)",
                     Process= "CEN MP - April 2024",
                     Location= "EN10-2-15",
-                    AssessmentDate = DateTime.Now,
-                    LastReviewDate= DateTime.Now,
-                    NextReviewDate= DateTime.Now,
-
+                    AssessmentDate = new DateTime(2024, 4, 26),
+                    LastReviewDate= new DateTime(2024, 4, 26),
+                    NextReviewDate = new DateTime(2027, 4, 26),
+                    RiskTeamId= 2,
+                    Approver = "John Smith",
+                    ApprovalDate= new DateTime(2024, 4, 28),
                 }
                 );
         }

@@ -8,7 +8,6 @@ namespace majorproject.Client.Static
         private static readonly string Prefix = "api";
 
         public static readonly string ActivitiesEndpoint = $"{Prefix}/activities";
-        public static readonly string EmployeesEndpoint = $"{Prefix}/employees";
         public static readonly string RiskTeamsEndpoint = $"{Prefix}/riskteams";
         public static readonly string RiskAssessmentsEndpoint = $"{Prefix}/riskassessments";
         public static readonly string HazardsEndpoint = $"{Prefix}/hazards";

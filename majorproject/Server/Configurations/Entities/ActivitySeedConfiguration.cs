@@ -16,8 +16,26 @@ namespace majorproject.Server.Configurations.Entities
                 new Activity
                 {
                     Id = 1,
-                    Name = "Use of MP facility (Lab) (Reference: ENG-TWSH-TS01-RA001)",
-
+                    Name = "Use of MP facility",
+                    AssessmentId = 1,
+                },
+                new Activity
+                {
+                    Id = 2,
+                    Name = "Use of BYOD Notebooks, PCs, Equipment",
+                    AssessmentId = 1,
+                },
+                new Activity
+                {
+                    Id = 3,
+                    Name = "Use of soldering iron in MP labs for hardware related projects",
+                    AssessmentId = 1,
+                },
+                new Activity
+                {
+                    Id = 4,
+                    Name = "Handling of hand tools in MP Labs for hardware related projects",
+                    AssessmentId = 1,
                 }
                 );
         }

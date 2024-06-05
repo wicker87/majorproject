@@ -56,9 +56,7 @@ namespace majorproject.Server.Repository
 
             var entries = _context.ChangeTracker.Entries()
                 .Where(q => q.State == EntityState.Modified ||
-                    q.State == EntityState.Added);
-
-            
+                    q.State == EntityState.Added);          
 
             await _context.SaveChangesAsync();
         }

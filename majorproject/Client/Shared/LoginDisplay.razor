@@ -1,12 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager Navigation
 
 @* Top Menu Bar Links/Buttons*@
 
 <AuthorizeView>
     <Authorized>
-        <span>Welcome, @context.User.Identity?.Name</span>
+        @if (userRoles == null)
+        {
+            <span>Welcome, @userEmail</span>
+        }
+        else if (userRoles.Contains("Administrator"))
+        {
+            <span>Welcome, @userEmail (Administrator)</span>
+        }
+        else if (userRoles.Contains("Manager"))
+        {
+            <span>Welcome, @userEmail (Manager)</span>
+        }
+        else if (userRoles.Contains("Employee"))
+        {
+            <span>Welcome, @userEmail (Employee)</span>
+        }
+        else
+        {
+            <span>Welcome, User</span>
+        }
         <a href="authentication/profile"><i class="fas fa-user-circle"></i> Account Setting</a>
         <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </Authorized>
@@ -20,8 +41,70 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @code {
-    private void BeginLogOut()
+    private List<string> userRoles;
+    private string userEmail;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationStateProvider.AuthenticationStateChanged += OnAuthenticationStateChanged;
+        await LoadUserDataAsync();
+    }
+
+    private async Task LoadUserDataAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            userEmail = user.Identity.Name; // Set the email name
+
+            if (userEmail.ToLower().Contains("admin"))
+            {
+                userRoles = new List<string> { "Administrator" };
+            }
+            else if (userEmail.ToLower().Contains("manager"))
+            {
+                userRoles = new List<string> { "Manager" };
+            }
+            else if (userEmail.ToLower().Contains("employee"))
+            {
+                userRoles = new List<string> { "Employee" };
+            }
+            else
+            {
+                userRoles = user.Claims
+                    .Where(c => c.Type == ClaimTypes.Role)
+                    .Select(c => c.Value)
+                    .ToList();
+            }
+        }
+        else
+        {
+            userRoles = null;
+            userEmail = null;
+        }
+
+        StateHasChanged(); // Force re-render
+    }
+
+    private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        InvokeAsync(async () =>
+        {
+            await LoadUserDataAsync();
+            StateHasChanged(); // Force re-render
+        });
+    }
+
+    private void BeginLogOut() // Logout of application
     {
         Navigation.NavigateToLogout("authentication/logout");
     }
+
+    public void Dispose()
+    {
+        AuthenticationStateProvider.AuthenticationStateChanged -= OnAuthenticationStateChanged;
+    }
 }
+

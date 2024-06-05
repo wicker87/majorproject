@@ -28,15 +28,15 @@ namespace majorproject.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //builder.ApplyConfiguration(new ActivitySeedConfiguration());
+            builder.ApplyConfiguration(new ActivitySeedConfiguration());
 
-            //builder.ApplyConfiguration(new HazardSeedConfiguration());
+            builder.ApplyConfiguration(new HazardSeedConfiguration());
 
-            //builder.ApplyConfiguration(new RiskControlSeedConfiguration());
+            builder.ApplyConfiguration(new RiskControlSeedConfiguration());
 
             //builder.ApplyConfiguration(new RiskEvaulationSeedConfiguration());
 
-            //builder.ApplyConfiguration(new RiskAssessmentSeedConfiguration());
+            builder.ApplyConfiguration(new RiskAssessmentSeedConfiguration());
 
             builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
 

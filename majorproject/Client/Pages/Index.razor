@@ -8,15 +8,16 @@
 
 <h5>Your online tool for managing Risk Assessment Forms for your organisation.</h5>
 
+@* <strong>Just checking</strong>
 @if (authenticationState == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <p>Welcome, @userName</p>
+    <p>Your email: @userName</p>
     <p>Your role: @userRole</p>
-}
+} *@
 
 <br />
 <p style="font-size: 24px; font-weight: bold;">Workplace Safety</p>
@@ -28,32 +29,32 @@ else
 @* <SurveyPrompt Title="How is Blazor working for you?" /> *@
 
 @code {
-    private AuthenticationState authenticationState;
-    private string userName;
-    private string userRole;
+    // private AuthenticationState authenticationState;
+    // private string userName;
+    // private string userRole;
 
-    protected override async Task OnInitializedAsync()
-    {
-        authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authenticationState.User;
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     var user = authenticationState.User;
 
-        if (user.Identity.IsAuthenticated)
-        {
-            userName = user.Identity.Name;
-            var role = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-            if (role != null)
-            {
-                userRole = role.Value;
-            }
-            else
-            {
-                userRole = "No role assigned";
-            }
-        }
-        else
-        {
-            userName = "Anonymous";
-            userRole = "None";
-        }
-    }
+    //     if (user.Identity.IsAuthenticated)
+    //     {
+    //         userName = user.Identity.Name;
+    //         var role = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+    //         if (role != null)
+    //         {
+    //             userRole = role.Value;
+    //         }
+    //         else
+    //         {
+    //             userRole = "No role assigned";
+    //         }
+    //     }
+    //     else
+    //     {
+    //         userName = "Anonymous";
+    //         userRole = "None";
+    //     }
+    // }
 }

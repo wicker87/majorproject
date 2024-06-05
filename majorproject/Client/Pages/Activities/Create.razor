@@ -27,7 +27,7 @@
     protected override async Task OnInitializedAsync()
     {
         activity = new Activity { AssessmentId = assessmentId };
-        activities = await _client.GetFromJsonAsync<List<Activity>>($"api/activities/assessment/{assessmentId}"); 
+        activities = await _client.GetFromJsonAsync<List<Activity>>($"api/activities/form/{assessmentId}");
     }
 
     private async Task CreateActivity()
