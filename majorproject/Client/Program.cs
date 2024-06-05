@@ -30,3 +30,6 @@ builder.Services.AddScoped<UserRoleService>();
 builder.Services.AddApiAuthorization();
 
 await builder.Build().RunAsync();
+
+
+
