@@ -252,7 +252,6 @@ namespace majorproject.Server.Migrations
                     LastReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NextReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: true),
-                    RiskTeamId = table.Column<int>(type: "int", nullable: true),
                     Approver = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -260,8 +259,8 @@ namespace majorproject.Server.Migrations
                 {
                     table.PrimaryKey("PK_RiskAssessments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RiskAssessments_RiskTeams_RiskTeamId",
-                        column: x => x.RiskTeamId,
+                        name: "FK_RiskAssessments_RiskTeams_TeamId",
+                        column: x => x.TeamId,
                         principalTable: "RiskTeams",
                         principalColumn: "Id");
                 });
@@ -273,15 +272,14 @@ namespace majorproject.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssessmentId = table.Column<int>(type: "int", nullable: true),
-                    RiskAssessmentId = table.Column<int>(type: "int", nullable: true)
+                    AssessmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkActivities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkActivities_RiskAssessments_RiskAssessmentId",
-                        column: x => x.RiskAssessmentId,
+                        name: "FK_WorkActivities_RiskAssessments_AssessmentId",
+                        column: x => x.AssessmentId,
                         principalTable: "RiskAssessments",
                         principalColumn: "Id");
                 });
@@ -294,15 +292,14 @@ namespace majorproject.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PossibleInjury = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ActivityId = table.Column<int>(type: "int", nullable: true),
-                    WorkActivityId = table.Column<int>(type: "int", nullable: true)
+                    ActivityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Identifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Identifications_WorkActivities_WorkActivityId",
-                        column: x => x.WorkActivityId,
+                        name: "FK_Identifications_WorkActivities_ActivityId",
+                        column: x => x.ActivityId,
                         principalTable: "WorkActivities",
                         principalColumn: "Id");
                 });
@@ -342,15 +339,14 @@ namespace majorproject.Server.Migrations
                     ImplementingPerson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EvaluationId = table.Column<int>(type: "int", nullable: true),
-                    RiskEvaluationId = table.Column<int>(type: "int", nullable: true)
+                    EvaluationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RiskControls", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RiskControls_RiskEvaluations_RiskEvaluationId",
-                        column: x => x.RiskEvaluationId,
+                        name: "FK_RiskControls_RiskEvaluations_EvaluationId",
+                        column: x => x.EvaluationId,
                         principalTable: "RiskEvaluations",
                         principalColumn: "Id");
                 });
@@ -370,52 +366,27 @@ namespace majorproject.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Designation", "Email", "EmailConfirmed", "EmployeeID", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc", 0, "05c10dd6-89e1-4abf-860d-1972171c76cf", "IT Manager", "janedoe@admin.com", false, 1003, "Jane", "Doe", false, null, "JANEDOE@ADMIN.COM", "JANEDOE@ADMIN.COM", "AQAAAAIAAYagAAAAECAYDITteblWcDhiqZaLHrCibykRipXoMvF0L8sNZcXGulNn2JekxE8rSoH+FzfUwg==", "64841415", false, "55d46a47-6076-4ccb-9be3-5c36e896e2c5", false, "janedoe@admin.com" },
-                    { "1519fcce-c355-4cad-8b22-01b76b762ffc", 0, "e2f83e26-7c99-4bcb-8587-633b07503556", "Safety Inspector", "tommyjones@employee.com", false, 1886, "Tommy", "Jones", false, null, "TOMMYJONES@EMPLOYEE.COM", "TOMMYJONES@EMPLOYEE.COM", "AQAAAAIAAYagAAAAENVd3o54T1yQl3SqpbPSM+dkQyJgWcSdDiadWnzzJsFBxv76ppvajNcyN4AeuO9P8g==", "65325334", false, "f092dedc-464b-4f2e-bcc4-2c89f4705a15", false, "tommyjones@employee.com" },
-                    { "23cdf685-e508-4fc6-84cc-c860af2dd301", 0, "37449d2a-2282-41b5-8401-df6d4517dada", "Safety Manager", "johnsmith@manager.com", false, 2010, "John", "Smith", false, null, "JOHNSMITH@MANAGER.COM", "JOHNSMITH@MANAGER.COM", "AQAAAAIAAYagAAAAEPUygM17CP0emWu9djSowlS3RZ3OxIqR6mSG8NupmU4qqOyLkfwEOhw1FJvbzVchTQ==", "67349033", false, "b9d0e11d-088e-4df0-9c7a-9df17a1324c6", false, "johnsmith@manager.com" },
-                    { "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5", 0, "2c7c56d3-7c5f-43ef-abd4-c68a237b98bb", "Safety Manager", "benjaminscott@manager.com", false, 1794, "Benjamin", "Scott", false, null, "BENJAMINSCOTT@MANAGER.COM", "BENJAMINSCOTT@MANAGER.COM", "AQAAAAIAAYagAAAAECkBFGerXpm00qBauploFVGXyQlUzr3vnWDonlOg0txupVJvoGVUBeA1tyZ8a0/Uug==", "62610071", false, "631ef938-ba38-4864-8eb2-ab115b6796da", false, "benjaminscott@manager.com" },
-                    { "33a4bc04-9b10-49a5-8cb6-8dea48b122c4", 0, "b6e987c9-adb0-48ed-be53-8abf3a878935", "Safety Inspector", "ninachoo@employee.com", false, 1170, "Nina", "Choo", false, null, "NINACHOO@EMPLOYEE.COM", "NINACHOO@EMPLOYEE.COM", "AQAAAAIAAYagAAAAECHEdBWKRX567QKJiuYdACXuTGulQT9Rk3AIvDYVVbak3uI8bZmCU7fFfbpUlbiT+A==", "65366623", false, "ee978c49-b884-48fc-b2b2-2af55e6812cc", false, "ninachoo@employee.com" },
-                    { "5258daf7-0bf7-4460-a854-4b3f427312c7", 0, "4c5f3648-331e-4b3b-952a-f9a1b482e0d1", "Safety Inspector", "warrenyoung@employee.com", false, 1331, "Warren", "Young", false, null, "WARRENYOUNG@EMPLOYEE.COM", "WARRENYOUNG@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEGPG0I1WDmf5F9n8dq975awU3cCu87Dk3wyOlAzw4Q1SQZ6qbZpZc3XDl+aIb4rywg==", "63388585", false, "c8d5cb13-e555-495f-8140-38266b8108e5", false, "warrenyoung@employee.com" },
-                    { "5859b058-1d6e-4b79-8040-9bbd204c0dc5", 0, "e960d7e2-e2e7-4062-b0ad-873180a3f253", "Safety Inspector", "stanleyhall@employee.com", false, 1243, "Stanley", "Hall", false, null, "STANLEYHALL@EMPLOYEE.COM", "STANLEYHALL@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEBpBPCL3NRB4fGWw9lCdo21k+i97dQCx5Y/sDxsuomzbC8icvk4ALDclmATR5Sa0uw==", "63960815", false, "7bb84b48-68d5-4bdf-8885-07307803dd1b", false, "stanleyhall@employee.com" },
-                    { "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28", 0, "36af34e6-10be-427f-b07d-176ec1eb8fa8", "Safety Inspector", "kylethomas@employee.com", false, 1426, "Kyle", "Thomas", false, null, "KYLETHOMAS@EMPLOYEE.COM", "KYLETHOMAS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEL2nMAO94obRaRi2qfLS7muM1twLI5LKhILcx3abzk9WwXbEAVzWdKY1K7fMEzTfqg==", "67361183", false, "e585365b-56e3-4335-aacd-a7904ae203bb", false, "kylethomas@employee.com" },
-                    { "63929151-0e12-4c5c-a03c-01c34642856a", 0, "1aac4b2a-591a-46bc-959e-267a034a2c8a", "Safety Inspector", "elizaross@employee.com", false, 1140, "Eliza", "Ross", false, null, "ELIZAROSS@EMPLOYEE.COM", "ELIZAROSS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEHqGno3dXU0lyau9RJrMuq9k8LPp513k0WZRl/11uqQmyz9f/SqIdXv3KEob/+0sXw==", "67780373", false, "07d77504-20c4-4526-a80b-09e15abdc184", false, "elizaross@employee.com" },
-                    { "6f84b324-5cc8-48b6-a348-57c74b3d5294", 0, "dc02690b-4208-4a3e-b5dc-c01ca916ec09", "Safety Inspector", "larryparker@employee.com", false, 2144, "Larry", "Parker", false, null, "LARRYPARKER@EMPLOYEE.COM", "LARRYPARKER@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEGOAJK5NRc1wupoD61DeguX41PkMKOQsnUMALrkoOkIeClBMypR2+uOojltEpYnTAA==", "67771504", false, "af6fc443-dbb5-4f99-bd06-bcc93e007594", false, "larryparker@employee.com" },
-                    { "77ea0c8c-fa62-4e13-980a-63ed5336f0b2", 0, "d6836df6-e65a-43ae-8bc9-c2c2229a9ce0", "Safety Inspector", "constancelee@employee.com", false, 1483, "Constance", "Lee", false, null, "CONSTANCELEE@EMPLOYEE.COM", "CONSTANCELEE@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEBXeBUXnM/caAPkHBeJ90pKxCDd7OSeOjzqgAiZxJeuyjULSJibg8APq/gNt/J9ewQ==", "67457717", false, "e89236c7-bac0-4b93-93e9-14e1e820605b", false, "constancelee@employee.com" },
-                    { "8d06620d-3d31-4c1c-9449-7eaac032f6bd", 0, "0eb4d1a8-4e2d-4ce7-998d-2869d4b9e864", "Safety Manager", "jennielow@manager.com", false, 1748, "Jennie", "Low", false, null, "JENNIELOW@MANAGER.COM", "JENNIELOW@MANAGER.COM", "AQAAAAIAAYagAAAAEEKCChrGxiNr3MwvricW2+o3TNVYIX+pTBydMGRdbM9DLD3FV91zLgo48oKTPf99QA==", "62247473", false, "85063525-a6e1-44e4-8167-7c243e74f899", false, "jennielow@manager.com" },
-                    { "911dd5ac-5093-444e-bd8d-b6fed36dcada", 0, "4119f15e-fd1e-4a0c-a813-b88cd203783f", "Safety Manager", "emilybrown@manager.com", false, 1061, "Emily", "Brown", false, null, "EMILYBROWN@MANAGER.COM", "EMILYBROWN@MANAGER.COM", "AQAAAAIAAYagAAAAEFzYh7dYXhdPVcVldswsbOGwQbLqWv85i0ZLi7WRS7/wxotoJmFQCG5NHoeGaMME5w==", "67528856", false, "89b709ee-7fe0-45f3-8d21-09fcae86740d", false, "emilybrown@manager.com" },
-                    { "b57e892b-0bdb-4469-afd9-e6522fea2f25", 0, "ae1ebb88-3d78-4796-be73-1638b66bf08f", "Safety Inspector", "jimmybaker@employee.com", false, 2156, "Jimmy", "Baker", false, null, "JIMMYBAKER@EMPLOYEE.COM", "JIMMYBAKER@EMPLOYEE.COM", "AQAAAAIAAYagAAAAECKUmL5ndgr/0FDOSjpnfoLEoplLeGuCqHMUJqxdwDaUSGK/nl8w9inTI+zhjg5dsg==", "67789981", false, "679c5982-4920-42b3-a04b-04f5025b6cca", false, "jimmybaker@employee.com" },
-                    { "cda313e3-33c1-4e6e-982b-3c5eb9ff9565", 0, "77afca09-5ae3-41cb-b1b4-ff578f3c8fcc", "Safety Inspector", "bobbybrooks@employee.com", false, 1507, "Bobby", "Brooks", false, null, "BOBBYBROOKS@EMPLOYEE.COM", "BOBBYBROOKS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEH4auxIXiZVCRvXap1/vvUmBbHuIKEIu5G8MpHgvVOuDtzENiEPICXFwYYuNlla2ew==", "62570046", false, "0b66f608-eeac-4c64-8855-26d3eba0a12c", false, "bobbybrooks@employee.com" },
-                    { "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563", 0, "36acb82c-1ad9-4465-b77f-0e069212b133", "Safety Inspector", "bendanis@employee.com", false, 2024, "Ben", "Danis", false, null, "BENDANIS@EMPLOYEE.COM", "BENDANIS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEI7QsFUKNKhnSqtRwiz3uI4eoUEl2l2jFfBx9Oh1Ur9S9D09cxMddfje9VkQqSnD5w==", "68626846", false, "d4f03968-8ccd-444a-914f-46bef6694b81", false, "bendanis@employee.com" },
-                    { "e5e8acfe-c59a-4b4d-bba4-d40057aecef4", 0, "a96db0c1-bddd-4f57-8e57-e2e2c6f4ffe9", "Safety Inspector", "maddietay@employee.com", false, 1224, "Maddie", "Tay", false, null, "MADDIETAY@EMPLOYEE.COM", "MADDIETAY@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEESVLeyHud7LDMUj/kxrSCzH0Do3DvHPmqirtg8TNCz9IrBp+jhHtZcJZobZ0h0beg==", "63457266", false, "d0194901-329a-454d-a57d-5000a131748e", false, "maddietay@employee.com" },
-                    { "e7b4016a-fa59-4669-969f-36601182f51c", 0, "2918d109-5832-4bec-b4be-8f7ee5275f89", "Safety Manager", "kevinjones@manager.com", false, 1991, "Kevin", "Jones", false, null, "KEVINJONES@MANAGER.COM", "KEVINJONES@MANAGER.COM", "AQAAAAIAAYagAAAAEKXAgLaX7bqlHQOW0+jyV5iZ0hllt1pyyvqx3fcYq4mHfTmJs0KHKkywJ6j8vazyww==", "68999888", false, "389d2f6c-cd20-4380-afc6-a5d45a06eecd", false, "kevinjones@manager.com" },
-                    { "f53bf9d9-95d1-42af-804e-e5edacdc9c74", 0, "72cbf85a-b138-4e52-8f5b-8607d347735a", "Safety Inspector", "elenareed@employee.com", false, 1953, "Elena", "Reed", false, null, "ELENAREED@EMPLOYEE.COM", "ELENAREED@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEL/eEXhaOAEc8NrYPcqDxZLQQqvvtWiHbMQTiqo/AlR/jncGT+ARqO8ukWVfiE75Rw==", "63450508", false, "4eb73ab1-ca34-4c69-a667-280b3a2459cc", false, "elenareed@employee.com" },
-                    { "fe8964fa-aac1-4db1-97bb-017e0905242f", 0, "4722bfc3-9bd1-43ad-bf0e-965f8cc5f4f4", "Safety Inspector", "jakehoward@employee.com", false, 1397, "Jake", "Howard", false, null, "JAKEHOWARD@EMPLOYEE.COM", "JAKEHOWARD@EMPLOYEE.COM", "AQAAAAIAAYagAAAAED9OKfQD56fAOnObXFP/r4T5wYIhnYmRcQQonjzM+FebFsyL/knaS6rlBerKaqlSoA==", "62678901", false, "9ef03c3a-c28d-442a-bb2f-439918cbae5c", false, "jakehoward@employee.com" }
+                    { "0923ec27-2dc5-46d5-a8a1-e48c70e69ecc", 0, "ad103fd7-2dfb-4313-882b-0045133d7539", "IT Manager", "janedoe@admin.com", false, 1003, "Jane", "Doe", false, null, "JANEDOE@ADMIN.COM", "JANEDOE@ADMIN.COM", "AQAAAAIAAYagAAAAEP3y24nT55g65XQ8fLOiboR22MfhMDAnFErVG4jmIcOABV8oTvb2bCaA28JY9wfLdQ==", "64841415", false, "e91a272c-57b5-4ecb-a7ce-7d33e1142170", false, "janedoe@admin.com" },
+                    { "1519fcce-c355-4cad-8b22-01b76b762ffc", 0, "859ab5e8-0f2d-4047-8cb8-c83f99953c54", "Safety Inspector", "tommyjones@employee.com", false, 1886, "Tommy", "Jones", false, null, "TOMMYJONES@EMPLOYEE.COM", "TOMMYJONES@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEJ7KiZWFqPpuz+JZY2JYVYDEHAzBB4IRhWqcoOB5gt/FushNvQYChZcwqd5Che2z5A==", "65325334", false, "32149996-db0c-4c0c-8b17-f8007ea5b32c", false, "tommyjones@employee.com" },
+                    { "23cdf685-e508-4fc6-84cc-c860af2dd301", 0, "d8a93375-45d6-49dd-bec7-fe1bad924ed9", "Safety Manager", "johnsmith@manager.com", false, 2010, "John", "Smith", false, null, "JOHNSMITH@MANAGER.COM", "JOHNSMITH@MANAGER.COM", "AQAAAAIAAYagAAAAEKcYgMlBnXi16AsCmFEv0xvwdeBBQAxBTVo5CPhn0fUW/AyDyTc7dkrPMYmxtt3xvQ==", "67349033", false, "3042db39-e4ea-4211-95a5-863a9615c23f", false, "johnsmith@manager.com" },
+                    { "2b94ec41-0ab6-4151-8a0f-3aeb25608ea5", 0, "19c89133-f497-4c26-9159-7fcec0710a6b", "Safety Manager", "benjaminscott@manager.com", false, 1794, "Benjamin", "Scott", false, null, "BENJAMINSCOTT@MANAGER.COM", "BENJAMINSCOTT@MANAGER.COM", "AQAAAAIAAYagAAAAEKmr2BMG9b4fhbMNMM9NPplzXV6OdwsvnPoijPfjUq//PA3KiEN6M3c2B0aEYs4+PA==", "62610071", false, "b2ba5347-d258-44a1-8f2e-8457ea513168", false, "benjaminscott@manager.com" },
+                    { "33a4bc04-9b10-49a5-8cb6-8dea48b122c4", 0, "1fa6c231-c2cb-46fc-ad7d-ace1d4a4b155", "Safety Inspector", "ninachoo@employee.com", false, 1170, "Nina", "Choo", false, null, "NINACHOO@EMPLOYEE.COM", "NINACHOO@EMPLOYEE.COM", "AQAAAAIAAYagAAAAELDvIl5Npmh6JlGJGyu1YX5k+E67pY/cuQNGby99oE9mIHiT9JsT3/E7KiCUIfXgXA==", "65366623", false, "216b22c2-0c27-4226-9f65-1168cfad781f", false, "ninachoo@employee.com" },
+                    { "5258daf7-0bf7-4460-a854-4b3f427312c7", 0, "29538102-e8c8-4753-b3c5-fa307f01f857", "Safety Inspector", "warrenyoung@employee.com", false, 1331, "Warren", "Young", false, null, "WARRENYOUNG@EMPLOYEE.COM", "WARRENYOUNG@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEMa0rrEk12R7VY5cO63FiJxbF7TmL7GUYJXt8DsUfFzBft6r4SIVZgM4pNKpS4Gb/g==", "63388585", false, "a6cb22b3-d33f-4a3b-902d-b3ba07d100da", false, "warrenyoung@employee.com" },
+                    { "5859b058-1d6e-4b79-8040-9bbd204c0dc5", 0, "40bc9a4a-66dd-4f6e-95ef-6fa05e663140", "Safety Inspector", "stanleyhall@employee.com", false, 1243, "Stanley", "Hall", false, null, "STANLEYHALL@EMPLOYEE.COM", "STANLEYHALL@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEJryGz6fu/MM1jVvVIny+mBRSWZGUarPCAkxRqWaoPNaaXpwWqgbfNb9IkSMG5czcQ==", "63960815", false, "1c6bd6d8-14d2-4482-84da-c2335deda783", false, "stanleyhall@employee.com" },
+                    { "5fe7b4d7-7dd2-4667-b1a0-8d9200a15b28", 0, "30740a3a-2d83-49d5-ac64-21460e86c773", "Safety Inspector", "kylethomas@employee.com", false, 1426, "Kyle", "Thomas", false, null, "KYLETHOMAS@EMPLOYEE.COM", "KYLETHOMAS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAENRwxkQMr0XXn7ppDWKgY1cM4H9IvIfSMC9s48MMYNKU/qxTZkYwj8OifbNg7XlsHA==", "67361183", false, "f9a39f9a-c285-4263-bb0f-69a5d0ab5290", false, "kylethomas@employee.com" },
+                    { "63929151-0e12-4c5c-a03c-01c34642856a", 0, "01e243c0-49ca-4dab-8467-88aee3cc8a22", "Safety Inspector", "elizaross@employee.com", false, 1140, "Eliza", "Ross", false, null, "ELIZAROSS@EMPLOYEE.COM", "ELIZAROSS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEOgevyttfoAsf2PjbXc94cIUw/GLvuTb8HBSBhZiKdfwlM+Cv1hswBXgbuuqbjxiOw==", "67780373", false, "955ea5df-7cde-4e39-8ec3-f3da5068fd2c", false, "elizaross@employee.com" },
+                    { "6f84b324-5cc8-48b6-a348-57c74b3d5294", 0, "152977d1-7e9c-47c8-94d8-85b04706cffe", "Safety Inspector", "larryparker@employee.com", false, 2144, "Larry", "Parker", false, null, "LARRYPARKER@EMPLOYEE.COM", "LARRYPARKER@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEHKCcJuJIGNmvLi/FrJYxTCEJOV6XKT8V7C7q+6M1o4hJJbDOJRWDRCD+BF5kgUFyg==", "67771504", false, "d91b8445-3c2f-4bbc-b000-14ae51e20bf6", false, "larryparker@employee.com" },
+                    { "77ea0c8c-fa62-4e13-980a-63ed5336f0b2", 0, "8bda3d82-07c8-47f5-b652-0fbaec53df04", "Safety Inspector", "constancelee@employee.com", false, 1483, "Constance", "Lee", false, null, "CONSTANCELEE@EMPLOYEE.COM", "CONSTANCELEE@EMPLOYEE.COM", "AQAAAAIAAYagAAAAECtUyfnTvaMXrflSKcCauWWIEVsp1w1WxmXNOtYxC/yt5ndn3u5WnRAaD9NwXxpT9A==", "67457717", false, "8329ae34-4fd2-4393-bec6-b0027e3f5623", false, "constancelee@employee.com" },
+                    { "8d06620d-3d31-4c1c-9449-7eaac032f6bd", 0, "fdbdf8c1-73cc-498a-9d5f-8e9498aa3c4e", "Safety Manager", "jennielow@manager.com", false, 1748, "Jennie", "Low", false, null, "JENNIELOW@MANAGER.COM", "JENNIELOW@MANAGER.COM", "AQAAAAIAAYagAAAAEHPLmh/xuPqwfLGBnuAGL6dp9wlvmkgWxRjBWF6XevJ09girpblkrY68HMF52N1hnQ==", "62247473", false, "2838649d-a423-4d63-a526-36ea5146a854", false, "jennielow@manager.com" },
+                    { "911dd5ac-5093-444e-bd8d-b6fed36dcada", 0, "b8e7ef9e-8598-4c10-9352-67a22c984be3", "Safety Manager", "emilybrown@manager.com", false, 1061, "Emily", "Brown", false, null, "EMILYBROWN@MANAGER.COM", "EMILYBROWN@MANAGER.COM", "AQAAAAIAAYagAAAAEMSAEIwrQCRt3fnUu8pogCC86kFcX7qoS62CF9EzkWOheQA8CNNEZpy+wwJ1XucFeg==", "67528856", false, "bf31d4e4-4d43-4e9c-936c-e63d528eaa98", false, "emilybrown@manager.com" },
+                    { "b57e892b-0bdb-4469-afd9-e6522fea2f25", 0, "68beb646-9805-4f15-9c67-a06f74bdbd3e", "Safety Inspector", "jimmybaker@employee.com", false, 2156, "Jimmy", "Baker", false, null, "JIMMYBAKER@EMPLOYEE.COM", "JIMMYBAKER@EMPLOYEE.COM", "AQAAAAIAAYagAAAAELdzVaLnA8R5CwwAWz5lfhF3XrWtlKcjAePYifhan3KNfR32O6dr3VpN01LWrwutBA==", "67789981", false, "859d5f27-245a-4ead-b56b-89ca67922e78", false, "jimmybaker@employee.com" },
+                    { "cda313e3-33c1-4e6e-982b-3c5eb9ff9565", 0, "dc2037ef-e7a2-4d63-9a9b-3bf0609f23f0", "Safety Inspector", "bobbybrooks@employee.com", false, 1507, "Bobby", "Brooks", false, null, "BOBBYBROOKS@EMPLOYEE.COM", "BOBBYBROOKS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEHNPY+DIkpq54XU/wYFDLuPuFzctCe/nHF45XBR2QhO2tpeK91sqG8uvl51sgDjGHA==", "62570046", false, "b4efb05c-2200-4204-872b-e3212b925948", false, "bobbybrooks@employee.com" },
+                    { "d4d4ebdf-dfc1-4f10-98a9-ba0a3140d563", 0, "cd7b25d8-271c-455f-bb69-292c074fe396", "Safety Inspector", "bendanis@employee.com", false, 2024, "Ben", "Danis", false, null, "BENDANIS@EMPLOYEE.COM", "BENDANIS@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEDr7b2ItGG7ZzOB3JQ9bHXNVf5bo3k0eUc+ECiLPKYWV1QQZfeJIsFqik1lHQkVvjQ==", "68626846", false, "7a0707a9-143d-4f17-b4a6-96e5fb53a257", false, "bendanis@employee.com" },
+                    { "e5e8acfe-c59a-4b4d-bba4-d40057aecef4", 0, "f57bfa65-3c12-46d9-aacf-4dfef1c2430e", "Safety Inspector", "maddietay@employee.com", false, 1224, "Maddie", "Tay", false, null, "MADDIETAY@EMPLOYEE.COM", "MADDIETAY@EMPLOYEE.COM", "AQAAAAIAAYagAAAAED9KxwtdqgyvSi115t+s6ZxIYM04lJF0ieg7NpjA4M0JgQXbMGJ7QYRal8VNQia5ig==", "63457266", false, "0b3b7505-75b3-4d42-9431-f75b499b3d4a", false, "maddietay@employee.com" },
+                    { "e7b4016a-fa59-4669-969f-36601182f51c", 0, "2c4da5bc-8482-4803-9dea-19db7ec7abfa", "Safety Manager", "kevinjones@manager.com", false, 1991, "Kevin", "Jones", false, null, "KEVINJONES@MANAGER.COM", "KEVINJONES@MANAGER.COM", "AQAAAAIAAYagAAAAEG1wqdIJ18RCkfTBhXwjMjmb2FbQfKlNFo7xW5HdAGUAt2HU76EgyAY6+gipF5UcsA==", "68999888", false, "2163c314-8b84-43a0-8efc-07dc9bd3ff2a", false, "kevinjones@manager.com" },
+                    { "f53bf9d9-95d1-42af-804e-e5edacdc9c74", 0, "6ec76dfd-473b-4627-ac95-acf1fa607f9d", "Safety Inspector", "elenareed@employee.com", false, 1953, "Elena", "Reed", false, null, "ELENAREED@EMPLOYEE.COM", "ELENAREED@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEFU4bZ/iOKfv+rZkCuvHNaLGglmgUf0pm0+65gW3XVHfDHZ32r4Qcmxcp9kEqpY64g==", "63450508", false, "ca9c86e1-2a86-41c7-a6b4-27b1d7e06fe2", false, "elenareed@employee.com" },
+                    { "fe8964fa-aac1-4db1-97bb-017e0905242f", 0, "eb02b48a-6b59-4789-ae6b-e135fbaf378a", "Safety Inspector", "jakehoward@employee.com", false, 1397, "Jake", "Howard", false, null, "JAKEHOWARD@EMPLOYEE.COM", "JAKEHOWARD@EMPLOYEE.COM", "AQAAAAIAAYagAAAAEP00Ppf8qC9q0vvArrQ05aDKPhywSouIBoi9FR67TDQCEaRUl2hWZaxKA1YOUoNerw==", "62678901", false, "2a6f9dfe-7bd3-40a9-a1d2-091bb8dd4b99", false, "jakehoward@employee.com" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Identifications",
-                columns: new[] { "Id", "ActivityId", "Name", "PossibleInjury", "WorkActivityId" },
-                values: new object[,]
-                {
-                    { 1, 1, "Trip and fall due to loose network and power extension cables, damaged floor tiles and wet floor", "Bodily Injuries", null },
-                    { 2, 1, "Falling ceiling board and and lights holding", "Head & Bodily Injuries", null },
-                    { 3, 2, "Contact with electrical parts and faulty cables with live exposed wires", "Electrocution", null },
-                    { 4, 3, "Contact with hot surface / soldering iron", "Burns to exposed skin", null },
-                    { 5, 3, "Piercing by soldering iron tip", "Minor Cuts", null },
-                    { 6, 3, "Inhaling fumes from soldering", "Eye, nose and throat irritation", null },
-                    { 7, 4, "Contact with sharp edges and pointed tips", "Injury to exposed skin/hand", null },
-                    { 8, 4, "Trip and fall due to hand tools/equipment on the floor", "Head & Bodily Injuries", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "RiskAssessments",
-                columns: new[] { "Id", "ApprovalDate", "ApprovedStatus", "Approver", "AssessmentDate", "Department", "LastReviewDate", "Location", "Name", "NextReviewDate", "Process", "RiskTeamId", "TeamId" },
-                values: new object[] { 1, new DateTime(2024, 4, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), true, "John Smith", new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Temasek Poly (ENG)", new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "EN10-2-15", "CEN MP Risk Assessment", new DateTime(2027, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "CEN MP - April 2024", null, 2 });
-
-            migrationBuilder.InsertData(
-                table: "RiskControls",
-                columns: new[] { "Id", "AdditionalControls", "DueDate", "EvaluationId", "ImplementingPerson", "Likelihood", "RPN", "Remarks", "RiskEvaluationId", "Severity" },
-                values: new object[] { 1, "All electrical appliances have proper electrical insulation.", new DateTime(2024, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "David Young", 1, 2, null, null, 2 });
 
             migrationBuilder.InsertData(
                 table: "RiskTeams",
@@ -425,17 +396,6 @@ namespace majorproject.Server.Migrations
                     { 1, "Eliza Ross", "Nina Choo", "Maddie Tay", "Stanley Hall", "Warren Young", "Jake Howard" },
                     { 2, "Kyle Thomas", "Constance Lee", "Bobby Brooks", null, null, null },
                     { 3, "Tommy Jones", "Elena Reed", "Ben Danis", "Larry Parker", "Jimmy Baker", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "WorkActivities",
-                columns: new[] { "Id", "AssessmentId", "Name", "RiskAssessmentId" },
-                values: new object[,]
-                {
-                    { 1, 1, "Use of MP facility", null },
-                    { 2, 1, "Use of BYOD Notebooks, PCs, Equipment", null },
-                    { 3, 1, "Use of soldering iron in MP labs for hardware related projects", null },
-                    { 4, 1, "Handling of hand tools in MP Labs for hardware related projects", null }
                 });
 
             migrationBuilder.InsertData(
@@ -466,6 +426,37 @@ namespace majorproject.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "RiskAssessments",
+                columns: new[] { "Id", "ApprovalDate", "ApprovedStatus", "Approver", "AssessmentDate", "Department", "LastReviewDate", "Location", "Name", "NextReviewDate", "Process", "TeamId" },
+                values: new object[] { 1, new DateTime(2024, 4, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), true, "John Smith", new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Temasek Poly (ENG)", new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "EN10-2-15", "CEN MP Risk Assessment", new DateTime(2027, 4, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "CEN MP - April 2024", 2 });
+
+            migrationBuilder.InsertData(
+                table: "WorkActivities",
+                columns: new[] { "Id", "AssessmentId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Use of MP facility" },
+                    { 2, 1, "Use of BYOD Notebooks, PCs, Equipment" },
+                    { 3, 1, "Use of soldering iron in MP labs for hardware related projects" },
+                    { 4, 1, "Handling of hand tools in MP Labs for hardware related projects" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Identifications",
+                columns: new[] { "Id", "ActivityId", "Name", "PossibleInjury" },
+                values: new object[,]
+                {
+                    { 1, 1, "Trip and fall due to loose network and power extension cables, damaged floor tiles and wet floor", "Bodily Injuries" },
+                    { 2, 1, "Falling ceiling board and and lights holding", "Head & Bodily Injuries" },
+                    { 3, 2, "Contact with electrical parts and faulty cables with live exposed wires", "Electrocution" },
+                    { 4, 3, "Contact with hot surface / soldering iron", "Burns to exposed skin" },
+                    { 5, 3, "Piercing by soldering iron tip", "Minor Cuts" },
+                    { 6, 3, "Inhaling fumes from soldering", "Eye, nose and throat irritation" },
+                    { 7, 4, "Contact with sharp edges and pointed tips", "Injury to exposed skin/hand" },
+                    { 8, 4, "Trip and fall due to hand tools/equipment on the floor", "Head & Bodily Injuries" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "RiskEvaluations",
                 columns: new[] { "Id", "ExistingRiskControls", "HazardId", "Likelihood", "RPN", "Severity" },
                 values: new object[,]
@@ -487,6 +478,11 @@ namespace majorproject.Server.Migrations
                     { 15, "Adopt safe working practices when handling sharp tools.", 7, 2, 4, 2 },
                     { 16, "Ensure all unused equipment/tools are kept properly when not in use or when away.", 8, 1, 3, 3 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "RiskControls",
+                columns: new[] { "Id", "AdditionalControls", "DueDate", "EvaluationId", "ImplementingPerson", "Likelihood", "RPN", "Remarks", "Severity" },
+                values: new object[] { 1, "All electrical appliances have proper electrical insulation.", new DateTime(2024, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "David Young", 1, 2, null, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -539,9 +535,9 @@ namespace majorproject.Server.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Identifications_WorkActivityId",
+                name: "IX_Identifications_ActivityId",
                 table: "Identifications",
-                column: "WorkActivityId");
+                column: "ActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
@@ -569,14 +565,16 @@ namespace majorproject.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RiskAssessments_RiskTeamId",
+                name: "IX_RiskAssessments_TeamId",
                 table: "RiskAssessments",
-                column: "RiskTeamId");
+                column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RiskControls_RiskEvaluationId",
+                name: "IX_RiskControls_EvaluationId",
                 table: "RiskControls",
-                column: "RiskEvaluationId");
+                column: "EvaluationId",
+                unique: true,
+                filter: "[EvaluationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RiskEvaluations_HazardId",
@@ -584,9 +582,9 @@ namespace majorproject.Server.Migrations
                 column: "HazardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkActivities_RiskAssessmentId",
+                name: "IX_WorkActivities_AssessmentId",
                 table: "WorkActivities",
-                column: "RiskAssessmentId");
+                column: "AssessmentId");
         }
 
         /// <inheritdoc />

@@ -9,12 +9,6 @@
 <h3 class="card-title">Hazards Data</h3>
 
 <br />
-
-<a href="/hazards/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Hazard
-</a>
-<br />
 <br />
 
 @if (Hazards == null)
@@ -40,9 +34,6 @@ else
                     <td>@hazard.Name</td>
                     <td>@hazard.PossibleInjury</td>                  
                     <td>
-                        <a href="/hazards/edit/@hazard.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(hazard.Id))">
                             <span class="oi oi-trash"></span>
                         </button>

@@ -39,7 +39,7 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIdentification(int id)
         {
-            var identification = await _unitOfWork.Identifications.Get(q => q.Id == id);
+            var identification = await _unitOfWork.Identifications.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskEvaluations));
 
             if (identification == null)
             {

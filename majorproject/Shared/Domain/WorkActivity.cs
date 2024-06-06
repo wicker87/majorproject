@@ -10,7 +10,7 @@ namespace majorproject.Shared.Domain
     {
         public string? Name {  get; set; }
         public int? AssessmentId {  get; set; }
-        public virtual RiskAssessment? RiskAssessment { get; set; }
-        public virtual ICollection<Identification>? Identifications { get; set; }
+        public virtual RiskAssessment? Assessment { get; set; }
+        public virtual List<Identification>? Identifications { get; set; }
     }
 }

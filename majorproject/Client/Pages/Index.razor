@@ -1,60 +1,41 @@
 ﻿@page "/"
-@using System.Security.Claims
-@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Risk Assessor</PageTitle>
 
 <h1>Welcome to Risk Assessment System</h1>
 
-<h5>Your online tool for managing Risk Assessment Forms for your organisation.</h5>
-
-@* <strong>Just checking</strong>
-@if (authenticationState == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <p>Your email: @userName</p>
-    <p>Your role: @userRole</p>
-} *@
+<h5>Your online tool for managing Risk Assessment Forms.</h5>
 
 <br />
-<p style="font-size: 24px; font-weight: bold;">Workplace Safety</p>
-<iframe id="ytplayer" type="text/html" width="700" height="480" allowfullscreen
-        src="https://www.youtube.com/embed/hAWOY80H22M?autoplay=0&mute=1&loop=1&playlist=hAWOY80H22M,O1Iw2kZfv2M,M9sjKdysswo">
-</iframe>
-<p>Sources: Workplace Safety & Health Council (YouTube)</p>
+<div style="display: flex; gap: 100px;">
+    <div>
+        <p style="font-size: 24px; font-weight: bold;">Workplace Safety</p>
+        <iframe id="ytplayer" type="text/html" width="700" height="480" allowfullscreen
+                src="https://www.youtube.com/embed/hAWOY80H22M?autoplay=0&mute=1&loop=1&playlist=hAWOY80H22M,O1Iw2kZfv2M,M9sjKdysswo">
+        </iframe>
+        <p>Sources: Workplace Safety & Health Council (YouTube)</p>
+    </div>
+    <div>
+        <br />
+        <br />
+        <p style="font-size: 24px; font-weight: bold;">An Overview</p>
+        <h5>
+            Risk Assessment is a systematic process of evaluating potential<br />
+            risks that may be involved in a projected activity. It is essential in<br />
+            workplace safety and health management to identify, analyse,<br />
+            and control hazards that could potentially cause harm to people.
+        </h5>
+        <br />
+        <br />
+        <p style="font-size: 24px; font-weight: bold;">Importance of Risk Assessment</p>      
+        <h6>
+            <p><strong>Legal Compliance:</strong><br />Helps ensure compliance with health and safety regulations and standards.</p>
+            <p><strong>Prevent Accidents and Illnesses:</strong><br />Proactively identifies and mitigates potential hazards.</p>
+            <p><strong>Improves Workplace Safety:</strong><br />Creates a safer environment for employees, reducing the likelihood of accidents and health issues.</p>
+            <p><strong>Enhances Productivity:</strong><br />A safe workplace contributes to higher employee morale and productivity.</p>
+        </h6>                   
+    </div>
+</div>
 
 @* <SurveyPrompt Title="How is Blazor working for you?" /> *@
 
-@code {
-    // private AuthenticationState authenticationState;
-    // private string userName;
-    // private string userRole;
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-    //     var user = authenticationState.User;
-
-    //     if (user.Identity.IsAuthenticated)
-    //     {
-    //         userName = user.Identity.Name;
-    //         var role = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-    //         if (role != null)
-    //         {
-    //             userRole = role.Value;
-    //         }
-    //         else
-    //         {
-    //             userRole = "No role assigned";
-    //         }
-    //     }
-    //     else
-    //     {
-    //         userName = "Anonymous";
-    //         userRole = "None";
-    //     }
-    // }
-}

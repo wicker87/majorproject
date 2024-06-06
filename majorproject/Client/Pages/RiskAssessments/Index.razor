@@ -31,6 +31,7 @@ else
                 <th>Process</th>
                 <th>Location</th>
                 <th>Assessment Date</th>
+                <th>Approver</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -44,6 +45,7 @@ else
                     <td>@assessment.Process</td>
                     <td>@assessment.Location</td>
                     <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
+                    <td>@assessment.Approver</td>
                     <td>
                         @if(assessment.ApprovedStatus == true)
                         {

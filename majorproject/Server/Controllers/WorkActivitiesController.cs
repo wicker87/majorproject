@@ -34,7 +34,7 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetWorkActivity(int id)
         {
-            var workActivity = await _unitOfWork.WorkActivities.Get(q => q.Id == id);
+            var workActivity = await _unitOfWork.WorkActivities.Get(q => q.Id == id, includes: q => q.Include(x => x.Identifications));
 
             if (workActivity == null)
             {
@@ -42,6 +42,14 @@ namespace majorproject.Server.Controllers
             }
 
             return Ok(workActivity);
+        }
+
+        // GET: api/Activities/assessment/5 - Newly added
+        [HttpGet("assessment/{id}")]
+        public async Task<IActionResult> GetActivitiesByAssessment(int id)
+        {
+            var activities = await _unitOfWork.WorkActivities.GetAll(q => q.AssessmentId == id);
+            return Ok(activities);
         }
 
         // PUT: api/WorkActivities/5
