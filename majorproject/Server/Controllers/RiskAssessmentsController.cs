@@ -27,9 +27,9 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskAssessments()
         {
-            var riskAssessments = await _unitOfWork.RiskAssessments.GetAll();
+            var riskAssessments = await _unitOfWork.RiskAssessments.GetAll(includes: q => q.Include(q => q.Team));
 
-            if(riskAssessments == null) 
+            if (riskAssessments == null) 
             {  
                 return NotFound(); 
             }
@@ -41,7 +41,9 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskAssessment(int id)
         {
-            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q=>q.Id==id);
+            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id,
+                includes: q => q.Include(x => x.Team).Include(x => x.WorkActivities)
+                .ThenInclude(x => x.Identifications).ThenInclude(x => x.RiskEvaluations).ThenInclude(x => x.Control));
 
             if (riskAssessment == null)
             {

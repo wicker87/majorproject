@@ -3,63 +3,65 @@
 @inject NavigationManager _navManager
 @inject IJSRuntime js
 
-<h3 class="card-title">Hazards</h3>
+<h3 class="card-title">Manage Hazards</h3>
 <hr />
-<h5>@formTitle</h5>
 <br />
 
-<div style="display: flex; gap: 10px;">
-    <div>
-        <FormComponent ButtonText="@formButtonText" hazard="hazard" OnValidSubmit="CreateOrUpdateHazard" />
-    </div>
-    <div>
-        @if (formButtonText == "Update Hazard")
+@foreach (var activity in activities)
+{
+    <h4>@activity.Activity.Name</h4>
+    <FormComponent T="Identification" ButtonText="@activity.FormButtonText" Model="@activity.CurrentHazard" OnValidSubmit="() => CreateOrUpdateHazard(activity)" OnCancelEdit="() => CancelEdit(activity)" />
+    <br />
+    <ol>
+        @foreach (var hazard in activity.Hazards)
         {
-            <br />
-            <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+            <li>
+                @hazard.Name
+                <button @onclick="() => EditHazard(activity, hazard)" class="btn btn-link">Edit</button>
+                <button @onclick="() => DeleteHazard(activity, hazard.Id, hazard.Name)" class="btn btn-link text-danger">Delete</button>
+            </li>
         }
-    </div>
-</div>
-<br />
-<ol>
-    @foreach (var haz in hazards)
-    {
-        <li>
-            @haz.Name (@haz.PossibleInjury)
-            <button @onclick="() => EditHazard(haz)" class="btn btn text-warning">Edit</button>
-            <button @onclick="() => DeleteHazard(haz.Id, haz.Name)" class="btn btn text-danger">Delete</button>
-        </li>
-    }
-</ol>
-<br />
-<hr />
-<button @onclick="CompleteHazards" class="btn btn-success btn-block">Update Hazards</button>
+    </ol>
+    <hr />
+}
+
+<button @onclick="CompleteHazards" class="btn btn-secondary">Next</button>
 
 @code {
     [Parameter] public int assessmentId { get; set; }
 
-    private Identification hazard = new Identification();
-    private List<Identification> hazards = new List<Identification>();
-    private string formButtonText = "Create Hazard";
-    private string formTitle = "Add Hazard";
-    private bool Disabled = false;
+    private List<ActivityWrapper> activities = new List<ActivityWrapper>();
 
     protected override async Task OnInitializedAsync()
     {
-        hazard = new Identification { ActivityId = assessmentId };
-        hazards = await _client.GetFromJsonAsync<List<Identification>>($"{Endpoints.IdentificationsEndpoint}/assessment/{assessmentId}");
+        // Fetch all activities for the specified assessment
+        var activityList = await _client.GetFromJsonAsync<List<WorkActivity>>($"{Endpoints.WorkActivitiesEndpoint}/assessment/{assessmentId}");
+
+        foreach (var activity in activityList)
+        {
+            var hazards = await _client.GetFromJsonAsync<List<Identification>>($"{Endpoints.IdentificationsEndpoint}/activity/{activity.Id}");
+            activities.Add(new ActivityWrapper
+                {
+                    Activity = activity,
+                    Hazards = hazards,
+                    CurrentHazard = new Identification { ActivityId = activity.Id },
+                    FormButtonText = "Create Hazard"
+                });
+        }
     }
 
-    private async Task CreateOrUpdateHazard()
+    private async Task CreateOrUpdateHazard(ActivityWrapper activityWrapper)
     {
+        var hazard = activityWrapper.CurrentHazard;
+
         if (hazard.Id == 0) // Create new hazard
         {
             var response = await _client.PostAsJsonAsync(Endpoints.IdentificationsEndpoint, hazard);
             if (response.IsSuccessStatusCode)
             {
                 var newHazard = await response.Content.ReadFromJsonAsync<Identification>();
-                hazards.Add(newHazard);
-                hazard = new Identification { ActivityId = assessmentId }; // Reset the form for the next hazard
+                activityWrapper.Hazards.Add(newHazard);
+                activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id }; // Reset the form
             }
         }
         else // Update existing hazard
@@ -67,33 +69,30 @@
             var response = await _client.PutAsJsonAsync($"{Endpoints.IdentificationsEndpoint}/{hazard.Id}", hazard);
             if (response.IsSuccessStatusCode)
             {
-                var index = hazards.FindIndex(a => a.Id == hazard.Id);
+                var index = activityWrapper.Hazards.FindIndex(h => h.Id == hazard.Id);
                 if (index != -1)
                 {
-                    hazards[index] = hazard;
+                    activityWrapper.Hazards[index] = hazard;
                 }
-                hazard = new Identification { ActivityId = assessmentId }; // Reset the form
-                formButtonText = "Create Hazard";
-                formTitle = "Add Hazard";
+                activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id }; // Reset the form
+                activityWrapper.FormButtonText = "Create Hazard";
             }
         }
     }
 
-    private void EditHazard(Identification haz)
+    private void EditHazard(ActivityWrapper activityWrapper, Identification hazard)
     {
-        hazard = haz;
-        formButtonText = "Update Hazard";
-        formTitle = "Edit Hazard";
+        activityWrapper.CurrentHazard = hazard;
+        activityWrapper.FormButtonText = "Update Hazard";
     }
 
-    private void CancelEdit()
+    private void CancelEdit(ActivityWrapper activityWrapper)
     {
-        hazard = new Identification { ActivityId = assessmentId };
-        formButtonText = "Create Hazard";
-        formTitle = "Add Hazard";
+        activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id };
+        activityWrapper.FormButtonText = "Create Hazard";
     }
 
-    private async Task DeleteHazard(int hazardId, string hazardName)
+    private async Task DeleteHazard(ActivityWrapper activityWrapper, int hazardId, string hazardName)
     {
         bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {hazardName}?");
         if (confirm)
@@ -101,16 +100,21 @@
             var response = await _client.DeleteAsync($"{Endpoints.IdentificationsEndpoint}/{hazardId}");
             if (response.IsSuccessStatusCode)
             {
-                hazards = hazards.Where(a => a.Id != hazardId).ToList();
+                activityWrapper.Hazards = activityWrapper.Hazards.Where(h => h.Id != hazardId).ToList();
             }
         }
     }
 
     private void CompleteHazards()
     {
-        _navManager.NavigateTo($"/assessments/"); // temporary
+        _navManager.NavigateTo($"/assessments/{assessmentId}/nextstep"); // Navigate to the next step
+    }
+
+    private class ActivityWrapper
+    {
+        public WorkActivity Activity { get; set; }
+        public List<Identification> Hazards { get; set; }
+        public Identification CurrentHazard { get; set; }
+        public string FormButtonText { get; set; }
     }
 }
-
-
-

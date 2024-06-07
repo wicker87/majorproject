@@ -19,7 +19,7 @@
         </div>
     </fieldset>
     <br />
-    <div style="display: flex; gap: 80px">
+    <div style="display: flex; gap: 10px">
         <div>
             @if (!Disabled)
             {
@@ -28,6 +28,12 @@
                 </button>
             }
         </div>
+        @if (ButtonText == "Update Hazard")
+        {
+            <div>
+                <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+            </div>
+        }
         @* <div>
             <BackToList Target="hazards" />
         </div> *@
@@ -39,5 +45,14 @@
     [Parameter] public Identification? hazard { get; set; } 
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; } 
+    [Parameter] public EventCallback OnCancelEdit { get; set; }
+
+    private void CancelEdit()
+    {
+        if (OnCancelEdit.HasDelegate)
+        {
+            OnCancelEdit.InvokeAsync(null);
+        }
+    }
 
 }

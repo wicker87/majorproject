@@ -48,6 +48,18 @@ namespace majorproject.Server.Controllers
             return Ok(identification);
         }
 
+        // GET: api/Identifications/activity/5 - Newly Added
+        [HttpGet("activity/{activityId}")]
+        public async Task<IActionResult> GetIdentificationsByActivityId(int activityId)
+        {
+            var identifications = await _unitOfWork.Identifications.GetAll(q => q.ActivityId == activityId);
+            if (identifications == null || !identifications.Any())
+            {
+                return NotFound();
+            }
+            return Ok(identifications);
+        }
+
         // PUT: api/Identifications/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
