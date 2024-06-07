@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label> Name: </label>
                     <div>
-                        <InputText @bind-Value="assessment.Name" class="form-control" style="width: 300px;" />
+                        <InputTextArea @bind-Value="assessment.Name" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                         <ValidationMessage For="@(() => assessment.Name)" />
                     </div>
                 </div>
@@ -19,15 +19,17 @@
                 <div class="form-group">
                     <label> Department: </label>
                     <div>
-                        <InputText @bind-Value="assessment.Department" class="form-control" style="width: 300px;" />
+                        <InputTextArea @bind-Value="assessment.Department" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                         <ValidationMessage For="@(() => assessment.Department)" />
                     </div>
-                </div>
-                <br />
+                </div>               
+            </div>
+            @* Second Column *@
+            <div>
                 <div class="form-group">
                     <label> Process: </label>
                     <div>
-                        <InputTextArea @bind-Value="assessment.Process" class="form-control" style="width: 300px; height: 100px; resize: none;" />
+                        <InputTextArea @bind-Value="assessment.Process" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                         <ValidationMessage For="@(() => assessment.Process)" />
                     </div>
                 </div>
@@ -35,12 +37,12 @@
                 <div class="form-group">
                     <label> Process/Activity Location: </label>
                     <div>
-                        <InputTextArea @bind-Value="assessment.Location" class="form-control" style="width: 300px; height: 100px; resize: none;" />
+                        <InputTextArea @bind-Value="assessment.Location" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                         <ValidationMessage For="@(() => assessment.Location)" />
                     </div>
                 </div>
             </div>
-            @* Second Column *@
+            @* Third Column *@
             <div>
                 <div class="form-group">
                     <label> Assessment Date: </label>
@@ -66,7 +68,7 @@
                     </div>
                 </div>               
             </div>
-            @* Third Column *@
+            @* Forth Column *@
             <div>
                 <div class="form-group">
                     <label> Approver: </label>
@@ -130,7 +132,7 @@
     </fieldset>
     <br />
     @* Buttons *@
-    <div style="display: flex; gap: 80px">
+    <div style="display: flex; gap: 480px">
         <div>
             @if (!Disabled)
             {

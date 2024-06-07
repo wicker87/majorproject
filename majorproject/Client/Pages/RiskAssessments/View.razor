@@ -1,7 +1,31 @@
-﻿@page "/assessments/view/{assessmentId:int}"
+﻿@page "/assessments/view/{id:int}"
 @inject HttpClient _client
 
-<h3 class="card-title">View Assessment Details</h3>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 6px;      
+    }
+
+    th {
+        text-align: center;
+        background-color: #ffb366;
+    }
+
+    td {
+        text-align: left;
+    }
+</style>
+
+<h3 class="card-title">View Risk Assessment Details</h3>
 <hr />
 
 @if (assessment == null)
@@ -10,10 +34,9 @@
 }
 else
 {
-    <h4>Assessment Details</h4>
-    <div style="display: flex; gap: 80px">
+    <h4>@assessment.Name</h4>
+    <div style="display:flex; gap: 60px;">
         <div>
-            <p><strong>Name:</strong> @assessment.Name</p>
             <p><strong>Department:</strong> @assessment.Department</p>
             <p><strong>Process:</strong> @assessment.Process</p>
             <p><strong>Location:</strong> @assessment.Location</p>
@@ -24,48 +47,129 @@ else
             <p><strong>Next Review Date:</strong> @assessment.NextReviewDate.ToString("dd/MM/yyyy")</p>
         </div>
         <div>
-            <p><strong>RA Leader:</strong> @assessment.RiskTeam?.Leader</p>
-            <p><strong>RA Member 1:</strong> @assessment.RiskTeam?.Member1</p>
-            <p><strong>RA Member 2:</strong> @assessment.RiskTeam?.Member2</p>                   
+            <p><strong>Leader:</strong> @assessment.Team?.Leader</p>
+            <p><strong>Member 1:</strong> @assessment.Team?.Member1</p>
+            <p><strong>Member 2:</strong> @assessment.Team?.Member2</p>
         </div>
         <div>
-            <p><strong>RA Member 3:</strong> @assessment.RiskTeam?.Member3</p>
-            <p><strong>RA Member 4:</strong> @assessment.RiskTeam?.Member4</p>
-            <p><strong>RA Member 5:</strong> @assessment.RiskTeam?.Member5</p>
+            <p><strong>Member 3:</strong> @assessment.Team?.Member3</p>
+            <p><strong>Member 4:</strong> @assessment.Team?.Member4</p>
+            <p><strong>Member 5:</strong> @assessment.Team?.Member5</p>
         </div>
         <div>
-            <p><strong>Approver:</strong> @assessment.Approver</p>
-        </div>
+            <p>Approved by</p>
+            <p><strong>Name:</strong> @assessment.Approver</p>
+            <p><strong>Date:</strong> @assessment.ApprovalDate.ToString("dd/MM/yyyy")</p>
+        </div>    
     </div>
 
-    <hr />
-
-    <div>
-        <h4>Activities</h4>
-        @* <ul>
-            @if (assessment.Activities != null)
+    <table>
+        <thead>
+            <tr class="header">
+                @* header row *@
+                <th colspan="4">Hazard Identification</th>
+                <th colspan="4">Risk Evaluation</th>
+                <th colspan="7">Risk Control</th>
+            </tr>
+            <tr>
+                @* sub-header row *@
+                <th>Ref</th>
+                <th>Work Activity</th>
+                <th>Hazard</th>
+                <th>Possible Injury/Ill-health</th>
+                <th>Existing Controls</th>
+                <th>S</th>
+                <th>L</th>
+                <th>RPN</th>
+                <th>Additional Controls</th>
+                <th>S</th>
+                <th>L</th>
+                <th>RPN</th>
+                <th>Implementer</th>
+                <th>Due Date</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (assessment.WorkActivities == null || !assessment.WorkActivities.Any())
             {
-                @foreach (var activity in assessment.Activities)
-                {
-                    <li>@activity.Name</li>
-                }
+                <tr>
+                    <td colspan="15">No Work activities</td>
+                </tr>
             }
             else
             {
-                <span>No activities available</span>
+                int index = 1;
+                @foreach (var activity in assessment.WorkActivities)
+                {
+                    var activityRowSpan = activity.Identifications?.Sum(h => h.RiskEvaluations?.Count() ?? 1) ?? 1;
+                    var activityPrinted = false;
+
+                    @foreach (var hazard in activity.Identifications ?? new List<Identification>())
+                    {
+                        var hazardRowSpan = hazard.RiskEvaluations?.Count() ?? 1;
+                        var hazardPrinted = false;
+
+                        @foreach (var evaluation in hazard.RiskEvaluations ?? new List<RiskEvaluation>())
+                        {
+                            <tr>
+                                @if (!activityPrinted)
+                                {
+                                    <td rowspan="@activityRowSpan">@index</td>
+                                    <td rowspan="@activityRowSpan">@activity.Name</td>
+                                    activityPrinted = true;
+                                    index++;
+                                }
+
+                                @if (!hazardPrinted)
+                                {
+                                    <td rowspan="@hazardRowSpan">@hazard.Name</td>
+                                    <td rowspan="@hazardRowSpan">@hazard.PossibleInjury</td>
+                                    hazardPrinted = true;
+                                }
+
+                                <td>@evaluation.ExistingRiskControls</td>
+                                <td>@evaluation.Severity</td>
+                                <td>@evaluation.Likelihood</td>
+                                <td>@evaluation.RPN</td>
+
+                                <td>@evaluation.Control?.AdditionalControls</td>
+                                <td>@evaluation.Control?.Severity</td>
+                                <td>@evaluation.Control?.Likelihood</td>
+                                <td>@evaluation.Control?.RPN</td>
+                                <td>@evaluation.Control?.ImplementingPerson</td>
+                                <td>@evaluation.Control?.DueDate.ToString("dd/MM/yyyy")</td>
+                                <td>@evaluation.Control?.Remarks</td>
+                            </tr>
+                        }
+                    }
+                    @* Handle Case with No Hazards or Evaluations *@
+                    if (!activity.Identifications.Any())
+                    {
+                        <tr>
+                            <td>@index</td>
+                            <td>@activity.Name</td>
+                            <td colspan="13"></td>
+                        </tr>
+                        index++;
+                    }
+                }
             }
-        </ul> *@
-    </div>
+        </tbody>
+    </table>
+    <br />
+    <BackToList Target="assessments" />
 }
+
 
 @code {
 
-    [Parameter] public int assessmentId { get; set; }
+    [Parameter] public int id { get; set; }
     private RiskAssessment assessment;
 
     protected async override Task OnParametersSetAsync()
     {
-        assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{assessmentId}");
+        assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{id}");
     }
 
 }

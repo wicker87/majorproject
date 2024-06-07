@@ -1,0 +1,23 @@
+﻿@page "/assessments/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Edit Risk Assessment</h3>
+
+<FormComponent ButtonText="Update Form" OnValidSubmit="EditForm" assessment="assessment" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    RiskAssessment? assessment = new RiskAssessment();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{id}");
+    }
+
+    async Task EditForm()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
+        _navManager.NavigateTo($"/assessments/{id}/activities/edit");
+    }
+}

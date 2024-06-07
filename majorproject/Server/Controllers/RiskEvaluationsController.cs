@@ -39,7 +39,7 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskEvaluation(int id)
         {
-            var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id);
+            var riskEvaluation = await _unitOfWork.RiskEvaluations.Get(q => q.Id == id, includes: q => q.Include(x => x.Control));
 
             if (riskEvaluation == null)
             {

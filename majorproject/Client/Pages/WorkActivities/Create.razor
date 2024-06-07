@@ -1,0 +1,89 @@
+﻿@page "/assessments/{assessmentId:int}/activities/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Add Work Activity</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="@formButtonText" activity="activity" OnValidSubmit="CreateOrUpdateActivity" />
+<br />
+<ol>
+    @foreach (var act in activities)
+    {
+        <li>
+            @act.Name
+            <button @onclick="() => EditActivity(act)" class="btn btn-link">Edit</button>
+            <button @onclick="() => DeleteActivity(act.Id)" class="btn btn-link text-danger">Delete</button>
+        </li>
+    }
+</ol>
+<br />
+<hr />
+<button @onclick="CompleteActivities" class="btn btn-secondary">Next</button>
+
+@code {
+    [Parameter] public int assessmentId { get; set; }
+
+    private WorkActivity activity = new WorkActivity();
+    private List<WorkActivity> activities = new List<WorkActivity>();
+    private string formButtonText = "Create Activity";
+
+    protected override async Task OnInitializedAsync()
+    {
+        activity = new WorkActivity { AssessmentId = assessmentId };
+        activities = await _client.GetFromJsonAsync<List<WorkActivity>>($"{Endpoints.WorkActivitiesEndpoint}/assessment/{assessmentId}");
+    }
+
+    private async Task CreateOrUpdateActivity()
+    {
+        if (activity.Id == 0) // Create new activity
+        {
+            var response = await _client.PostAsJsonAsync(Endpoints.WorkActivitiesEndpoint, activity);
+            if (response.IsSuccessStatusCode)
+            {
+                var newActivity = await response.Content.ReadFromJsonAsync<WorkActivity>();
+                activities.Add(activity);
+                activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form for the next activity
+            }
+        }
+        else // Update existing activity
+        {
+            var response = await _client.PutAsJsonAsync($"{Endpoints.WorkActivitiesEndpoint}/{activity.Id}", activity);
+            if (response.IsSuccessStatusCode)
+            {
+                var index = activities.FindIndex(a => a.Id == activity.Id);
+                if (index != -1)
+                {
+                    activities[index] = activity;
+                }
+                activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form
+                formButtonText = "Create Activity";
+            }
+        }
+    }
+
+    private void EditActivity(WorkActivity act)
+    {
+        activity = act;
+        formButtonText = "Update Activity";
+    }
+
+    private async Task DeleteActivity(int activityId)
+    {
+        var response = await _client.DeleteAsync($"{Endpoints.WorkActivitiesEndpoint}/{activityId}");
+        if (response.IsSuccessStatusCode)
+        {
+            activities = activities.Where(a => a.Id != activityId).ToList();
+        }
+    }
+
+    private void CompleteActivities()
+    {
+        // _navManager.NavigateTo($"/assessments/{assessmentId}/hazards/create");
+        _navManager.NavigateTo($"/assessments/"); // temporary
+    }
+}
+
+
+

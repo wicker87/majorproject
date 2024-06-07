@@ -9,12 +9,6 @@
 <h3 class="card-title">Risk Evaluations Data</h3>
 
 <br />
-
-<a href="/evaluations/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Risk Evaluation
-</a>
-<br />
 <br />
 
 @if (Evaluations == null)
@@ -44,9 +38,6 @@ else
                     <td>@evaluation.Severity</td>
                     <td>@evaluation.RPN</td>
                     <td>
-                        <a href="/evaluations/edit/@evaluation.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(evaluation.Id))">
                             <span class="oi oi-trash"></span>
                         </button>

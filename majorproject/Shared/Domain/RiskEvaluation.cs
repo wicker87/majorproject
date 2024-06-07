@@ -13,6 +13,7 @@ namespace majorproject.Shared.Domain
         public int? Likelihood { get; set; }
         public int? RPN { get; set; }
         public int? HazardId { get; set; }
-        public virtual Hazard? Hazard { get; set; }
+        public virtual Identification? Hazard { get; set; }
+        public virtual RiskControl? Control { get; set; }
     }
 }

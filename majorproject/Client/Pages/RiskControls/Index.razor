@@ -9,12 +9,6 @@
 <h3 class="card-title">Risk Controls Data</h3>
 
 <br />
-
-<a href="/controls/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Risk Control
-</a>
-<br />
 <br />
 
 @if (Controls == null)
@@ -50,9 +44,6 @@ else
                     <td>@control.DueDate.ToString("dd/MM/yyyy")</td>
                     <td>@control.Remarks</td>
                     <td>
-                        <a href="/controls/edit/@control.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(control.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
