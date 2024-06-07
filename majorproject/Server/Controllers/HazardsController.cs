@@ -28,10 +28,11 @@ namespace majorproject.Server.Controllers
         {
             var hazards = await _unitOfWork.Hazards.GetAll();
 
-            if (hazards == null)
+            if(hazards == null)
             {
                 return NotFound();
             }
+
             return Ok(hazards);
         }
 

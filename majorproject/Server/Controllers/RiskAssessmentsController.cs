@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using majorproject.Server.Data;
 using majorproject.Shared.Domain;
 using majorproject.Server.IRepository;
+using majorproject.Server.Repository;
 
 namespace majorproject.Server.Controllers
 {
@@ -26,7 +27,13 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskAssessments()
         {
-            var riskAssessments = await _unitOfWork.RiskAssessments.GetAll(includes: q => q.Include(x => x.RiskTeam));
+            var riskAssessments = await _unitOfWork.RiskAssessments.GetAll();
+
+            if(riskAssessments == null) 
+            {  
+                return NotFound(); 
+            }
+
             return Ok(riskAssessments);
         }
 
@@ -34,9 +41,7 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskAssessment(int id)
         {
-            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskTeam.Leader)
-            .Include(x => x.RiskTeam.Member1).Include(x => x.RiskTeam.Member2).Include(x => x.RiskTeam.Member3)
-            .Include(x => x.RiskTeam.Member4).Include(x => x.RiskTeam.Member5).Include(x => x.Activities));
+            var riskAssessment = await _unitOfWork.RiskAssessments.Get(q=>q.Id==id);
 
             if (riskAssessment == null)
             {

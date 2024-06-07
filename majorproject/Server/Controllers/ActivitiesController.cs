@@ -29,7 +29,7 @@ namespace majorproject.Server.Controllers
         {
             var activities = await _unitOfWork.Activities.GetAll();
 
-            if (activities == null)
+            if(activities == null)
             {
                 return NotFound();
             }
