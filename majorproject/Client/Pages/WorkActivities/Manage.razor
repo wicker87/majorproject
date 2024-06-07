@@ -1,26 +1,39 @@
-﻿@page "/assessments/{assessmentId:int}/activities/create"
+﻿@page "/assessments/{assessmentId:int}/activities/manage"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject IJSRuntime js
 
-<h3 class="card-title">Add Work Activity</h3>
+<h3 class="card-title">Work Activities</h3>
 <hr />
+<h5>@formTitle</h5>
 <br />
 
-<FormComponent ButtonText="@formButtonText" activity="activity" OnValidSubmit="CreateOrUpdateActivity" />
+<div style="display: flex; gap: 10px;">
+    <div>
+        <FormComponent ButtonText="@formButtonText" activity="activity" OnValidSubmit="CreateOrUpdateActivity" />
+    </div>
+    <div>
+        @if (formButtonText == "Update Activity")
+        {
+            <br />
+            <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+        }
+    </div>
+</div>
 <br />
 <ol>
     @foreach (var act in activities)
     {
         <li>
             @act.Name
-            <button @onclick="() => EditActivity(act)" class="btn btn-link">Edit</button>
-            <button @onclick="() => DeleteActivity(act.Id)" class="btn btn-link text-danger">Delete</button>
+            <button @onclick="() => EditActivity(act)" class="btn btn text-warning">Edit</button>
+            <button @onclick="() => DeleteActivity(act.Id, act.Name)" class="btn btn text-danger">Delete</button>
         </li>
     }
 </ol>
 <br />
 <hr />
-<button @onclick="CompleteActivities" class="btn btn-secondary">Next</button>
+<button @onclick="CompleteActivities" class="btn btn-success btn-block">Update Activities</button>
 
 @code {
     [Parameter] public int assessmentId { get; set; }
@@ -28,6 +41,8 @@
     private WorkActivity activity = new WorkActivity();
     private List<WorkActivity> activities = new List<WorkActivity>();
     private string formButtonText = "Create Activity";
+    private string formTitle = "Add Work Activity";
+    private bool Disabled = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,7 +58,7 @@
             if (response.IsSuccessStatusCode)
             {
                 var newActivity = await response.Content.ReadFromJsonAsync<WorkActivity>();
-                activities.Add(activity);
+                activities.Add(newActivity);
                 activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form for the next activity
             }
         }
@@ -59,6 +74,7 @@
                 }
                 activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form
                 formButtonText = "Create Activity";
+                formTitle = "Add Work Activity";
             }
         }
     }
@@ -67,21 +83,32 @@
     {
         activity = act;
         formButtonText = "Update Activity";
+        formTitle = "Edit Work Activity";
     }
 
-    private async Task DeleteActivity(int activityId)
+    private void CancelEdit()
     {
-        var response = await _client.DeleteAsync($"{Endpoints.WorkActivitiesEndpoint}/{activityId}");
-        if (response.IsSuccessStatusCode)
+        activity = new WorkActivity { AssessmentId = assessmentId };
+        formButtonText = "Create Activity";
+        formTitle = "Add Work Activity";
+    }
+
+    private async Task DeleteActivity(int activityId, string activityName)
+    {
+        bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {activityName}?");
+        if (confirm)
         {
-            activities = activities.Where(a => a.Id != activityId).ToList();
+            var response = await _client.DeleteAsync($"{Endpoints.WorkActivitiesEndpoint}/{activityId}");
+            if (response.IsSuccessStatusCode)
+            {
+                activities = activities.Where(a => a.Id != activityId).ToList();
+            }
         }
     }
 
     private void CompleteActivities()
     {
-        // _navManager.NavigateTo($"/assessments/{assessmentId}/hazards/create");
-        _navManager.NavigateTo($"/assessments/"); // temporary
+        _navManager.NavigateTo($"/assessments/{assessmentId:int}/hazards/manage"); 
     }
 }
 

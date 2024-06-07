@@ -1,12 +1,20 @@
-﻿<EditForm Model="@activity" OnValidSubmit="@OnValidSubmit">
+﻿<EditForm Model="@hazard" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
             <label> Name: </label>
             <div>
-                <InputTextArea @bind-Value="activity.Name" class="form-control" style="width: 300px; height: 60px; resize: none;" />
-                <ValidationMessage For="@(() => activity.Name)" />
+                <InputTextArea @bind-Value="hazard.Name" class="form-control" style="width: 300px; height: 60px; resize: none;" />
+                <ValidationMessage For="@(() => hazard.Name)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Possible Injury: </label>
+            <div>
+                <InputTextArea @bind-Value="hazard.PossibleInjury" class="form-control" style="width: 300px; height: 60px; resize: none;" />
+                <ValidationMessage For="@(() => hazard.Name)" />
             </div>
         </div>
     </fieldset>
@@ -21,14 +29,14 @@
             }
         </div>
         @* <div>
-            <BackToList Target="activities" />
+            <BackToList Target="hazards" />
         </div> *@
     </div>
 </EditForm>
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public WorkActivity? activity { get; set; } 
+    [Parameter] public Identification? hazard { get; set; } 
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; } 
 

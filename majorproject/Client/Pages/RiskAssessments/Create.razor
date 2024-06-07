@@ -17,7 +17,7 @@
         if (response.IsSuccessStatusCode)
         {
             var createdAssessment = await response.Content.ReadFromJsonAsync<RiskAssessment>();
-            _navManager.NavigateTo($"/assessments/{createdAssessment.Id}/activities/create");
+            _navManager.NavigateTo($"/assessments/{createdAssessment.Id}/activities/manage");
         }
     }
 }

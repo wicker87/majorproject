@@ -1,0 +1,116 @@
+﻿@page "/assessments/{assessmentId:int}/hazards/manage"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@inject IJSRuntime js
+
+<h3 class="card-title">Hazards</h3>
+<hr />
+<h5>@formTitle</h5>
+<br />
+
+<div style="display: flex; gap: 10px;">
+    <div>
+        <FormComponent ButtonText="@formButtonText" hazard="hazard" OnValidSubmit="CreateOrUpdateHazard" />
+    </div>
+    <div>
+        @if (formButtonText == "Update Hazard")
+        {
+            <br />
+            <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+        }
+    </div>
+</div>
+<br />
+<ol>
+    @foreach (var haz in hazards)
+    {
+        <li>
+            @haz.Name (@haz.PossibleInjury)
+            <button @onclick="() => EditHazard(haz)" class="btn btn text-warning">Edit</button>
+            <button @onclick="() => DeleteHazard(haz.Id, haz.Name)" class="btn btn text-danger">Delete</button>
+        </li>
+    }
+</ol>
+<br />
+<hr />
+<button @onclick="CompleteHazards" class="btn btn-success btn-block">Update Hazards</button>
+
+@code {
+    [Parameter] public int assessmentId { get; set; }
+
+    private Identification hazard = new Identification();
+    private List<Identification> hazards = new List<Identification>();
+    private string formButtonText = "Create Hazard";
+    private string formTitle = "Add Hazard";
+    private bool Disabled = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hazard = new Identification { ActivityId = assessmentId };
+        hazards = await _client.GetFromJsonAsync<List<Identification>>($"{Endpoints.IdentificationsEndpoint}/assessment/{assessmentId}");
+    }
+
+    private async Task CreateOrUpdateHazard()
+    {
+        if (hazard.Id == 0) // Create new hazard
+        {
+            var response = await _client.PostAsJsonAsync(Endpoints.IdentificationsEndpoint, hazard);
+            if (response.IsSuccessStatusCode)
+            {
+                var newHazard = await response.Content.ReadFromJsonAsync<Identification>();
+                hazards.Add(newHazard);
+                hazard = new Identification { ActivityId = assessmentId }; // Reset the form for the next hazard
+            }
+        }
+        else // Update existing hazard
+        {
+            var response = await _client.PutAsJsonAsync($"{Endpoints.IdentificationsEndpoint}/{hazard.Id}", hazard);
+            if (response.IsSuccessStatusCode)
+            {
+                var index = hazards.FindIndex(a => a.Id == hazard.Id);
+                if (index != -1)
+                {
+                    hazards[index] = hazard;
+                }
+                hazard = new Identification { ActivityId = assessmentId }; // Reset the form
+                formButtonText = "Create Hazard";
+                formTitle = "Add Hazard";
+            }
+        }
+    }
+
+    private void EditHazard(Identification haz)
+    {
+        hazard = haz;
+        formButtonText = "Update Hazard";
+        formTitle = "Edit Hazard";
+    }
+
+    private void CancelEdit()
+    {
+        hazard = new Identification { ActivityId = assessmentId };
+        formButtonText = "Create Hazard";
+        formTitle = "Add Hazard";
+    }
+
+    private async Task DeleteHazard(int hazardId, string hazardName)
+    {
+        bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {hazardName}?");
+        if (confirm)
+        {
+            var response = await _client.DeleteAsync($"{Endpoints.IdentificationsEndpoint}/{hazardId}");
+            if (response.IsSuccessStatusCode)
+            {
+                hazards = hazards.Where(a => a.Id != hazardId).ToList();
+            }
+        }
+    }
+
+    private void CompleteHazards()
+    {
+        _navManager.NavigateTo($"/assessments/"); // temporary
+    }
+}
+
+
+

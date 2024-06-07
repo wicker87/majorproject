@@ -18,6 +18,6 @@
     async Task EditForm()
     {
         await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
-        _navManager.NavigateTo($"/assessments/{id}/activities/edit");
+        _navManager.NavigateTo($"/assessments/{id}/activities/manage");
     }
 }
