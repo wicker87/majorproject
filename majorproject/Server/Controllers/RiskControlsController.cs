@@ -32,6 +32,7 @@ namespace majorproject.Server.Controllers
             {
                 return NotFound();
             }
+
             return Ok(riskcontrols);
         }
 
