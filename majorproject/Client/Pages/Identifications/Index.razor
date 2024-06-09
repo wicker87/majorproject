@@ -63,9 +63,9 @@ else
             {
                 await _client.DeleteAsync($"{Endpoints.IdentificationsEndpoint}/{hazardId}");
                 await OnInitializedAsync();
+                _navManager.NavigateTo("/hazards/", forceLoad: true);
             }
         }
-        _navManager.NavigateTo("/hazards/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

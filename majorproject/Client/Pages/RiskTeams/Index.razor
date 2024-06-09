@@ -1,4 +1,4 @@
-﻿@page "/riskteams/"
+﻿@page "/teams/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -10,14 +10,14 @@
 
 <br />
 
-<a href="/riskteams/create" class="btn btn-secondary">
+<a href="/teams/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
-    Create New Team
+    Create New Risk Team
 </a>
 <br />
 <br />
 
-@if (RiskTeams == null)
+@if (Teams == null)
 {
     <div class="alert alert-info">Loading Risk teams Data...</div>
 }
@@ -36,16 +36,16 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var riskteam in RiskTeams)
+            @foreach (var team in Teams)
             {
                 <tr>
-                    <td>@riskteam.Leader</td>
-                    <td>@riskteam.Member1</td>
-                    <td>@riskteam.Member2</td>
+                    <td>@team.Leader</td>
+                    <td>@team.Member1</td>
+                    <td>@team.Member2</td>
                     <td>
-                        @if (riskteam.Member3 != null)
+                        @if (team.Member3 != null)
                         {
-                            @riskteam.Member3
+                            @team.Member3
                         }
                         else
                         {
@@ -53,9 +53,9 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.Member4 != null)
+                        @if (team.Member4 != null)
                         {
-                            @riskteam.Member4
+                            @team.Member4
                         }
                         else
                         {
@@ -63,9 +63,9 @@ else
                         }
                     </td>
                     <td>
-                        @if (riskteam.Member5 != null)
+                        @if (team.Member5 != null)
                         {
-                            @riskteam.Member5
+                            @team.Member5
                         }
                         
                         else
@@ -74,10 +74,10 @@ else
                         }
                     </td>
                     <td>
-                        <a href="/riskteams/edit/@riskteam.Id" class="btn btn-warning">
+                        <a href="/teams/edit/@team.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(riskteam.Id))">
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(team.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -88,27 +88,27 @@ else
 }
 
 @code {
-    private List<RiskTeam>? RiskTeams;
+    private List<RiskTeam>? Teams;
 
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
-        RiskTeams = await _client.GetFromJsonAsync<List<RiskTeam>>($"{Endpoints.RiskTeamsEndpoint}");
+        Teams = await _client.GetFromJsonAsync<List<RiskTeam>>($"{Endpoints.RiskTeamsEndpoint}");
     }
 
-    async Task Delete(int riskteamId)
+    async Task Delete(int teamId)
     {
-        if (RiskTeams != null)
+        if (Teams != null)
         {
-            var riskteam = RiskTeams.First(q => q.Id == riskteamId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {riskteam.Leader}'s team?");
+            var team = Teams.First(q => q.Id == teamId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {team.Leader}'s team?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.RiskTeamsEndpoint}/{riskteamId}");
+                await _client.DeleteAsync($"{Endpoints.RiskTeamsEndpoint}/{teamId}");
                 await OnInitializedAsync();
+                _navManager.NavigateTo("/teams/", forceLoad: true);
             }
-        }
-        _navManager.NavigateTo("/riskteams/", forceLoad: true);
+        }      
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

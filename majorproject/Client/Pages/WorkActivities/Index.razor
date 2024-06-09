@@ -61,9 +61,9 @@ else
             {
                 await _client.DeleteAsync($"{Endpoints.WorkActivitiesEndpoint}/{activityId}");
                 await OnInitializedAsync();
+                _navManager.NavigateTo("/activities/", forceLoad: true);
             }
         }
-        _navManager.NavigateTo("/activities/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

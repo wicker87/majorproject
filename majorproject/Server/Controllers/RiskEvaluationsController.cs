@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using majorproject.Server.Data;
 using majorproject.Shared.Domain;
 using majorproject.Server.IRepository;
+using majorproject.Client.Static;
 
 namespace majorproject.Server.Controllers
 {
@@ -46,6 +47,22 @@ namespace majorproject.Server.Controllers
                 return NotFound();
             }
             return Ok(riskEvaluation);
+        }
+
+        // GET: api/Identifications/assessment/5 - Newly added
+        [HttpGet("assessment/{id}")]
+        public async Task<IActionResult> GetIdentificationsByAssessmentId(int id)
+        {
+            var hazards = await _unitOfWork.Identifications.GetAll(q => q.Activity.AssessmentId == id);
+            return Ok(hazards);
+        }
+
+        // GET: api/RiskEvaluations/hazard/5 - Newly added
+        [HttpGet("hazard/{id}")]
+        public async Task<IActionResult> GetEvaluationsByHazardId(int id)
+        {
+            var evaluations = await _unitOfWork.RiskEvaluations.GetAll(q => q.HazardId == id);
+            return Ok(evaluations);
         }
 
         // PUT: api/RiskEvaluations/5

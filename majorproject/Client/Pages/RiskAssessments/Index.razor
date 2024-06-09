@@ -31,6 +31,7 @@ else
                 <th>Process</th>
                 <th>Location</th>
                 <th>Assessment Date</th>
+                <th>Leader</th>
                 <th>Approver</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -45,6 +46,7 @@ else
                     <td>@assessment.Process</td>
                     <td>@assessment.Location</td>
                     <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
+                    <td>@assessment.Team?.Leader</td>
                     <td>@assessment.Approver</td>
                     <td>
                         @if(assessment.ApprovedStatus == true)
@@ -57,10 +59,10 @@ else
                         }
                     </td>
                     <td>
-                        <a href="/assessments/edit/@assessment.Id" class="btn btn-warning">
+                        <a href="/assessments/@assessment.Id/edit" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <a href="/assessments/view/@assessment.Id" class="btn btn-primary">
+                        <a href="/assessments/@assessment.Id/view" class="btn btn-primary">
                             <span class="oi oi-eye"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="@(()=>Delete(assessment.Id))">
@@ -105,9 +107,9 @@ else
             {
                 await _client.DeleteAsync($"{Endpoints.RiskAssessmentsEndpoint}/{assessmentId}");
                 await OnInitializedAsync();
+                _navManager.NavigateTo("/assessments/", forceLoad: true);
             }
         }
-        _navManager.NavigateTo("/assessments/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

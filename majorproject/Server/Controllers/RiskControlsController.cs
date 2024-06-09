@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using majorproject.Server.Data;
 using majorproject.Shared.Domain;
 using majorproject.Server.IRepository;
+using majorproject.Client.Static;
+using NuGet.Protocol;
 
 namespace majorproject.Server.Controllers
 {
@@ -26,27 +28,35 @@ namespace majorproject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRiskControls()
         {
-            var riskcontrols = await _unitOfWork.RiskControls.GetAll();
+            var riskControls = await _unitOfWork.RiskControls.GetAll();
 
-            if (riskcontrols == null)
+            if (riskControls == null)
             {
                 return NotFound();
             }
 
-            return Ok(riskcontrols);
+            return Ok(riskControls);
         }
 
         // GET: api/RiskControls/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRiskControl(int id)
         {
-            var riskcontrol = await _unitOfWork.RiskControls.Get(q => q.Id == id);
+            var riskControl = await _unitOfWork.RiskControls.Get(q => q.Id == id);
 
-            if (riskcontrol == null)
+            if (riskControl == null)
             {
                 return NotFound();
             }
-            return Ok(riskcontrol);
+            return Ok(riskControl);
+        }
+
+        // GET: api/RiskEvaluations/assessment/5 - Newly Added
+        [HttpGet("assessment/{id}")]
+        public async Task<IActionResult> GetEvaluationsByAssessmentId(int id)
+        {
+            var evaluations = await _unitOfWork.RiskEvaluations.GetAll(q => q.Hazard.Activity.AssessmentId == id);
+            return Ok(evaluations);
         }
 
         // PUT: api/RiskControls/5

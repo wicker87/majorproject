@@ -42,6 +42,16 @@ namespace majorproject.Server.Configurations.Entities
                     Member3 = "Larry Parker",
                     Member4 = "Jimmy Baker",
                     Member5 = null
+                },
+                new RiskTeam
+                {
+                    Id = 4,
+                    Leader = "Stanley Hall",
+                    Member1 = "Jake Howard",
+                    Member2 = "Constance Lee",
+                    Member3 = "Tommy Jones",
+                    Member4 = null,
+                    Member5 = null
                 }
                 );
         }

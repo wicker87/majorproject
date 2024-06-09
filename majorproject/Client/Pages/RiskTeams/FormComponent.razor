@@ -2,15 +2,15 @@
 @inject HttpClient _client
 @inject UserRoleService UserRoleService
 
-<h6>Note that a riskteam must have minimum 3 members.</h6>
-<EditForm Model="@riskteam" OnValidSubmit="@OnValidSubmit">
+<h6>Note that each  Risk Team must have minimum 3 members.</h6>
+<EditForm Model="@team" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
             <label> Leader: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Leader" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Leader" class="form-control" style="width: 500px;">
                     <option value="">-- Select Leader --</option>
                      @if (Users != null)
                     {
@@ -22,14 +22,14 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Leader)" />
+                <ValidationMessage For="@(() => team.Leader)" />
             </div>  
         </div>
         <br />
         <div class="form-group">
             <label> Member 1: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member1" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Member1" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 1 --</option>
                     @if (Users != null)
                     {
@@ -41,14 +41,14 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member1)" />
+                <ValidationMessage For="@(() => team.Member1)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 2: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member2" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Member2" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 2 --</option>
                     @if (Users != null)
                     {
@@ -60,14 +60,14 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member2)" />
+                <ValidationMessage For="@(() => team.Member2)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 3: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member3" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Member3" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 3 --</option>
                     @if (Users != null)
                     {
@@ -79,14 +79,14 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member3)" />
+                <ValidationMessage For="@(() => team.Member3)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 4: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member4" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Member4" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 4 --</option>
                     @if (Users != null)
                     {
@@ -98,14 +98,14 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member4)" />
+                <ValidationMessage For="@(() => team.Member4)" />
             </div>
         </div>
         <br />
         <div class="form-group">
             <label> Member 5: </label>
             <div>
-                <InputSelect @bind-Value="riskteam.Member5" class="form-control" style="width: 500px;">
+                <InputSelect @bind-Value="team.Member5" class="form-control" style="width: 500px;">
                     <option value="">-- Select Member 5 --</option>
                    @if (Users != null)
                     {
@@ -117,29 +117,29 @@
                         }
                     }
                 </InputSelect>
-                <ValidationMessage For="@(() => riskteam.Member5)" />
+                <ValidationMessage For="@(() => team.Member5)" />
             </div>
         </div>
     </fieldset>
     <br />
     <div style="display: flex; gap: 80px">
         <div>
+            <BackToList Target="teams" />
+        </div>
+        <div>
             @if (!Disabled)
             {
                 <button type="submit" class="btn btn-success btn-block">
                     @ButtonText
                 </button>
-            }
-        </div>
-        <div>
-            <BackToList Target="riskteams" />
+            }          
         </div>
     </div>
 </EditForm>
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public RiskTeam? riskteam { get; set; }   
+    [Parameter] public RiskTeam? team { get; set; }   
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 

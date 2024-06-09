@@ -1,0 +1,139 @@
+﻿@page "/assessments/{assessmentId:int}/evaluations/manage"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@inject IJSRuntime js
+
+<h3 class="card-title">Manage Risk Evaluations</h3>
+<hr />
+<br />
+
+@foreach (var hazard in hazards)
+{
+    <h4><strong>Hazard:</strong> @hazard.Identification.Name</h4>
+    <FormComponent ButtonText="@hazard.FormButtonText" evaluation="@hazard.CurrentEvaluation" OnValidSubmit="() => CreateOrUpdateEvaluation(hazard)" OnCancelEdit="() => CancelEdit(hazard)" />
+    <br />
+    <ol>
+        @foreach (var evaluation in hazard.Evaluations)
+        {
+            <li>
+                @evaluation.ExistingRiskControls
+                <button @onclick="() => EditEvaluation(hazard, evaluation)" class="btn btn-link text-warning">Edit</button>
+                <button @onclick="() => DeleteEvaluation(hazard, evaluation.Id, evaluation.ExistingRiskControls)" class="btn btn-link text-danger">Delete</button>
+                <button @onclick="() => NavigateToRiskControls(evaluation.Id)" class="btn btn-link text-primary">Manage Risk Control</button>
+            </li>
+        }
+    </ol>
+    <hr />
+}
+
+<div style="display: flex; gap: 80px">
+    <div>
+        <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
+    </div>
+    <div>
+        <button @onclick="CompleteEvaluations" class="btn btn-success btn-block">Finish <span class="oi oi-arrow-right"></span></button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int assessmentId { get; set; }
+
+    private List<HazardWrapper> hazards = new List<HazardWrapper>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch all hazards for the specified assessment 
+        var hazardList = await _client.GetFromJsonAsync<List<Identification>>($"{Endpoints.IdentificationsEndpoint}/assessment/{assessmentId}");
+
+        foreach (var hazard in hazardList)
+        {
+            var evaluations = await _client.GetFromJsonAsync<List<RiskEvaluation>>($"{Endpoints.RiskEvaluationsEndpoint}/hazard/{hazard.Id}");
+            hazards.Add(new HazardWrapper
+                {
+                    Identification = hazard,
+                    Evaluations = evaluations,
+                    CurrentEvaluation = new RiskEvaluation { HazardId = hazard.Id },
+                    FormButtonText = "Create Evaluation"
+                });
+        }
+    }
+
+    private async Task CreateOrUpdateEvaluation(HazardWrapper hazardWrapper)
+    {
+        var evaluation = hazardWrapper.CurrentEvaluation;
+
+        if (evaluation.Id == 0) // Create new evaluation
+        {
+            var response = await _client.PostAsJsonAsync(Endpoints.RiskEvaluationsEndpoint, evaluation);
+            if (response.IsSuccessStatusCode)
+            {
+                var newEvaluation = await response.Content.ReadFromJsonAsync<RiskEvaluation>();
+                hazardWrapper.Evaluations.Add(newEvaluation);
+                hazardWrapper.CurrentEvaluation = new RiskEvaluation { HazardId = hazardWrapper.Identification.Id }; // Reset the form
+            }
+        }
+        else // Update existing evaluation
+        {
+            var response = await _client.PutAsJsonAsync($"{Endpoints.RiskEvaluationsEndpoint}/{evaluation.Id}", evaluation);
+            if (response.IsSuccessStatusCode)
+            {
+                var index = hazardWrapper.Evaluations.FindIndex(e => e.Id == evaluation.Id);
+                if (index != -1)
+                {
+                    hazardWrapper.Evaluations[index] = evaluation;
+                }
+                hazardWrapper.CurrentEvaluation = new RiskEvaluation { HazardId = hazardWrapper.Identification.Id }; // Reset the form
+                hazardWrapper.FormButtonText = "Create Evaluation";
+            }
+        }
+    }
+
+    private void EditEvaluation(HazardWrapper hazardWrapper, RiskEvaluation evaluation)
+    {
+        hazardWrapper.CurrentEvaluation = evaluation;
+        hazardWrapper.FormButtonText = "Update Evaluation";
+    }
+
+    private void CancelEdit(HazardWrapper hazardWrapper)
+    {
+        hazardWrapper.CurrentEvaluation = new RiskEvaluation { HazardId = hazardWrapper.Identification.Id };
+        hazardWrapper.FormButtonText = "Create Evaluation";
+    }
+
+    private async Task DeleteEvaluation(HazardWrapper hazardWrapper, int evaluationId, string evaluationName)
+    {
+        bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete the evaluation with control: {evaluationName}?");
+        if (confirm)
+        {
+            var response = await _client.DeleteAsync($"{Endpoints.RiskEvaluationsEndpoint}/{evaluationId}");
+            if (response.IsSuccessStatusCode)
+            {
+                hazardWrapper.Evaluations = hazardWrapper.Evaluations.Where(e => e.Id != evaluationId).ToList();
+            }
+        }
+    }
+
+    private void NavigateToRiskControls(int evaluationId)
+    {
+        _navManager.NavigateTo($"/evaluations/{evaluationId}/controls/manage");
+    }
+
+    private void CompleteEvaluations()
+    {
+        _navManager.NavigateTo($"/assessments/");
+    }
+
+    private void GoBack()
+    {
+        _navManager.NavigateTo($"/assessments/{assessmentId}/hazards/manage");
+    }
+
+    private class HazardWrapper
+    {
+        public Identification Identification { get; set; }
+        public List<RiskEvaluation> Evaluations { get; set; }
+        public RiskEvaluation CurrentEvaluation { get; set; }
+        public string FormButtonText { get; set; }
+    }
+}
+

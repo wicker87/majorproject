@@ -1,0 +1,71 @@
+﻿<EditForm Model="@evaluation" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label> Existing Control: </label>
+            <div>
+                <InputTextArea @bind-Value="evaluation.ExistingRiskControls" class="form-control" style="width: 300px; height: 80px; resize: none;" />
+                <ValidationMessage For="@(() => evaluation.ExistingRiskControls)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Severity (S): </label>
+            <div>
+                <InputNumber @bind-Value="evaluation.Severity" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => evaluation.Severity)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Likelihood (L): </label>
+            <div>
+                <InputNumber @bind-Value="evaluation.Likelihood" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => evaluation.Likelihood)" />
+            </div>
+        </div>        
+        <br />
+        <div class="form-group">
+            <label> Risk Priority Number (RPN): </label>
+            <div>
+                <InputNumber @bind-Value="evaluation.RPN" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => evaluation.RPN)" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 20px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-secondary">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        @if (ButtonText == "Update Evaluation")
+        {
+            <div>
+                <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+            </div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public RiskEvaluation? evaluation { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+    [Parameter] public EventCallback OnCancelEdit { get; set; }
+
+    private void CancelEdit()
+    {
+        if (OnCancelEdit.HasDelegate)
+        {
+            OnCancelEdit.InvokeAsync(null);
+        }
+    }
+
+}

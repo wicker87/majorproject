@@ -3,15 +3,15 @@
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label> Name: </label>
+            <label> Work Activity: </label>
             <div>
-                <InputTextArea @bind-Value="activity.Name" class="form-control" style="width: 300px; height: 60px; resize: none;" />
+                <InputTextArea @bind-Value="activity.Name" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                 <ValidationMessage For="@(() => activity.Name)" />
             </div>
         </div>
     </fieldset>
     <br />
-    <div style="display: flex; gap: 80px">
+    <div style="display: flex; gap: 20px">
         <div>
             @if (!Disabled)
             {
@@ -20,9 +20,12 @@
                 </button>
             }
         </div>
-        @* <div>
-            <BackToList Target="activities" />
-        </div> *@
+        @if (ButtonText == "Update Activity")
+        {
+            <div>
+                <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+            </div>
+        }
     </div>
 </EditForm>
 
@@ -31,5 +34,10 @@
     [Parameter] public WorkActivity? activity { get; set; } 
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; } 
+    [Parameter] public EventCallback OnCancelEdit { get; set; }
 
+    private async Task CancelEdit()
+    {
+        await OnCancelEdit.InvokeAsync();
+    }
 }

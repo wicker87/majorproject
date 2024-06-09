@@ -1,23 +1,23 @@
-﻿@page "/riskteams/edit/{id:int}"
+﻿@page "/teams/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
 <h3 class="card-title">Edit Risk Team</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditRiskTeam" riskteam="riskteam" />
+<FormComponent ButtonText="Update" OnValidSubmit="EditTeam" team="team" />
 
 @code {
     [Parameter] public int id { get; set; }
-    RiskTeam? riskteam = new RiskTeam();
+    RiskTeam? team = new RiskTeam();
 
     protected async override Task OnParametersSetAsync()
     {
-        riskteam = await _client.GetFromJsonAsync<RiskTeam>($"{Endpoints.RiskTeamsEndpoint}/{id}");
+        team = await _client.GetFromJsonAsync<RiskTeam>($"{Endpoints.RiskTeamsEndpoint}/{id}");
     }
 
-    async Task EditRiskTeam()
+    async Task EditTeam()
     {
-        await _client.PutAsJsonAsync($"{Endpoints.RiskTeamsEndpoint}/{id}", riskteam); 
-        _navManager.NavigateTo("/riskteams/"); 
+        await _client.PutAsJsonAsync($"{Endpoints.RiskTeamsEndpoint}/{id}", team); 
+        _navManager.NavigateTo("/teams/"); 
     }
 }

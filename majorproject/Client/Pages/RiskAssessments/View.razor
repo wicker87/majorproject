@@ -1,4 +1,4 @@
-﻿@page "/assessments/view/{id:int}"
+﻿@page "/assessments/{id:int}/view"
 @inject HttpClient _client
 
 <style>
@@ -12,7 +12,7 @@
     }
 
     th, td {
-        padding: 6px;      
+        padding: 6px;
     }
 
     th {
@@ -35,7 +35,7 @@
 else
 {
     <h4>@assessment.Name</h4>
-    <div style="display:flex; gap: 60px;">
+    <div style="display:flex; gap: 40px;">
         <div>
             <p><strong>Department:</strong> @assessment.Department</p>
             <p><strong>Process:</strong> @assessment.Process</p>
@@ -60,7 +60,7 @@ else
             <p>Approved by</p>
             <p><strong>Name:</strong> @assessment.Approver</p>
             <p><strong>Date:</strong> @assessment.ApprovalDate.ToString("dd/MM/yyyy")</p>
-        </div>    
+        </div>
     </div>
 
     <table>
@@ -94,64 +94,94 @@ else
             @if (assessment.WorkActivities == null || !assessment.WorkActivities.Any())
             {
                 <tr>
-                    <td colspan="15">No Work activities</td>
+                    <td colspan="15">No Work Activities</td>
                 </tr>
             }
             else
             {
                 int index = 1;
-                @foreach (var activity in assessment.WorkActivities)
+                foreach (var activity in assessment.WorkActivities)
                 {
                     var activityRowSpan = activity.Identifications?.Sum(h => h.RiskEvaluations?.Count() ?? 1) ?? 1;
-                    var activityPrinted = false;
+                    if (activityRowSpan == 0) activityRowSpan = 1;
+                    bool activityPrinted = false;
 
-                    @foreach (var hazard in activity.Identifications ?? new List<Identification>())
-                    {
-                        var hazardRowSpan = hazard.RiskEvaluations?.Count() ?? 1;
-                        var hazardPrinted = false;
-
-                        @foreach (var evaluation in hazard.RiskEvaluations ?? new List<RiskEvaluation>())
-                        {
-                            <tr>
-                                @if (!activityPrinted)
-                                {
-                                    <td rowspan="@activityRowSpan">@index</td>
-                                    <td rowspan="@activityRowSpan">@activity.Name</td>
-                                    activityPrinted = true;
-                                    index++;
-                                }
-
-                                @if (!hazardPrinted)
-                                {
-                                    <td rowspan="@hazardRowSpan">@hazard.Name</td>
-                                    <td rowspan="@hazardRowSpan">@hazard.PossibleInjury</td>
-                                    hazardPrinted = true;
-                                }
-
-                                <td>@evaluation.ExistingRiskControls</td>
-                                <td>@evaluation.Severity</td>
-                                <td>@evaluation.Likelihood</td>
-                                <td>@evaluation.RPN</td>
-
-                                <td>@evaluation.Control?.AdditionalControls</td>
-                                <td>@evaluation.Control?.Severity</td>
-                                <td>@evaluation.Control?.Likelihood</td>
-                                <td>@evaluation.Control?.RPN</td>
-                                <td>@evaluation.Control?.ImplementingPerson</td>
-                                <td>@evaluation.Control?.DueDate.ToString("dd/MM/yyyy")</td>
-                                <td>@evaluation.Control?.Remarks</td>
-                            </tr>
-                        }
-                    }
-                    @* Handle Case with No Hazards or Evaluations *@
-                    if (!activity.Identifications.Any())
+                    if (activity.Identifications == null || !activity.Identifications.Any())
                     {
                         <tr>
                             <td>@index</td>
                             <td>@activity.Name</td>
-                            <td colspan="13"></td>
+                            <td colspan="13">No Hazards</td>
                         </tr>
                         index++;
+                    }
+                    else
+                    {
+                        foreach (var hazard in activity.Identifications)
+                        {
+                            var hazardRowSpan = hazard.RiskEvaluations?.Count() ?? 1;
+                            if (hazardRowSpan == 0) hazardRowSpan = 1;
+                            bool hazardPrinted = false;
+
+                            if (hazard.RiskEvaluations == null || !hazard.RiskEvaluations.Any())
+                            {
+                                <tr>
+                                    @if (!activityPrinted)
+                                    {
+                                        <td rowspan="@activityRowSpan">@index</td>
+                                        <td rowspan="@activityRowSpan">@activity.Name</td>
+                                        activityPrinted = true;
+                                        index++;
+                                    }
+
+                                    <td rowspan="@hazardRowSpan">@hazard.Name</td>
+                                    <td rowspan="@hazardRowSpan">@hazard.PossibleInjury</td>
+                                    <td colspan="11">No Risk Evaluations</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var evaluation in hazard.RiskEvaluations)
+                                {
+                                    <tr>
+                                        @if (!activityPrinted)
+                                        {
+                                            <td rowspan="@activityRowSpan">@index</td>
+                                            <td rowspan="@activityRowSpan">@activity.Name</td>
+                                            activityPrinted = true;
+                                            index++;
+                                        }
+
+                                        @if (!hazardPrinted)
+                                        {
+                                            <td rowspan="@hazardRowSpan">@hazard.Name</td>
+                                            <td rowspan="@hazardRowSpan">@hazard.PossibleInjury</td>
+                                            hazardPrinted = true;
+                                        }
+
+                                        <td>@evaluation.ExistingRiskControls</td>
+                                        <td>@evaluation.Severity</td>
+                                        <td>@evaluation.Likelihood</td>
+                                        <td>@evaluation.RPN</td>
+
+                                        @if (evaluation.Control == null)
+                                        {
+                                            <td colspan="7">No Risk Control</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@evaluation.Control?.AdditionalControls</td>
+                                            <td>@evaluation.Control?.Severity</td>
+                                            <td>@evaluation.Control?.Likelihood</td>
+                                            <td>@evaluation.Control?.RPN</td>
+                                            <td>@evaluation.Control?.ImplementingPerson</td>
+                                            <td>@evaluation.Control?.DueDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@evaluation.Control?.Remarks</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        }
                     }
                 }
             }

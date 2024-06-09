@@ -3,9 +3,9 @@
     <ValidationSummary />
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <label> Name: </label>
+            <label> Hazard: </label>
             <div>
-                <InputTextArea @bind-Value="hazard.Name" class="form-control" style="width: 300px; height: 60px; resize: none;" />
+                <InputTextArea @bind-Value="hazard.Name" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                 <ValidationMessage For="@(() => hazard.Name)" />
             </div>
         </div>
@@ -13,13 +13,13 @@
         <div class="form-group">
             <label> Possible Injury: </label>
             <div>
-                <InputTextArea @bind-Value="hazard.PossibleInjury" class="form-control" style="width: 300px; height: 60px; resize: none;" />
+                <InputTextArea @bind-Value="hazard.PossibleInjury" class="form-control" style="width: 300px; height: 80px; resize: none;" />
                 <ValidationMessage For="@(() => hazard.Name)" />
             </div>
         </div>
     </fieldset>
     <br />
-    <div style="display: flex; gap: 10px">
+    <div style="display: flex; gap: 20px">
         <div>
             @if (!Disabled)
             {
@@ -34,9 +34,6 @@
                 <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
             </div>
         }
-        @* <div>
-            <BackToList Target="hazards" />
-        </div> *@
     </div>
 </EditForm>
 

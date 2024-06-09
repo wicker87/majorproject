@@ -1,0 +1,97 @@
+﻿<EditForm Model="@control" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label> Additional Control: </label>
+            <div>
+                <InputTextArea @bind-Value="control.AdditionalControls" class="form-control" style="width: 300px; height: 80px; resize: none;" />
+                <ValidationMessage For="@(() => control.AdditionalControls)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Severity (S): </label>
+            <div>
+                <InputNumber @bind-Value="control.Severity" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => control.Severity)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Likelihood (L): </label>
+            <div>
+                <InputNumber @bind-Value="control.Likelihood" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => control.Likelihood)" />
+            </div>
+        </div>       
+        <br />
+        <div class="form-group">
+            <label> Risk Priority Number (RPN): </label>
+            <div>
+                <InputNumber @bind-Value="control.RPN" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => control.RPN)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label> Implementer: </label>
+            <div>
+                <InputText @bind-Value="control.ImplementingPerson" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => control.ImplementingPerson)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Due Date: </label>
+            <div>
+                <InputDate @bind-Value="control.DueDate" class="form-control" style="width: 300px;" />
+                <ValidationMessage For="@(() => control.DueDate)" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label> Remarks: </label>
+            <div>
+                <InputTextArea @bind-Value="control.Remarks" class="form-control" style="width: 300px; height: 80px; resize: none;" />
+                <ValidationMessage For="@(() => control.Remarks)" />
+            </div>
+        </div>
+        <br />
+    </fieldset>
+    <br />
+    <div style="display: flex; gap: 20px">
+        <div>
+            @if (!Disabled)
+            {
+                <button type="submit" class="btn btn-secondary">
+                    @ButtonText
+                </button>
+            }
+        </div>
+        @if (ButtonText == "Update Control")
+        {
+            <div>
+                <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+            </div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public RiskControl? control { get; set; } 
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback<RiskControl> OnValidSubmit { get; set; }
+    [Parameter] public EventCallback OnCancelEdit { get; set; }
+
+    private void HandleValidSubmit()
+    {
+        OnValidSubmit.InvokeAsync(control);
+    }
+
+    private void CancelEdit()
+    {
+        OnCancelEdit.InvokeAsync(null);
+    }
+
+}

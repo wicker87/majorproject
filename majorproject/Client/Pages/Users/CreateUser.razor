@@ -69,8 +69,14 @@
         </InputSelect>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Create User</button>
-    <BackToList Target="userroles" />
+    <div style="display: flex; gap: 80px">
+        <div>
+            <BackToList Target="userroles" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success btn-block">Create User</button>
+        </div>
+    </div> 
 </EditForm>
 
 @code {

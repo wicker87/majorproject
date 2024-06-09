@@ -73,9 +73,9 @@ else
             {
                 await _client.DeleteAsync($"{Endpoints.RiskControlsEndpoint}/{controlId}");
                 await OnInitializedAsync();
+                _navManager.NavigateTo("/controls/", forceLoad: true);
             }
         }
-        _navManager.NavigateTo("/controls/", forceLoad: true);
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)

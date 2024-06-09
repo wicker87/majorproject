@@ -3,37 +3,32 @@
 @inject NavigationManager _navManager
 @inject IJSRuntime js
 
-<h3 class="card-title">Work Activities</h3>
+<h3 class="card-title">Manage Work Activities</h3>
 <hr />
-<h5>@formTitle</h5>
 <br />
 
-<div style="display: flex; gap: 10px;">
-    <div>
-        <FormComponent ButtonText="@formButtonText" activity="activity" OnValidSubmit="CreateOrUpdateActivity" />
-    </div>
-    <div>
-        @if (formButtonText == "Update Activity")
-        {
-            <br />
-            <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
-        }
-    </div>
-</div>
+<FormComponent ButtonText="@formButtonText" activity="activity" OnValidSubmit="CreateOrUpdateActivity" OnCancelEdit="CancelEdit" />
 <br />
 <ol>
     @foreach (var act in activities)
     {
         <li>
             @act.Name
-            <button @onclick="() => EditActivity(act)" class="btn btn text-warning">Edit</button>
-            <button @onclick="() => DeleteActivity(act.Id, act.Name)" class="btn btn text-danger">Delete</button>
+            <button @onclick="() => EditActivity(act)" class="btn btn-link text-warning">Edit</button>
+            <button @onclick="() => DeleteActivity(act.Id, act.Name)" class="btn btn-link text-danger">Delete</button>
         </li>
     }
 </ol>
 <br />
 <hr />
-<button @onclick="CompleteActivities" class="btn btn-success btn-block">Update Activities</button>
+<div style="display: flex; gap: 80px">
+    <div>
+        <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
+    </div>
+    <div>
+        <button @onclick="CompleteActivities" class="btn btn-success btn-block">Next <span class="oi oi-arrow-right"></span></button>
+    </div>
+</div>
 
 @code {
     [Parameter] public int assessmentId { get; set; }
@@ -41,7 +36,6 @@
     private WorkActivity activity = new WorkActivity();
     private List<WorkActivity> activities = new List<WorkActivity>();
     private string formButtonText = "Create Activity";
-    private string formTitle = "Add Work Activity";
     private bool Disabled = false;
 
     protected override async Task OnInitializedAsync()
@@ -74,7 +68,6 @@
                 }
                 activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form
                 formButtonText = "Create Activity";
-                formTitle = "Add Work Activity";
             }
         }
     }
@@ -83,14 +76,12 @@
     {
         activity = act;
         formButtonText = "Update Activity";
-        formTitle = "Edit Work Activity";
     }
 
     private void CancelEdit()
     {
         activity = new WorkActivity { AssessmentId = assessmentId };
         formButtonText = "Create Activity";
-        formTitle = "Add Work Activity";
     }
 
     private async Task DeleteActivity(int activityId, string activityName)
@@ -108,9 +99,11 @@
 
     private void CompleteActivities()
     {
-        _navManager.NavigateTo($"/assessments/{assessmentId:int}/hazards/manage"); 
+        _navManager.NavigateTo($"/assessments/{assessmentId}/hazards/manage"); 
+    }
+
+    private void GoBack()
+    {
+        _navManager.NavigateTo($"/assessments/{assessmentId}/edit");
     }
 }
-
-
-

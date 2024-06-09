@@ -1,5 +1,6 @@
 ﻿@inject HttpClient _client
 @inject UserRoleService UserRoleService
+@inject NavigationManager _navManager
 
 <EditForm Model="@assessment" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -131,18 +132,19 @@
         </div>
     </fieldset>
     <br />
+    <hr />
     @* Buttons *@
-    <div style="display: flex; gap: 480px">
+    <div style="display: flex; gap: 80px">
+        <div>
+            <BackToList Target="assessments"/>           
+        </div>
         <div>
             @if (!Disabled)
             {
                 <button type="submit" class="btn btn-success btn-block">
-                    @ButtonText
+                    @ButtonText <span class="oi oi-arrow-right"></span>
                 </button>
             }
-        </div>
-        <div>
-            <BackToList Target="assessments" />
         </div>
     </div>
 </EditForm>

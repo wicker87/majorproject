@@ -36,6 +36,42 @@ namespace majorproject.Server.Configurations.Entities
                     Id = 4,
                     Name = "Handling of hand tools in MP Labs for hardware related projects",
                     AssessmentId = 1,
+                },
+                new WorkActivity
+                {
+                    Id = 5,
+                    Name = "Use of facility",
+                    AssessmentId = 2,
+                },
+                new WorkActivity
+                {
+                    Id = 6,
+                    Name = "Use of PCs in Laboratory",
+                    AssessmentId = 2,
+                },
+                new WorkActivity
+                {
+                    Id = 7,
+                    Name = "Maintenance and operation of lab equipment",
+                    AssessmentId = 2,
+                },
+                new WorkActivity
+                {
+                    Id = 8,
+                    Name = "Handling component and lab materials",
+                    AssessmentId = 2,
+                },
+                new WorkActivity
+                {
+                    Id = 9,
+                    Name = "Hand soldering",
+                    AssessmentId = 2,
+                },
+                new WorkActivity
+                {
+                    Id = 10,
+                    Name = "Transportation of lab equipment",
+                    AssessmentId = 2,
                 }
                 );
         }

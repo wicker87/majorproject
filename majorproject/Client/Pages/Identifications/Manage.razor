@@ -9,15 +9,15 @@
 
 @foreach (var activity in activities)
 {
-    <h4>@activity.Activity.Name</h4>
-    <FormComponent T="Identification" ButtonText="@activity.FormButtonText" Model="@activity.CurrentHazard" OnValidSubmit="() => CreateOrUpdateHazard(activity)" OnCancelEdit="() => CancelEdit(activity)" />
+    <h4><strong>Work Activity:</strong> @activity.Activity.Name</h4>
+    <FormComponent ButtonText="@activity.FormButtonText" hazard="@activity.CurrentHazard" OnValidSubmit="() => CreateOrUpdateHazard(activity)" OnCancelEdit="() => CancelEdit(activity)" />
     <br />
     <ol>
         @foreach (var hazard in activity.Hazards)
         {
             <li>
                 @hazard.Name
-                <button @onclick="() => EditHazard(activity, hazard)" class="btn btn-link">Edit</button>
+                <button @onclick="() => EditHazard(activity, hazard)" class="btn btn-link text-warning">Edit</button>
                 <button @onclick="() => DeleteHazard(activity, hazard.Id, hazard.Name)" class="btn btn-link text-danger">Delete</button>
             </li>
         }
@@ -25,7 +25,14 @@
     <hr />
 }
 
-<button @onclick="CompleteHazards" class="btn btn-secondary">Next</button>
+<div style="display: flex; gap: 80px">
+    <div>
+        <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
+    </div>
+    <div>
+        <button @onclick="CompleteHazards" class="btn btn-success btn-block">Next <span class="oi oi-arrow-right"></span></button>
+    </div>
+</div>
 
 @code {
     [Parameter] public int assessmentId { get; set; }
@@ -107,7 +114,12 @@
 
     private void CompleteHazards()
     {
-        _navManager.NavigateTo($"/assessments/{assessmentId}/nextstep"); // Navigate to the next step
+        _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage"); 
+    }
+
+    private void GoBack()
+    {
+        _navManager.NavigateTo($"/assessments/{assessmentId}/activities/manage");
     }
 
     private class ActivityWrapper

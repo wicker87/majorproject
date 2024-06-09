@@ -48,15 +48,19 @@ namespace majorproject.Server.Controllers
             return Ok(identification);
         }
 
-        // GET: api/Identifications/activity/5 - Newly Added
-        [HttpGet("activity/{activityId}")]
-        public async Task<IActionResult> GetIdentificationsByActivityId(int activityId)
+        // GET: api/Identifications/assessment/5 - Newly Added
+        [HttpGet("assessment/{id}")]
+        public async Task<IActionResult> GetIdentificationsByAssessment(int id)
         {
-            var identifications = await _unitOfWork.Identifications.GetAll(q => q.ActivityId == activityId);
-            if (identifications == null || !identifications.Any())
-            {
-                return NotFound();
-            }
+            var identifications = await _unitOfWork.Identifications.GetAll(q => q.Activity.AssessmentId == id);
+            return Ok(identifications);
+        }
+
+        // GET: api/Identifications/activity/5 - Newly Added
+        [HttpGet("activity/{id}")]
+        public async Task<IActionResult> GetIdentificationsByActivityId(int id)
+        {
+            var identifications = await _unitOfWork.Identifications.GetAll(q => q.ActivityId == id);
             return Ok(identifications);
         }
 
