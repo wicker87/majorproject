@@ -1,5 +1,8 @@
 ﻿@page "/assessments/{id:int}/view"
 @inject HttpClient _client
+@inject IJSRuntime js
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims
 
 <style>
     table {
@@ -59,7 +62,17 @@ else
         <div>
             <p>Approved by</p>
             <p><strong>Name:</strong> @assessment.Approver</p>
-            <p><strong>Date:</strong> @assessment.ApprovalDate.ToString("dd/MM/yyyy")</p>
+            <p>
+                <strong>Date: </strong>
+                @if (@assessment.ApprovalDate != default(DateTime))
+                {
+                    @assessment.ApprovalDate.ToString("dd/MM/yyyy")
+                }
+                else
+                {
+                    <span style="color:red">Not Approved Yet</span>
+                }
+            </p>
         </div>
     </div>
 
@@ -189,18 +202,140 @@ else
     </table>
     <br />
     <BackToList Target="assessments" />
+    @if (isApprover)
+    {
+        <EditForm Model="@assessment">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <br />
+            @if (assessment.ApprovedStatus != true)
+            {
+                <button type="button" class="btn btn-success" @onclick="ApproveAssessment">Approved Form</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+            }
+        </EditForm>
+    }
+    <br />
+    @if (showSuccessMessage)
+    {
+        <div class="alert alert-success" role="alert">
+            Successfully change form approved status.
+        </div>
+        
+    }
 }
-
 
 @code {
 
     [Parameter] public int id { get; set; }
     private RiskAssessment assessment;
+    private bool showSuccessMessage = false;
+    private bool isApprover = false;
+    private string userEmail;
 
     protected async override Task OnParametersSetAsync()
+    {
+        // Load assessment data
+        await LoadAssessmentAsync();
+
+        // Subscribe to authentication state changes
+        AuthenticationStateProvider.AuthenticationStateChanged += OnAuthenticationStateChanged;
+
+        // Load user data after loading the assessment
+        await LoadUserDataAsync();
+    }
+
+    private async Task LoadAssessmentAsync()
     {
         assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{id}");
     }
 
+    private async Task ApproveAssessment()
+    {
+        bool confirm = await js.InvokeAsync<bool>("confirm", "Do you want to approve this form?");
+        if (confirm)
+        {
+            if (assessment.ApprovedStatus != true)
+            {
+                assessment.ApprovedStatus = true;
+                assessment.ApprovalDate = DateTime.Now;
+
+                var response = await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
+                if (response.IsSuccessStatusCode)
+                {
+                    showSuccessMessage = true;
+                    StateHasChanged();
+                    await Task.Delay(3000); // Show message for 3 seconds
+                    showSuccessMessage = false;
+                    StateHasChanged();
+                }
+            }
+        }
+    }
+
+    private async Task UnapprovedAssessment()
+    {
+        bool confirm = await js.InvokeAsync<bool>("confirm", "Do you want to unapproved this form?");
+        if (confirm)
+        {
+            if (assessment.ApprovedStatus == true)
+            {
+                assessment.ApprovedStatus = false;
+                assessment.ApprovalDate = default(DateTime);
+
+                var response = await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
+                if (response.IsSuccessStatusCode)
+                {
+                    showSuccessMessage = true;
+                    StateHasChanged();
+                    await Task.Delay(3000); // Show message for 3 seconds
+                    showSuccessMessage = false;
+                    StateHasChanged();
+                }
+            }
+        }
+    }
+
+    private async Task LoadUserDataAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            userEmail = user.Identity.Name;
+
+            if (!string.IsNullOrEmpty(assessment?.Approver))
+            {
+                var approverEmailNamePart = assessment.Approver.ToLower().Replace(" ", "");
+                isApprover = userEmail.ToLower().Contains(approverEmailNamePart);
+            }
+
+            var roles = user.Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
+        }
+        else
+        {
+            userEmail = null;
+            isApprover = false;
+        }
+
+        StateHasChanged(); // Force re-render
+    }
+
+    private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
+    {
+        InvokeAsync(async () =>
+        {
+            await LoadUserDataAsync();
+            StateHasChanged(); // Force re-render
+        });
+    }
 }
+
 

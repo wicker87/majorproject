@@ -2,11 +2,23 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Edit Risk Assessment</h3>
+<AssessmentNavMenu AssessmentId="@id" />
+<h3 class="card-title">Risk Assessment Details</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Next" OnValidSubmit="EditForm" assessment="assessment" />
+<FormComponent ButtonText="Update Form" OnValidSubmit="EditForm" assessment="assessment" />
+<br />
+<hr />
+
+<div style="display: flex; gap: 80px">
+    <div>
+        <BackToList Target="assessments" />
+    </div>
+    <div>
+        <button @onclick="CompleteAssessments" class="btn btn-success btn-block">Next <span class="oi oi-arrow-right"></span></button>
+    </div>
+</div>
 
 @code {
     [Parameter] public int id { get; set; }
@@ -20,6 +32,11 @@
     async Task EditForm()
     {
         await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
+        _navManager.NavigateTo($"/assessments/{id}/activities/manage");
+    }
+
+    private void CompleteAssessments()
+    {
         _navManager.NavigateTo($"/assessments/{id}/activities/manage");
     }
 }

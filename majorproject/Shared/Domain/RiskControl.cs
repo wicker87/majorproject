@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace majorproject.Shared.Domain
 {
     public class RiskControl : BaseDomainModel
     {
+        [Required]
         public string? AdditionalControls { get; set; }
         public int? Severity { get; set; }
         public int? Likelihood { get; set; }

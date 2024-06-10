@@ -5,7 +5,7 @@
         <div class="form-group">
             <label> Additional Control: </label>
             <div>
-                <InputTextArea @bind-Value="control.AdditionalControls" class="form-control" style="width: 300px; height: 80px; resize: none;" />
+                <InputTextArea @bind-Value="control.AdditionalControls" class="form-control" style="width: 400px; height: 80px; resize: none;" />
                 <ValidationMessage For="@(() => control.AdditionalControls)" />
             </div>
         </div>
@@ -13,7 +13,7 @@
         <div class="form-group">
             <label> Severity (S): </label>
             <div>
-                <InputNumber @bind-Value="control.Severity" class="form-control" style="width: 300px;" />
+                <InputNumber @bind-Value="control.Severity" class="form-control" style="width: 300px;" @oninput="CalculateRPN" @onclick="CalculateRPN" />
                 <ValidationMessage For="@(() => control.Severity)" />
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label> Likelihood (L): </label>
             <div>
-                <InputNumber @bind-Value="control.Likelihood" class="form-control" style="width: 300px;" />
+                <InputNumber @bind-Value="control.Likelihood" class="form-control" style="width: 300px;" @oninput="CalculateRPN" @onclick="CalculateRPN" />
                 <ValidationMessage For="@(() => control.Likelihood)" />
             </div>
         </div>       
@@ -33,6 +33,7 @@
                 <ValidationMessage For="@(() => control.RPN)" />
             </div>
         </div>
+        <br />
         <div class="form-group">
             <label> Implementer: </label>
             <div>
@@ -71,7 +72,7 @@
         @if (ButtonText == "Update Control")
         {
             <div>
-                <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
+                <button @onclick="HandleDelete" class="btn btn-danger">Delete</button>
             </div>
         }
     </div>
@@ -82,16 +83,25 @@
     [Parameter] public RiskControl? control { get; set; } 
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback<RiskControl> OnValidSubmit { get; set; }
-    [Parameter] public EventCallback OnCancelEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
 
     private void HandleValidSubmit()
     {
         OnValidSubmit.InvokeAsync(control);
     }
 
-    private void CancelEdit()
+    private void HandleDelete()
     {
-        OnCancelEdit.InvokeAsync(null);
+        OnDelete.InvokeAsync(control.Id);
     }
 
+    protected override void OnInitialized()
+    {
+        control.DueDate = DateTime.Now;
+    }
+
+    private void CalculateRPN()
+    {
+        control.RPN = (control.Severity ?? 0) * (control.Likelihood ?? 0);
+    }
 }

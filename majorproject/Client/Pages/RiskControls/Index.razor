@@ -68,7 +68,7 @@ else
         if (Controls != null)
         {
             var control = Controls.First(q => q.Id == controlId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {control.AdditionalControls} form?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {control.AdditionalControls}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.RiskControlsEndpoint}/{controlId}");

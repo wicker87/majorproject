@@ -51,12 +51,24 @@ namespace majorproject.Server.Controllers
             return Ok(riskControl);
         }
 
-        // GET: api/RiskEvaluations/assessment/5 - Newly Added
+        // GET: api/RiskEvaluations/assessment/5 - Newly Added (changes may be required)
         [HttpGet("assessment/{id}")]
         public async Task<IActionResult> GetEvaluationsByAssessmentId(int id)
         {
             var evaluations = await _unitOfWork.RiskEvaluations.GetAll(q => q.Hazard.Activity.AssessmentId == id);
             return Ok(evaluations);
+        }
+
+        // GET: api/RiskControls/evaluation/5 - Newly added 
+        [HttpGet("evaluation/{id}")]
+        public async Task<IActionResult> GetControlByEvaluationId(int id)
+        {
+            var control = await _unitOfWork.RiskControls.Get(q => q.EvaluationId == id);
+            if (control == null)
+            {
+                return NotFound();
+            }
+            return Ok(control);
         }
 
         // PUT: api/RiskControls/5

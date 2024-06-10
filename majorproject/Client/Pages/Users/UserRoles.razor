@@ -1,4 +1,4 @@
-﻿@page "/userroles"
+﻿@page "/userRoles"
 @attribute [Authorize]
 @inject IJSRuntime js
 @inject UserRoleService UserRoleService
@@ -9,7 +9,7 @@
 <h3>User Roles Data</h3>
 <h5>These users represents the employees that are allowed to access this application.</h5>
 
-<a href="/userroles/create" class="btn btn-secondary">
+<a href="/userRoles/create" class="btn btn-secondary">
     <span class="oi oi-plus"></span>
     Create New User
 </a>
@@ -57,7 +57,7 @@ else
                         }
                     </td>
                     <td>
-                        <a href="/userroles/edit/@userRole.UserId" class="btn btn-warning">
+                        <a href="/userRoles/edit/@userRole.UserId" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
                         <button class="btn btn-danger" @onclick="() => Delete(userRole.UserId)">

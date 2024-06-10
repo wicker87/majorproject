@@ -1,0 +1,47 @@
+﻿@inject NavigationManager Navigation
+
+<style>
+    .assessment-nav-menu {
+        margin-bottom: 20px;
+    }
+
+    .assessment-nav-menu .nav-pills .nav-link {
+        color: #ff8000;
+        margin-right: 10px;
+    }
+
+    .assessment-nav-menu .nav-pills .nav-link.active {
+        font-weight: bold;
+        color: #fff;
+        background-color: #ff8000;
+    }
+</style>
+
+<div class="assessment-nav-menu">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/edit")" href="/assessments/@AssessmentId/edit">1. Risk Assessment Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/activities/manage")" href="/assessments/@AssessmentId/activities/manage">2. Work Activities</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/hazards/manage")" href="/assessments/@AssessmentId/hazards/manage">3. Hazards</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/evaluations/manage")" href="/assessments/@AssessmentId/evaluations/manage">4. Risk Evaluations/Controls</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/")" href="/assessments/">Exit</a>
+        </li>
+    </ul>
+</div>
+
+@code {
+    [Parameter] public int AssessmentId { get; set; }
+
+    private string GetNavLinkClass(string href)
+    {
+        return Navigation.Uri.Contains(href) ? "active" : "";
+    }
+}

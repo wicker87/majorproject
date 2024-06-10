@@ -1,38 +1,43 @@
-﻿@page "/evaluations/{evaluationId:int}/controls/manage"
+﻿@page "/assessments/{assessmentId:int}/evaluations/{evaluationId:int}/control/manage"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 @inject IJSRuntime js
 
-<h3 class="card-title">Manage Risk Controls</h3>
+<h3 class="card-title">Manage Risk Control</h3>
 <hr />
 <br />
 
-<h4><strong>Existing Risk Controls:</strong> </h4>
-<FormComponent ButtonText="@formButtonText" control="@currentControl" OnValidSubmit="CreateOrUpdateControl" />
-<br />
-@if (formButtonText == "Update Control")
-{
+<h4><strong>Existing Control:</strong>  @existingRiskControls</h4> 
+<div style="display: flex; gap: 40px">
     <div>
-        <button @onclick="() => DeleteControl(currentControl.Id)" class="btn btn-link text-danger">Delete</button>
+        <FormComponent ButtonText="@formButtonText" control="@currentControl" OnValidSubmit="CreateOrUpdateControl" OnDelete="DeleteControl" />
     </div>
-}
-<hr />
-
-<div style="display: flex; gap: 80px">
     <div>
-        <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
+        <p><strong>5x5 Risk Matrix with Numeric Ratings</strong></p>
+        <img src="RPN Chart.png" style="width:600px" />
     </div>
 </div>
+<br />
+<hr />
+
+<button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back to Risk Evaluations</button>
 
 @code {
-    [Parameter] public int assessmentId { get; set; }
+    [Parameter] public int assessmentId { get; set; } 
     [Parameter] public int evaluationId { get; set; }
+    private string existingRiskControls;
 
     private RiskControl currentControl = new RiskControl();
     private string formButtonText = "Create Control";
 
     protected override async Task OnInitializedAsync()
     {
+        var evaluation = await _client.GetFromJsonAsync<RiskEvaluation>($"{Endpoints.RiskEvaluationsEndpoint}/{evaluationId}");
+        if (evaluation != null)
+        {
+            existingRiskControls = evaluation.ExistingRiskControls;
+        }
+
         var response = await _client.GetAsync($"{Endpoints.RiskControlsEndpoint}/evaluation/{evaluationId}");
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
@@ -41,8 +46,16 @@
         else
         {
             response.EnsureSuccessStatusCode(); // Throws an exception if the status code is not 2xx
-            currentControl = await response.Content.ReadFromJsonAsync<RiskControl>();
-            formButtonText = "Update Control";
+            var control = await response.Content.ReadFromJsonAsync<RiskControl>();
+            if (control != null)
+            {
+                currentControl = control;
+                formButtonText = "Update Control";
+            }
+            else
+            {
+                currentControl = new RiskControl { EvaluationId = evaluationId };
+            }
         }
     }
 
@@ -55,6 +68,7 @@
             {
                 currentControl = await response.Content.ReadFromJsonAsync<RiskControl>();
                 formButtonText = "Update Control";
+                _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
             }
         }
         else // Update existing control
@@ -64,13 +78,14 @@
             {
                 currentControl = await response.Content.ReadFromJsonAsync<RiskControl>();
                 formButtonText = "Update Control";
+                _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
             }
-        }
+        }     
     }
 
     private async Task DeleteControl(int controlId)
     {
-        bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete this control?");
+        bool confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete this risk control?");
         if (confirm)
         {
             var response = await _client.DeleteAsync($"{Endpoints.RiskControlsEndpoint}/{controlId}");
@@ -84,7 +99,6 @@
 
     private void GoBack()
     {
-        // _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
+        _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
     }
 }
-

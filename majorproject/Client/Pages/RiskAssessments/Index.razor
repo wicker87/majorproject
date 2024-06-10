@@ -29,7 +29,6 @@ else
                 <th>Name</th>
                 <th>Department</th>
                 <th>Process</th>
-                <th>Location</th>
                 <th>Assessment Date</th>
                 <th>Leader</th>
                 <th>Approver</th>
@@ -44,7 +43,6 @@ else
                     <td>@assessment.Name</td>
                     <td>@assessment.Department</td>
                     <td>@assessment.Process</td>
-                    <td>@assessment.Location</td>
                     <td>@assessment.AssessmentDate.ToString("dd/MM/yyyy")</td>
                     <td>@assessment.Team?.Leader</td>
                     <td>@assessment.Approver</td>
@@ -52,6 +50,10 @@ else
                         @if(assessment.ApprovedStatus == true)
                         {
                             <span style="color: darkgreen">Form Approved</span>
+                        }
+                        else if(assessment.ApprovedStatus == false)
+                        {
+                            <span style="color: darkred">Form Unapproved</span>
                         }
                         else
                         {
@@ -68,25 +70,12 @@ else
                         <button class="btn btn-danger" @onclick="@(()=>Delete(assessment.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
-                        @* <button class="button" id="statusButton" onclick="changeStatus()">Pending Approval</button> *@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
-<script>
-    function changeStatus() {
-        var statusButton = document.getElementById('statusButton');
-        if (statusButton.innerHTML === "Pending Approval") {
-            statusButton.innerHTML = "Form Approved";
-        } 
-        else {
-            statusButton.innerHTML = "Pending Approval";
-        }
-    }
-</script>
 
 @code {
     private List<RiskAssessment>? Assessments;
@@ -102,7 +91,7 @@ else
         if (Assessments != null)
         {
             var assessment = Assessments.First(q => q.Id == assessmentId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {assessment.Name} form?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete this RA form ?\n{assessment.Name}");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.RiskAssessmentsEndpoint}/{assessmentId}");

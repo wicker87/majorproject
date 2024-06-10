@@ -6,7 +6,10 @@
 <hr />
 <br /> 
 
-<FormComponent ButtonText="Next" assessment="assessment" OnValidSubmit="@CreateAssessment" />
+<FormComponent ButtonText="Create Form" assessment="assessment" OnValidSubmit="@CreateAssessment" />
+<br />
+<hr />
+<BackToList Target="assessments" />
 
 @code {
     RiskAssessment assessment = new RiskAssessment();

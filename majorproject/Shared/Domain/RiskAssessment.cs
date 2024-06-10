@@ -10,10 +10,13 @@ namespace majorproject.Shared.Domain
     public class RiskAssessment : BaseDomainModel
     {
         public bool? ApprovedStatus { get; set; }
-
+        [Required]
         public string? Name { get; set; }
+        [Required]
         public string? Department { get; set; }
+        [Required]
         public string? Process {  get; set; }
+        [Required]
         public string? Location {  get; set; }
         public DateTime AssessmentDate {  get; set; }
         public DateTime LastReviewDate { get; set; }
@@ -21,7 +24,7 @@ namespace majorproject.Shared.Domain
 
         public string? Approver { get; set; }
         public DateTime ApprovalDate { get; set; }
-
+        [Required]
         public int? TeamId { get; set; }
         public virtual RiskTeam? Team { get; set; }
 

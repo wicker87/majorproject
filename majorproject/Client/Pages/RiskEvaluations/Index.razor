@@ -62,7 +62,7 @@ else
         if (Evaluations != null)
         {
             var evaluation = Evaluations.First(q => q.Id == evaluationId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {evaluation.ExistingRiskControls} form?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {evaluation.ExistingRiskControls}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.RiskEvaluationsEndpoint}/{evaluationId}");

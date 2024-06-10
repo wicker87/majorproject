@@ -5,7 +5,7 @@
         <div class="form-group">
             <label> Existing Control: </label>
             <div>
-                <InputTextArea @bind-Value="evaluation.ExistingRiskControls" class="form-control" style="width: 300px; height: 80px; resize: none;" />
+                <InputTextArea @bind-Value="evaluation.ExistingRiskControls" class="form-control" style="width: 400px; height: 80px; resize: none;" />
                 <ValidationMessage For="@(() => evaluation.ExistingRiskControls)" />
             </div>
         </div>
@@ -13,7 +13,7 @@
         <div class="form-group">
             <label> Severity (S): </label>
             <div>
-                <InputNumber @bind-Value="evaluation.Severity" class="form-control" style="width: 300px;" />
+                <InputNumber @bind-Value="evaluation.Severity" class="form-control" style="width: 300px;" @oninput="CalculateRPN" @onclick="CalculateRPN" />
                 <ValidationMessage For="@(() => evaluation.Severity)" />
             </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label> Likelihood (L): </label>
             <div>
-                <InputNumber @bind-Value="evaluation.Likelihood" class="form-control" style="width: 300px;" />
+                <InputNumber @bind-Value="evaluation.Likelihood" class="form-control" style="width: 300px;" @oninput="CalculateRPN" @onclick="CalculateRPN" />
                 <ValidationMessage For="@(() => evaluation.Likelihood)" />
             </div>
         </div>        
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label> Risk Priority Number (RPN): </label>
             <div>
-                <InputNumber @bind-Value="evaluation.RPN" class="form-control" style="width: 300px;" />
+                <InputNumber Value="evaluation.RPN" ValueExpression="@(() => evaluation.RPN)" class="form-control" style="width: 300px;" />
                 <ValidationMessage For="@(() => evaluation.RPN)" />
             </div>
         </div>
@@ -68,4 +68,8 @@
         }
     }
 
+    private void CalculateRPN()
+    {
+        evaluation.RPN = (evaluation.Severity ?? 0) * (evaluation.Likelihood ?? 0);
+    }
 }

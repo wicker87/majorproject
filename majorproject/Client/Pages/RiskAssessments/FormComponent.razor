@@ -132,20 +132,14 @@
         </div>
     </fieldset>
     <br />
-    <hr />
     @* Buttons *@
-    <div style="display: flex; gap: 80px">
-        <div>
-            <BackToList Target="assessments"/>           
-        </div>
-        <div>
-            @if (!Disabled)
-            {
-                <button type="submit" class="btn btn-success btn-block">
-                    @ButtonText <span class="oi oi-arrow-right"></span>
-                </button>
-            }
-        </div>
+    <div>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-secondary">
+                @ButtonText
+            </button>
+        }
     </div>
 </EditForm>
 
