@@ -85,6 +85,16 @@
     [Parameter] public EventCallback<RiskControl> OnValidSubmit { get; set; }
     [Parameter] public EventCallback<int> OnDelete { get; set; }
 
+    protected override void OnInitialized()
+    {
+        control.DueDate = DateTime.Now;
+    }
+
+    private void CalculateRPN()
+    {
+        control.RPN = control.Severity * control.Likelihood;
+    }
+
     private void HandleValidSubmit()
     {
         OnValidSubmit.InvokeAsync(control);
@@ -93,15 +103,5 @@
     private void HandleDelete()
     {
         OnDelete.InvokeAsync(control.Id);
-    }
-
-    protected override void OnInitialized()
-    {
-        control.DueDate = DateTime.Now;
-    }
-
-    private void CalculateRPN()
-    {
-        control.RPN = (control.Severity ?? 0) * (control.Likelihood ?? 0);
     }
 }

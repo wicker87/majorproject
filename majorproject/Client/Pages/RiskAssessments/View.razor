@@ -27,8 +27,8 @@
         text-align: left;
     }
 </style>
-
-<h3 class="card-title">View Risk Assessment Details</h3>
+<AssessmentNavMenu AssessmentId="@id" />
+<h3 class="card-title">View Risk Assessment</h3>
 <hr />
 
 @if (assessment == null)
@@ -124,7 +124,7 @@ else
                         <tr>
                             <td>@index</td>
                             <td>@activity.Name</td>
-                            <td colspan="13">No Hazards</td>
+                            <td colspan="13">No Hazard</td>
                         </tr>
                         index++;
                     }
@@ -139,17 +139,8 @@ else
                             if (hazard.RiskEvaluations == null || !hazard.RiskEvaluations.Any())
                             {
                                 <tr>
-                                    @if (!activityPrinted)
-                                    {
-                                        <td rowspan="@activityRowSpan">@index</td>
-                                        <td rowspan="@activityRowSpan">@activity.Name</td>
-                                        activityPrinted = true;
-                                        index++;
-                                    }
-
-                                    <td rowspan="@hazardRowSpan">@hazard.Name</td>
-                                    <td rowspan="@hazardRowSpan">@hazard.PossibleInjury</td>
-                                    <td colspan="11">No Risk Evaluations</td>
+                                    <td colspan="4" style="color:darkred">▲ Please add Risk Evaluation for <strong>"@hazard.Name"</strong> to view data</td>
+                                    <td colspan="11">No Risk Evaluation</td>                                   
                                 </tr>
                             }
                             else
@@ -188,7 +179,16 @@ else
                                             <td>@evaluation.Control?.Likelihood</td>
                                             <td>@evaluation.Control?.RPN</td>
                                             <td>@evaluation.Control?.ImplementingPerson</td>
-                                            <td>@evaluation.Control?.DueDate.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @if (evaluation.Control.DueDate != default(DateTime))
+                                                {
+                                                    @evaluation.Control?.DueDate.ToString("dd/MM/yyyy")
+                                                }
+                                                else 
+                                                {
+                                                    <span>To be determined</span>
+                                                }
+                                            </td>
                                             <td>@evaluation.Control?.Remarks</td>
                                         }
                                     </tr>

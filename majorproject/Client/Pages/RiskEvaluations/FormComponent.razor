@@ -70,6 +70,6 @@
 
     private void CalculateRPN()
     {
-        evaluation.RPN = (evaluation.Severity ?? 0) * (evaluation.Likelihood ?? 0);
+        evaluation.RPN = evaluation.Severity * evaluation.Likelihood;
     }
 }

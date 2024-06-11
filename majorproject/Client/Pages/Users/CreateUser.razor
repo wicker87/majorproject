@@ -26,7 +26,7 @@
             <br />
             <div class="form-group">
                 <label for="userName">User Name</label>
-                <InputText id="userName" class="form-control" style="width: 300px" @bind-Value="userRole.UserName" @oninput="UpdateUserName" />
+                <InputText id="userName" class="form-control" style="width: 300px" autocomplete="off" @bind-Value="userRole.UserName" @oninput="UpdateUserName" />
             </div>
             <br />
             <div class="form-group">
@@ -48,12 +48,12 @@
             <br />
             <div class="form-group">
                 <label for="email">Email</label>
-                <InputText id="email" class="form-control" style="width: 300px" @bind-Value="userRole.Email" @oninput="UpdateEmail" />
+                <InputText id="email" class="form-control" style="width: 300px" autocomplete="off" @bind-Value="userRole.Email" @oninput="UpdateEmail" />
             </div>
             <br />
             <div class="form-group">
                 <label for="password">Password</label>
-                <InputText id="password" type="password" class="form-control" style="width: 300px" @bind-Value="userRole.Password" />
+                <InputText id="password" type="password" class="form-control" style="width: 300px" autocomplete="new-password" @bind-Value="userRole.Password" />
             </div>
         </div>
     </div>

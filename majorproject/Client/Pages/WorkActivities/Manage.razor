@@ -46,6 +46,7 @@
     private List<WorkActivity> activities = new List<WorkActivity>();
     private string formButtonText = "Create Activity";
     private bool Disabled = false;
+    private WorkActivity originalActivity = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,6 +64,7 @@
                 var newActivity = await response.Content.ReadFromJsonAsync<WorkActivity>();
                 activities.Add(newActivity);
                 activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form for the next activity
+                originalActivity = null;
             }
         }
         else // Update existing activity
@@ -77,18 +79,36 @@
                 }
                 activity = new WorkActivity { AssessmentId = assessmentId }; // Reset the form
                 formButtonText = "Create Activity";
+                originalActivity = null;
             }
         }
     }
 
     private void EditActivity(WorkActivity act)
     {
+        originalActivity = new WorkActivity
+            {
+                Id = act.Id,
+                Name = act.Name,
+                AssessmentId = act.AssessmentId
+            };
         activity = act;
         formButtonText = "Update Activity";
     }
 
     private void CancelEdit()
     {
+        if (originalActivity != null)
+        {
+            // Revert the changes by restoring the original activity state
+            var index = activities.FindIndex(a => a.Id == originalActivity.Id);
+            if (index != -1)
+            {
+                activities[index] = originalActivity;
+            }
+            originalActivity = null;
+        }
+
         activity = new WorkActivity { AssessmentId = assessmentId };
         formButtonText = "Create Activity";
     }

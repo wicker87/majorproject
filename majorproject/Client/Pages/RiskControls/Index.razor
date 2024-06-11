@@ -7,7 +7,7 @@
 @inject NavigationManager _navManager
 
 <h3 class="card-title">Risk Controls Data</h3>
-
+<h5 style="color:red">Note: You can only delete the data only if it does not have the foreign Id (1st column)</h5>
 <br />
 <br />
 
@@ -21,6 +21,7 @@ else
         <thead>
             <tr>
                 <th>Evaluation Id</th>
+                <th>Control Id</th>
                 <th>Additional Controls</th>
                 <th>Likelihood</th>
                 <th>Severity</th>
@@ -36,6 +37,7 @@ else
             {
                 <tr>
                     <td>@control.EvaluationId</td>
+                    <td>@control.Id</td>
                     <td>@control.AdditionalControls</td>
                     <td>@control.Likelihood</td>
                     <td>@control.Severity</td>

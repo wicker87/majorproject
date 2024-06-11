@@ -47,6 +47,7 @@
     [Parameter] public int assessmentId { get; set; }
 
     private List<ActivityWrapper> activities = new List<ActivityWrapper>();
+    private Identification originalHazard = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,6 +79,7 @@
                 var newHazard = await response.Content.ReadFromJsonAsync<Identification>();
                 activityWrapper.Hazards.Add(newHazard);
                 activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id }; // Reset the form
+                originalHazard = null;
             }
         }
         else // Update existing hazard
@@ -92,18 +94,37 @@
                 }
                 activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id }; // Reset the form
                 activityWrapper.FormButtonText = "Create Hazard";
+                originalHazard = null;
             }
         }
     }
 
     private void EditHazard(ActivityWrapper activityWrapper, Identification hazard)
     {
+        originalHazard = new Identification
+            {
+                Id = hazard.Id,
+                Name = hazard.Name,
+                PossibleInjury = hazard.PossibleInjury,
+                ActivityId = hazard.ActivityId
+            };
         activityWrapper.CurrentHazard = hazard;
         activityWrapper.FormButtonText = "Update Hazard";
     }
 
     private void CancelEdit(ActivityWrapper activityWrapper)
     {
+        if (originalHazard != null)
+        {
+            // Revert the changes by restoring the original hazard state
+            var index = activityWrapper.Hazards.FindIndex(h => h.Id == originalHazard.Id);
+            if (index != -1)
+            {
+                activityWrapper.Hazards[index] = originalHazard;
+            }
+            originalHazard = null; 
+        }
+
         activityWrapper.CurrentHazard = new Identification { ActivityId = activityWrapper.Activity.Id };
         activityWrapper.FormButtonText = "Create Hazard";
     }
