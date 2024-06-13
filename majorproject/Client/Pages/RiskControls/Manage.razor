@@ -69,6 +69,7 @@
                 currentControl = await response.Content.ReadFromJsonAsync<RiskControl>();
                 formButtonText = "Update Control";
             }
+            _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
         }
         else // Update existing control
         {
@@ -78,8 +79,8 @@
                 currentControl = await response.Content.ReadFromJsonAsync<RiskControl>();
                 formButtonText = "Update Control";
             }
-        }    
-        _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
+            _navManager.NavigateTo($"/assessments/{assessmentId}/evaluations/manage");
+        }          
     }
 
     private async Task DeleteControl(int controlId)

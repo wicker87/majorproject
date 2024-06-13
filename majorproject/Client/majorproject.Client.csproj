@@ -27,9 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\RightSidePanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Pages\Users\CreateUser.razor" />
     <None Include="Pages\Users\EditUser.razor" />
     <None Include="Pages\Users\UserRoles.razor" />
+    <None Include="Components\RightSidePanel.razor" />
     <None Include="wwwroot\scripts\datatable.js" />
   </ItemGroup>
 
@@ -47,6 +52,14 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\RightSidePanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\RightSidePanel.razor" />
   </ItemGroup>
 
 </Project>

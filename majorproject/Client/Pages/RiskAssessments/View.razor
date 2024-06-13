@@ -38,29 +38,30 @@
 else
 {
     <h4>@assessment.Name</h4>
-    <div style="display:flex; gap: 40px;">
-        <div>
+    <br />
+    <div style="display:flex; gap: 50px;">
+        <div style="flex: 1; max-width: 440px;">
             <p><strong>Department:</strong> @assessment.Department</p>
             <p><strong>Process:</strong> @assessment.Process</p>
             <p><strong>Location:</strong> @assessment.Location</p>
         </div>
-        <div>
+        <div style="flex: 1; max-width: 220px;">
             <p><strong>Assessment Date:</strong> @assessment.AssessmentDate.ToString("dd/MM/yyyy")</p>
             <p><strong>Last Review Date:</strong> @assessment.LastReviewDate.ToString("dd/MM/yyyy")</p>
             <p><strong>Next Review Date:</strong> @assessment.NextReviewDate.ToString("dd/MM/yyyy")</p>
         </div>
-        <div>
+        <div style="flex: 1; max-width: 200px;">
             <p><strong>Leader:</strong> @assessment.Team?.Leader</p>
             <p><strong>Member 1:</strong> @assessment.Team?.Member1</p>
             <p><strong>Member 2:</strong> @assessment.Team?.Member2</p>
         </div>
-        <div>
+        <div style="flex: 1; max-width: 200px;">
             <p><strong>Member 3:</strong> @assessment.Team?.Member3</p>
             <p><strong>Member 4:</strong> @assessment.Team?.Member4</p>
             <p><strong>Member 5:</strong> @assessment.Team?.Member5</p>
         </div>
-        <div>
-            <p>Approved by</p>
+        <div style="flex: 1; max-width: 200px;">
+            <p style="text-decoration: underline;">Approved by</p>
             <p><strong>Name:</strong> @assessment.Approver</p>
             <p>
                 <strong>Date: </strong>
@@ -166,7 +167,7 @@ else
                                         <td>@evaluation.ExistingRiskControls</td>
                                         <td>@evaluation.Severity</td>
                                         <td>@evaluation.Likelihood</td>
-                                        <td>@evaluation.RPN</td>
+                                        <td style="text-align:center">@evaluation.RPN</td>
 
                                         @if (evaluation.Control == null)
                                         {
