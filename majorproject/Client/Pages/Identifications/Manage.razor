@@ -16,22 +16,30 @@
 </div>
 <br />
 
-@foreach (var activity in activities)
+@if (activities.Any())
 {
-    <h4><strong>Work Activity:</strong> @activity.Activity.Name</h4>
-    <FormComponent ButtonText="@activity.FormButtonText" hazard="@activity.CurrentHazard" OnValidSubmit="() => CreateOrUpdateHazard(activity)" OnCancelEdit="() => CancelEdit(activity)" />
+    @foreach (var activity in activities)
+    {
+        <h4><strong>Work Activity:</strong> @activity.Activity.Name</h4>
+        <FormComponent ButtonText="@activity.FormButtonText" hazard="@activity.CurrentHazard" OnValidSubmit="() => CreateOrUpdateHazard(activity)" OnCancelEdit="() => CancelEdit(activity)" />
+        <br />
+        <ol>
+            @foreach (var hazard in activity.Hazards)
+            {
+                <li>
+                    @hazard.Name
+                    <button @onclick="() => EditHazard(activity, hazard)" class="btn btn-link text-warning">Edit</button>
+                    <button @onclick="() => DeleteHazard(activity, hazard.Id, hazard.Name)" class="btn btn-link text-danger">Delete</button>
+                </li>
+            }
+        </ol>
+        <hr />
+    }
+}
+else
+{
+    <h5 style="color:red">Please add work activities first</h5>
     <br />
-    <ol>
-        @foreach (var hazard in activity.Hazards)
-        {
-            <li>
-                @hazard.Name
-                <button @onclick="() => EditHazard(activity, hazard)" class="btn btn-link text-warning">Edit</button>
-                <button @onclick="() => DeleteHazard(activity, hazard.Id, hazard.Name)" class="btn btn-link text-danger">Delete</button>
-            </li>
-        }
-    </ol>
-    <hr />
 }
 
 <div style="display: flex; gap: 80px">

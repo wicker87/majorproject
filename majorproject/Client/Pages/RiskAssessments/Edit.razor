@@ -11,14 +11,7 @@
 <br />
 <hr />
 
-<div style="display: flex; gap: 80px">
-    <div>
-        <BackToList Target="assessments" />
-    </div>
-    <div>
-        <button @onclick="CompleteAssessments" class="btn btn-success btn-block">Next <span class="oi oi-arrow-right"></span></button>
-    </div>
-</div>
+<button @onclick="CompleteAssessments" class="btn btn-success btn-block">Next <span class="oi oi-arrow-right"></span></button>
 
 @code {
     [Parameter] public int id { get; set; }

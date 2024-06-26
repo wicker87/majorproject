@@ -11,36 +11,44 @@
         <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
     </div>
     <div>
-        <button @onclick="CompleteEvaluations" class="btn btn-success btn-block">Exit Form</button>
+        <button @onclick="CompleteEvaluations" class="btn btn-success btn-block">View Form</button>
     </div>
 </div>
 <br />
 
-@foreach (var hazard in hazards)
+@if(hazards.Any())
 {
-    <h4><strong>Hazard:</strong> @hazard.Identification.Name</h4>
-    <div style="display: flex; gap: 40px">
-        <div>
-            <FormComponent ButtonText="@hazard.FormButtonText" evaluation="@hazard.CurrentEvaluation" OnValidSubmit="() => CreateOrUpdateEvaluation(hazard)" OnCancelEdit="() => CancelEdit(hazard)" />
+    @foreach (var hazard in hazards)
+    {
+        <h4><strong>Hazard:</strong> @hazard.Identification.Name</h4>
+        <div style="display: flex; gap: 40px">
+            <div>
+                <FormComponent ButtonText="@hazard.FormButtonText" evaluation="@hazard.CurrentEvaluation" OnValidSubmit="() => CreateOrUpdateEvaluation(hazard)" OnCancelEdit="() => CancelEdit(hazard)" />
+            </div>
+            <div>
+                <p><strong>5x5 Risk Matrix with Numeric Ratings</strong></p>
+                <img src="RPN Chart.png" style="width:600px" />
+            </div>
         </div>
-        <div>
-            <p><strong>5x5 Risk Matrix with Numeric Ratings</strong></p>
-            <img src="RPN Chart.png" style="width:600px"/>
-        </div>
-    </div>   
+        <br />
+        <ol>
+            @foreach (var evaluation in hazard.Evaluations)
+            {
+                <li>
+                    @evaluation.ExistingRiskControls
+                    <button @onclick="() => EditEvaluation(hazard, evaluation)" class="btn btn-link text-warning">Edit</button>
+                    <button @onclick="() => DeleteEvaluation(hazard, evaluation.Id, evaluation.ExistingRiskControls)" class="btn btn-link text-danger">Delete</button>
+                    <button @onclick="() => NavigateToRiskControls(evaluation.Id)" class="btn btn-link text-primary">Manage Risk Control</button>
+                </li>
+            }
+        </ol>
+        <hr />
+    }
+}
+else
+{
+    <h5 style="color:red">Please add hazards first</h5>
     <br />
-    <ol>
-        @foreach (var evaluation in hazard.Evaluations)
-        {
-            <li>
-                @evaluation.ExistingRiskControls
-                <button @onclick="() => EditEvaluation(hazard, evaluation)" class="btn btn-link text-warning">Edit</button>
-                <button @onclick="() => DeleteEvaluation(hazard, evaluation.Id, evaluation.ExistingRiskControls)" class="btn btn-link text-danger">Delete</button>
-                <button @onclick="() => NavigateToRiskControls(evaluation.Id)" class="btn btn-link text-primary">Manage Risk Control</button>
-            </li>
-        }
-    </ol>
-    <hr />
 }
 
 <div style="display: flex; gap: 80px">
@@ -48,7 +56,7 @@
         <button @onclick="GoBack" class="btn btn-secondary"><span class="oi oi-arrow-left"></span> Back</button>
     </div>
     <div>
-        <button @onclick="CompleteEvaluations" class="btn btn-success btn-block">Exit Form</button>
+        <button @onclick="CompleteEvaluations" class="btn btn-success btn-block">View Form</button>
     </div>
 </div>
 
@@ -160,7 +168,7 @@
 
     private void CompleteEvaluations()
     {
-        _navManager.NavigateTo($"/assessments/");
+        _navManager.NavigateTo($"/assessments/{assessmentId}/view");
     }
 
     private void GoBack()
