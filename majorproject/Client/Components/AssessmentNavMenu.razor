@@ -20,8 +20,11 @@
 <div class="assessment-nav-menu">
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/edit")" href="/assessments/@AssessmentId/edit">1. Risk Assessment Details</a>
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/ai")" href="/assessments/@AssessmentId/ai">Preliminary RA Generator</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/edit")" href="/assessments/@AssessmentId/edit">1. Risk Assessment Details</a>
+        </li>       
         <li class="nav-item">
             <a class="nav-link @GetNavLinkClass($"/assessments/{AssessmentId}/activities/manage")" href="/assessments/@AssessmentId/activities/manage">2. Work Activities</a>
         </li>
