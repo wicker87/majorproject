@@ -6,6 +6,75 @@
 
 @* Top Menu Bar Links/Buttons*@
 
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-menu {
+        display: none; /* Hide by default */
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 380px;
+        box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        left: 16%;
+        top: 130%;
+    }
+
+    .dropdown-item {
+        color: black;
+        padding: 12px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-item:hover {
+            background-color: #e0e0e0; /* Change background color on hover */
+            color: black; /* Keep text color black */
+        }
+
+    .dropdown-toggle.active + .dropdown-menu {
+        display: block; /* Show menu when toggle is active */
+    }
+</style>
+
+<script>
+    function toggleDropdown() {
+        var button = document.getElementById('alertsButton');
+        var dropdownMenu = button.nextElementSibling;
+
+        // Toggle the active class on the button
+        button.classList.toggle('active');
+
+        // Toggle the display of the dropdown menu
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+    }
+
+    // Close the dropdown if clicked outside
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropdown-toggle')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.style.display === 'block') {
+                    openDropdown.style.display = 'none';
+                }
+            }
+
+            var toggles = document.getElementsByClassName("dropdown-toggle");
+            for (var i = 0; i < toggles.length; i++) {
+                toggles[i].classList.remove('active');
+            }
+        }
+    }
+</script>
+
 <AuthorizeView>
     <Authorized>
         @if (userRoles == null)
@@ -14,24 +83,34 @@
         }
         else if (userRoles.Contains("Administrator"))
         {
-            <span>Welcome, @userEmail (Administrator)</span>
+            <span>Welcome, @userEmail (<strong>Administrator</strong>)</span>
         }
         else if (userRoles.Contains("Manager"))
         {
-            <span>Welcome, @userEmail (Manager)</span>
+            <span>Welcome, @userEmail (<strong>Manager</strong>)</span>
         }
         else if (userRoles.Contains("Employee"))
         {
-            <span>Welcome, @userEmail (Employee)</span>
+            <span>Welcome, @userEmail (<strong>Employee</strong>)</span>
         }
         else
         {
             <span>Welcome, User</span>
         }
-        <a href="authentication/profile"><i class="fas fa-user-circle"></i> Account Settings</a>
         <a href="https://www.mom.gov.sg/workplace-safety-and-health/safety-and-health-management-systems/risk-management" target="_blank">
             <i class="fas fa-info-circle"></i> About Risk Management
         </a>
+
+        <div class="dropdown">
+            <button class="nav-link btn btn-link dropdown-toggle" id="alertsButton" onclick="toggleDropdown()"><i class="fas fa-bell"></i> Alerts</button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">Alert 1<br />This is alert 1</div><hr />               
+                <div class="dropdown-item">Alert 2<br />This is alert 2</div><hr />
+                <div class="dropdown-item">Alert 3<br />This is alert 3</div><hr />
+            </div>
+        </div>
+
+        <a href="authentication/profile"><i class="fas fa-user-circle"></i> Account Settings</a>       
         <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </Authorized>
     <NotAuthorized>

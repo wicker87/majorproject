@@ -16,7 +16,7 @@
 
 /* Styles the icons used in the navigation items */
 .oi {
-    width: 2.6rem;
+    width: 2.4rem;
     font-size: 1.4rem;
     vertical-align: text-top;
     top: -2px;
@@ -24,7 +24,7 @@
 
 /* Styles the navigation items */
 .nav-item {
-    font-size: 1.0rem;
+    font-size: 1.1rem;
     padding-bottom: 0.5rem;
 }
 

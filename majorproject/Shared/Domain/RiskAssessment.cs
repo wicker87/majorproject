@@ -29,5 +29,7 @@ namespace majorproject.Shared.Domain
         public virtual RiskTeam? Team { get; set; }
 
         public virtual List<WorkActivity>? WorkActivities { get; set; }
+
+        public virtual List<Alert>? Alerts { get; set; }
     }
 }

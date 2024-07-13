@@ -208,13 +208,25 @@ else
             <DataAnnotationsValidator />
             <ValidationSummary />
             <br />
-            @if (assessment.ApprovedStatus != true)
+            @if (assessment.ApprovedStatus == true)
+            {
+                <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                            
+            }
+            else if (assessment.ApprovedStatus == false)
             {
                 <button type="button" class="btn btn-success" @onclick="ApproveAssessment">Approved Form</button>
             }
             else
             {
-                <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                <div style="display: flex; gap: 80px">
+                    <div>
+                        <button type="button" class="btn btn-success" @onclick="ApproveAssessment">Approved Form</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                    </div>
+                </div>
             }
         </EditForm>
     }
