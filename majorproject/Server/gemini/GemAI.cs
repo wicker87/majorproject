@@ -16,11 +16,11 @@ public class GemAI
         });
     }
 
-    public async Task RiskTableGeneration()
-    {
-        var base64Image = ;
-        var response = await _geminiClient.ImagePrompt("Parse this image. Identify the work activities that are done in the picture. Identify the possible hazards the work activity has and the corresponding injury or ill health it might cause. Find any risks controls for the hazards you have found which are implemented in the picture and rate the hazards severity and likelihood with the risk control in place on a scale of 1 to 5, 1 being the least likely/severe and 5 being the most likely/severe. multiply the severity rating and likelihood rating together. Come up with additional risk controls for the hazard along with the severity and likelihood of the hazard with the new control measures in place, on a scale of 1 to 5, 1 being the least likely/severe and 5 being the most likely/severe. Group the response by work activity followed by hazards.",base64Image,"Jpeg");
+    //public async Task RiskTableGeneration()
+    //{
+    //    var base64Image = ;
+    //    var response = await _geminiClient.ImagePrompt("Parse this image. Identify the work activities that are done in the picture. Identify the possible hazards the work activity has and the corresponding injury or ill health it might cause. Find any risks controls for the hazards you have found which are implemented in the picture and rate the hazards severity and likelihood with the risk control in place on a scale of 1 to 5, 1 being the least likely/severe and 5 being the most likely/severe. multiply the severity rating and likelihood rating together. Come up with additional risk controls for the hazard along with the severity and likelihood of the hazard with the new control measures in place, on a scale of 1 to 5, 1 being the least likely/severe and 5 being the most likely/severe. Group the response by work activity followed by hazards.",base64Image,"Jpeg");
             
-    }
+    //}
     
 }

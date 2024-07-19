@@ -41,6 +41,8 @@ namespace majorproject.Server.Data
 
             builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
 
+            builder.ApplyConfiguration(new AlertSeedConfiguration());
+
             // Identity seed
             builder.ApplyConfiguration(new RoleSeedConfiguration());
 

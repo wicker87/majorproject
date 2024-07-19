@@ -2,7 +2,8 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject NavigationManager Navigation
+@inject NavigationManager _navManager
+@inject HttpClient _client
 
 @* Top Menu Bar Links/Buttons*@
 
@@ -16,18 +17,24 @@
         display: none; /* Hide by default */
         position: absolute;
         background-color: #f9f9f9;
-        min-width: 380px;
+        width: 300px;
+        max-height: 360px; /* Set a max height for the dropdown menu */
+        overflow-y: auto; /* Enable vertical scrolling */
         box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.2);
         z-index: 1;
-        left: 16%;
-        top: 130%;
+        right: -100px;
+        top: 132%;
     }
 
     .dropdown-item {
         color: black;
-        padding: 12px;
+        padding: 2px 10px;
         text-decoration: none;
         display: block;
+        width: 100%; /* Ensure items fit within the menu */
+        box-sizing: border-box; /* Include padding in the width calculation */
+        white-space: normal; /* Allow text to wrap */
+        word-break: break-word; /* Ensure long words break */
     }
 
         .dropdown-item:hover {
@@ -42,6 +49,7 @@
 
 <script>
     function toggleDropdown() {
+
         var button = document.getElementById('alertsButton');
         var dropdownMenu = button.nextElementSibling;
 
@@ -97,25 +105,38 @@
         {
             <span>Welcome, User</span>
         }
-        <a href="https://www.mom.gov.sg/workplace-safety-and-health/safety-and-health-management-systems/risk-management" target="_blank">
-            <i class="fas fa-info-circle"></i> About Risk Management
-        </a>
-
+        
         <div class="dropdown">
-            <button class="nav-link btn btn-link dropdown-toggle" id="alertsButton" onclick="toggleDropdown()"><i class="fas fa-bell"></i> Alerts</button>
+            <button class="nav-link btn btn-link dropdown-toggle" id="alertsButton" title="Alerts" @onmousedown="ReloadAlerts" onclick="toggleDropdown()"><i class="fas fa-bell fa-lg"></i></button>
             <div class="dropdown-menu">
-                <div class="dropdown-item">Alert 1<br />This is alert 1</div><hr />               
-                <div class="dropdown-item">Alert 2<br />This is alert 2</div><hr />
-                <div class="dropdown-item">Alert 3<br />This is alert 3</div><hr />
+                @if (userAlerts == null || !userAlerts.Any())
+                {
+                    <div style="text-align:center">- - - - - - No alerts - - - - - -</div>
+                }
+                else
+                {
+                    @foreach (var alert in userAlerts)
+                    {
+                        <div class="dropdown-item" @onclick="() => NavigateToAssessment(alert.AssessmentId)">
+                            @alert.Message
+                            <br />
+                            <small style="display:block; text-align:right;">@alert.DateTime.ToString("ddd, dd MMM, hh:mm tt")</small>
+                        </div>
+                        <hr />
+                    }
+                }
             </div>
         </div>
 
-        <a href="authentication/profile"><i class="fas fa-user-circle"></i> Account Settings</a>       
-        <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <a href="authentication/profile"><i title="Account Settings" class="fas fa-user-circle fa-lg"></i></a>
+        <button class="nav-link btn btn-link" @onclick="BeginLogOut"><i class="fas fa-sign-out-alt fa-lg"></i> Logout</button>
     </Authorized>
     <NotAuthorized>
-        @* <a href="authentication/register"><i class="fas fa-user-plus"></i> Register</a> *@
-        <a href="authentication/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="https://www.mom.gov.sg/workplace-safety-and-health/safety-and-health-management-systems/risk-management" target="_blank">
+            <i class="fas fa-info-circle fa-lg"></i> About Risk Management
+        </a>
+        @* <a href="authentication/register"><i class="fas fa-user-plus fa-lg"></i> Register</a> *@
+        <a href="authentication/login"><i class="fas fa-sign-in-alt fa-lg"></i> Login</a>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -124,6 +145,7 @@
 @code {
     private List<string> userRoles;
     private string userEmail;
+    private List<Alert>? userAlerts;
 
     protected override async Task OnInitializedAsync()
     {
@@ -159,6 +181,7 @@
                     .Select(c => c.Value)
                     .ToList();
             }
+            await LoadUserAlertsAsync(); // Load relevant alerts
         }
         else
         {
@@ -167,6 +190,84 @@
         }
 
         StateHasChanged(); // Force re-render
+    }
+
+    public async Task ReloadAlerts()
+    {
+        await LoadUserAlertsAsync();
+        StateHasChanged(); // Ensure the UI is updated
+    }
+
+    private async Task LoadUserAlertsAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var userEmail = user.Identity.Name;
+
+            // Fetch all risk assessments
+            var riskAssessments = await _client.GetFromJsonAsync<List<RiskAssessment>>($"{Endpoints.RiskAssessmentsEndpoint}");
+
+            bool isAdmin = userEmail.ToLower().Contains("admin");
+
+            // Fetch all alerts
+            var alerts = await _client.GetFromJsonAsync<List<Alert>>($"{Endpoints.AlertsEndpoint}");
+
+            if (isAdmin)
+            {
+                // Admins can access all alerts
+                userAlerts = alerts.OrderByDescending(alert => alert.DateTime).ToList();
+            }
+            else
+            {
+                // Filter risk assessments where the user is a member or approver
+                var userRiskAssessments = riskAssessments.Where(ra =>
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Leader) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Member1) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Member2) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Member3) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Member4) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Team.Member5) ||
+                    NormalizedEmail(userEmail) == NormalizeName(ra.Approver)
+                ).Select(ra => ra.Id).ToList();
+
+                // Filter alerts related to the user's risk assessments
+                userAlerts = alerts
+                .Where(alert => alert.AssessmentId.HasValue && userRiskAssessments.Contains(alert.AssessmentId.Value))
+                .OrderByDescending(alert => alert.DateTime)
+                .Take(20)
+                .ToList();
+            }           
+        }
+    }
+
+    private string NormalizeName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            return string.Empty;
+        }
+
+        return name.ToLower().Replace(" ", "");
+    }
+
+    private string NormalizedEmail(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return string.Empty;
+        }
+
+        var normalizedEmail = email.ToLower().Replace(" ", "");
+        var emailParts = normalizedEmail.Split('@');
+        return emailParts[0];
+    }
+
+    private void NavigateToAssessment(int? assessmentId)
+    {
+        _navManager.NavigateTo($"/assessments/{assessmentId}/view");
     }
 
     private void OnAuthenticationStateChanged(Task<AuthenticationState> task)
@@ -180,7 +281,7 @@
 
     private void BeginLogOut() // Logout of application
     {
-        Navigation.NavigateToLogout("authentication/logout");
+        _navManager.NavigateToLogout("authentication/logout");
     }
 
     public void Dispose()

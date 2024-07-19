@@ -1,6 +1,9 @@
 ﻿@page "/assessments/create"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims
+@using System.Globalization;
 
 <h3 class="card-title">Create New Risk Assessment</h3>
 <hr />
@@ -13,6 +16,18 @@
 
 @code {
     RiskAssessment assessment = new RiskAssessment();
+    private string? userEmail;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            userEmail = user.Identity.Name;
+        }
+    }
 
     private async Task CreateAssessment()
     {
@@ -20,6 +35,13 @@
         if (response.IsSuccessStatusCode)
         {
             var createdAssessment = await response.Content.ReadFromJsonAsync<RiskAssessment>();
+            var alert = new Alert
+            {
+                AssessmentId = createdAssessment.Id,
+                    Message = $"📄A new risk assessment, {createdAssessment.Name}, has been created.",
+                DateTime = DateTime.Now,
+            };
+            await _client.PostAsJsonAsync(Endpoints.AlertsEndpoint, alert);
             _navManager.NavigateTo($"/assessments/{createdAssessment.Id}/activities/manage");
         }
     }
