@@ -34,7 +34,7 @@ namespace majorproject.Server.Configurations.Entities
                     ApprovedStatus = true,
                     Name = "TP-ENG Laboratories Risk Assessment",
                     Department = "School of Engineering",
-                    Process = "ELN/CEN/ABS/IFM/AEL/AEG//BME/IIT/MTN",
+                    Process = "ELN/ CEN/ ABS/ IFM/ AEL/ AEG/ BME/ IIT/ MTN",
                     Location = "EN15-06-051, EN15-06-052, EN15-06-053, EN15-06-055, EN15-06-057, EN15-06-058",
                     AssessmentDate = new DateTime(2024, 5, 10),
                     LastReviewDate = new DateTime(2024, 5, 15),

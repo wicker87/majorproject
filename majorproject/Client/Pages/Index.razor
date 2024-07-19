@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@inject FormService FormService
 
 <PageTitle>Risk Assessor</PageTitle>
 
@@ -40,4 +44,51 @@
 </div>
 
 @* <SurveyPrompt Title="How is Blazor working for you?" /> *@
+@code {
+    private AuthenticationState authenticationState;
+    private string userName;
 
+    private static bool popupShown = false; // Static field to persist within the session
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authenticationState.User;
+
+            if (user.Identity.IsAuthenticated)
+            {
+                userName = user.Identity.Name;
+
+                // Ensure the pop-up is shown only once per session
+                if (!popupShown)
+                {
+                    var areThereAnyPendingRiskAssessments = await FormService.AreThereAnyPendingRiskAssessmentsAsync();
+
+                    if (userName.ToLower().Contains("manager"))
+                    {
+                        if (areThereAnyPendingRiskAssessments)
+                        {
+                            await js.InvokeVoidAsync("alert", $"Welcome, {userName} (Manager). There are risk assessments that are needed to be approved.");
+                        }
+                        else
+                        {
+                            await js.InvokeVoidAsync("alert", $"Welcome, {userName} (Manager). There are no risk assessments that are needed to be approved.");
+                        }
+                    }                 
+                    popupShown = true; // Set the flag to true after showing the popup
+                }
+            }
+            else
+            {
+                userName = "Anonymous";
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions and log errors as necessary
+            await js.InvokeVoidAsync("alert", $"Error: {ex.Message}");
+        }
+    }
+}

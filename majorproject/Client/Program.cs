@@ -29,6 +29,9 @@ builder.Services.AddScoped<UserRoleService>();
 
 builder.Services.AddApiAuthorization();
 
+// Register FormService
+builder.Services.AddScoped<FormService>();
+
 await builder.Build().RunAsync();
 
 
