@@ -19,7 +19,7 @@ risk assessment form using generative AI. Users can then manually review and adj
             @foreach (var file in uploadedFiles)
             {
                 <div class="p-2">
-                    <img src="@file.DataUrl" alt="Uploaded Image" class="img-thumbnail" />
+                    <img src="@file.Base64String" alt="Uploaded Image" class="img-thumbnail" />
                     <p><strong>Name:</strong> @file.Name</p>
                     <p><strong>Type:</strong> @file.Type</p>
                     <p><strong>Size:</strong> @Math.Round(file.Size / 1024.0, 2) kB</p>
@@ -27,16 +27,16 @@ risk assessment form using generative AI. Users can then manually review and adj
             }
         </div>
         <br />
-        <button class="btn btn-success btn-block">Generate</button>
+        <button class="btn btn-success btn-block" @onclick="UploadPicture">Generate</button>
     </div>
 }
 
 @code {
-    
+
     [Parameter] public int id { get; set; }
     RiskAssessment? assessment = new RiskAssessment();
 
-    private List<UploadedFile> uploadedFiles = new List<UploadedFile>();
+    private List<ImageSource> uploadedFiles = new List<ImageSource>();
 
     protected async override Task OnParametersSetAsync()
     {
@@ -45,6 +45,7 @@ risk assessment form using generative AI. Users can then manually review and adj
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
+
         uploadedFiles.Clear();
         foreach (var file in e.GetMultipleFiles(3)) // Limit to 3 files
         {
@@ -52,25 +53,79 @@ risk assessment form using generative AI. Users can then manually review and adj
             await file.OpenReadStream().ReadAsync(buffer);
 
             var dataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
-            uploadedFiles.Add(new UploadedFile
+            uploadedFiles.Add(new ImageSource
                 {
                     Name = file.Name,
                     Type = file.ContentType,
                     Size = file.Size,
-                    DataUrl = dataUrl
+                    Base64String = dataUrl
                 });
+
         }
 
         // Optionally, you can perform additional actions with the file here, such as uploading it to a server
         // var buffer = new byte[uploadedFile.Size];
         // await uploadedFile.OpenReadStream().ReadAsync(buffer);
     }
-
-    private class UploadedFile
+    public async Task UploadPicture()
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public long Size { get; set; }
-        public string DataUrl { get; set; }
+        
+        if (uploadedFiles != null)
+        {
+            int uploadedFilesLength = uploadedFiles.Count;
+            foreach (var image in uploadedFiles)
+            {
+                await _client.PostAsJsonAsync(Endpoints.ImageSourcesEndpoint, image);
+            }
+            uploadedFiles.Clear();
+
+            List<ImageSource> pictureList = new List<ImageSource>();
+
+            pictureList = await _client.GetFromJsonAsync<List<ImageSource>>(Endpoints.ImageSourcesEndpoint);
+
+            int pictureListLength = pictureList.Count;
+
+            int lengthdiff = pictureListLength - uploadedFilesLength;
+
+            for(int i=lengthdiff; i<pictureListLength; i++)
+            {
+
+                /*for(int f=0; f< ; f++)
+                {
+                    WorkActivity workActivity = new WorkActivity();
+                    //add variables to work activity
+                    List<Identification> identList = new List<Identification>();
+                    identList = await _client.GetFromJsonAsync<List<Identification>>(Endpoints.IdentificationsEndpoint);
+                    int identLength = 0;
+                    if (identList == null)
+                    {
+                        identLength = 0;
+                    }
+                    else
+                    {
+                        identLength = identList.Count;
+                    }
+                    //find amount of added identification
+                    for(int g=identLength; g<identLength+; g++)
+                    {
+                        Identification identification = new Identification();
+                        for(int h; h< ; h++)
+                        {
+                            RiskEvaluation riskEvaluation = new RiskEvaluation();
+                            RiskControl riskControl = new RiskControl();
+                        }
+                    }
+                }*/
+
+            }
+
+                
+                
+                    
+                
+            
+        }
     }
+    
+    
 }

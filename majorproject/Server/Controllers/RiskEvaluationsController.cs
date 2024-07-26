@@ -50,7 +50,7 @@ namespace majorproject.Server.Controllers
         }
 
         // GET: api/Identifications/assessment/5 - Newly added
-        [HttpGet("assessment/{id}")]
+       [HttpGet("assessment/{id}")]
         public async Task<IActionResult> GetIdentificationsByAssessmentId(int id)
         {
             var hazards = await _unitOfWork.Identifications.GetAll(q => q.Activity.AssessmentId == id);
@@ -64,7 +64,7 @@ namespace majorproject.Server.Controllers
             var evaluations = await _unitOfWork.RiskEvaluations.GetAll(q => q.HazardId == id);
             return Ok(evaluations);
         }
-
+        
         // PUT: api/RiskEvaluations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

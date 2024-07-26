@@ -18,6 +18,7 @@ namespace majorproject.Shared.Domain
         public string? Member3 { get; set; }
         public string? Member4 { get; set; }
         public string? Member5 { get; set; }
+       
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

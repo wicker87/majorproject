@@ -18,15 +18,15 @@ namespace majorproject.Server.Configurations.Entities
                     Id = 1,
                     ApprovedStatus = true,
                     Name = "CEN MP Risk Assessment",
-                    Department="Temasek Poly (ENG)",
-                    Process= "CEN MP - April 2024",
-                    Location= "EN10-2-15",
+                    Department = "Temasek Poly (ENG)",
+                    Process = "CEN MP - April 2024",
+                    Location = "EN10-2-15",
                     AssessmentDate = new DateTime(2024, 4, 26),
-                    LastReviewDate= new DateTime(2024, 4, 26),
+                    LastReviewDate = new DateTime(2024, 4, 26),
                     NextReviewDate = new DateTime(2027, 4, 26),
-                    TeamId= 2,
                     Approver = "John Smith",
-                    ApprovalDate= new DateTime(2024, 4, 28),
+                    ApprovalDate = new DateTime(2024, 4, 28),
+                    TeamId = 2
                 },
                 new RiskAssessment
                 {
@@ -39,9 +39,9 @@ namespace majorproject.Server.Configurations.Entities
                     AssessmentDate = new DateTime(2018, 1, 26),
                     LastReviewDate = new DateTime(2023, 12, 1),
                     NextReviewDate = new DateTime(2026, 11, 30),
-                    TeamId = 4,
                     Approver = "Benjamin Scott",
                     ApprovalDate = new DateTime(2023, 12, 6),
+                    TeamId = 4
                 }
                 );
         }

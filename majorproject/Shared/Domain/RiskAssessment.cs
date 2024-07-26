@@ -21,13 +21,12 @@ namespace majorproject.Shared.Domain
         public DateTime AssessmentDate {  get; set; }
         public DateTime LastReviewDate { get; set; }
         public DateTime NextReviewDate { get; set;}
-
         public string? Approver { get; set; }
         public DateTime ApprovalDate { get; set; }
         [Required]
         public int? TeamId { get; set; }
         public virtual RiskTeam? Team { get; set; }
-
         public virtual List<WorkActivity>? WorkActivities { get; set; }
+        
     }
 }

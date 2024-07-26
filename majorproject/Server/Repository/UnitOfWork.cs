@@ -22,6 +22,7 @@ namespace majorproject.Server.Repository
         private IGenericRepository<RiskControl> _riskControls;
         private IGenericRepository<RiskEvaluation> _riskEvaluations;
         private IGenericRepository<RiskTeam> _riskTeams;
+        private IGenericRepository<ImageSource> _imageSources;
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -43,6 +44,9 @@ namespace majorproject.Server.Repository
             => _riskEvaluations ??= new GenericRepository<RiskEvaluation>(_context);
         public IGenericRepository<RiskTeam> RiskTeams
             => _riskTeams ??= new GenericRepository<RiskTeam>(_context);
+        public IGenericRepository<ImageSource> ImageSources
+            => _imageSources ??= new GenericRepository<ImageSource>(_context);
+
         public void Dispose()
         {
             _context.Dispose();
