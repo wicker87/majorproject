@@ -25,6 +25,7 @@ namespace majorproject.Server.Data
         public DbSet<RiskControl> RiskControls { get; set;}       
         public DbSet<RiskTeam> RiskTeams { get; set; }
         public DbSet<ImageSource> ImageSources { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,7 +42,7 @@ namespace majorproject.Server.Data
 
             builder.ApplyConfiguration(new RiskTeamSeedConfiguration());
 
-            
+            builder.ApplyConfiguration(new AlertSeedConfiguration());
 
             // Identity seed
             builder.ApplyConfiguration(new RoleSeedConfiguration());

@@ -1,5 +1,5 @@
 ﻿<div class="right-side-panel @(isCollapsed ? "collapsed" : "expanded")">
-    <button @onclick="TogglePanel" class="toggle-button">
+    <button @onclick="TogglePanel" title="RMCP" class="toggle-button">
         @(isCollapsed ? "<" : ">")
     </button>
     @if (!isCollapsed)
@@ -36,7 +36,7 @@
         background-color: rgba(255, 128, 0, 0.7);
         color: black;
         border: none;
-        padding: 5px;
+        padding: 20px 5px 20px;
         cursor: pointer;
         z-index: 1001;
         font-size: 16px; 

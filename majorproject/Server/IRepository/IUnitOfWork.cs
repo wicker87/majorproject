@@ -17,5 +17,6 @@ namespace majorproject.Server.IRepository
         IGenericRepository<RiskControl> RiskControls { get; }      
         IGenericRepository<RiskTeam> RiskTeams { get; }
         IGenericRepository<ImageSource> ImageSources { get; }
+        IGenericRepository<Alert> Alerts { get; }
     }
 }

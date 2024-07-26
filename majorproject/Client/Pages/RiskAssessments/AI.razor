@@ -1,5 +1,6 @@
 ﻿@page "/assessments/{id:int}/ai"
 @inject HttpClient _client
+@inject IJSRuntime js
 
 <AssessmentNavMenu AssessmentId="@id" />
 <h3 class="card-title">Preliminary Risk Assessment Generator</h3>
@@ -9,7 +10,7 @@
 risk assessment form using generative AI. Users can then manually review and adjust the generated assessment.</h5>
 <br />
 <InputFile class="form-control" style="width:400px; max-height:300px;" OnChange="HandleFileSelected" multiple />
-<p style="color:red">* Can only accept up to 3 images in one go.</p>
+<p style="color:red">* Can only accept up to 3 images per generate.</p>
 
 @if (uploadedFiles != null && uploadedFiles.Any())
 {
@@ -42,6 +43,11 @@ risk assessment form using generative AI. Users can then manually review and adj
     {
         assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{id}");
     }
+
+    // private async Task OpenChatGPT()
+    // {
+    //     await js.InvokeVoidAsync("window.open", "https://chatgpt.com/", "_blank");
+    // }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {

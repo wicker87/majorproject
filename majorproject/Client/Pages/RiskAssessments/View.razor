@@ -3,6 +3,7 @@
 @inject IJSRuntime js
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @using System.Security.Claims
+@using System.Globalization;
 
 <style>
     table {
@@ -208,13 +209,25 @@ else
             <DataAnnotationsValidator />
             <ValidationSummary />
             <br />
-            @if (assessment.ApprovedStatus != true)
+            @if (assessment.ApprovedStatus == true)
+            {
+                <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                            
+            }
+            else if (assessment.ApprovedStatus == false)
             {
                 <button type="button" class="btn btn-success" @onclick="ApproveAssessment">Approved Form</button>
             }
             else
             {
-                <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                <div style="display: flex; gap: 80px">
+                    <div>
+                        <button type="button" class="btn btn-success" @onclick="ApproveAssessment">Approved Form</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-warning" @onclick="UnapprovedAssessment">Unapproved Form</button>
+                    </div>
+                </div>
             }
         </EditForm>
     }
@@ -266,6 +279,14 @@ else
                 var response = await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
                 if (response.IsSuccessStatusCode)
                 {
+                    var alert = new Alert
+                        {
+                            AssessmentId = id,
+                            Message = $"✅{assessment.Approver} (Manager) has approved the risk assessment, {assessment.Name}.",
+                            DateTime = DateTime.Now,
+                        };
+                    await _client.PostAsJsonAsync(Endpoints.AlertsEndpoint, alert);
+
                     showSuccessMessage = true;
                     StateHasChanged();
                     await Task.Delay(3000); // Show message for 3 seconds
@@ -289,6 +310,14 @@ else
                 var response = await _client.PutAsJsonAsync($"{Endpoints.RiskAssessmentsEndpoint}/{id}", assessment);
                 if (response.IsSuccessStatusCode)
                 {
+                    var alert = new Alert
+                        {
+                            AssessmentId = id,
+                            Message = $"❎{assessment.Approver} (Manager) has unapproved the risk assessment, {assessment.Name}.",
+                            DateTime = DateTime.Now,
+                        };
+                    await _client.PostAsJsonAsync(Endpoints.AlertsEndpoint, alert);
+
                     showSuccessMessage = true;
                     StateHasChanged();
                     await Task.Delay(3000); // Show message for 3 seconds

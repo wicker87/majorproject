@@ -15,5 +15,6 @@ namespace majorproject.Client.Static
         public static readonly string RiskEvaluationsEndpoint = $"{Prefix}/riskevaluations";
         public static readonly string RiskControlsEndpoint = $"{Prefix}/riskcontrols";
         public static readonly string ImageSourcesEndpoint = $"{Prefix}/imagesources";
+        public static readonly string AlertsEndpoint = $"{Prefix}/alerts";
     }
 }

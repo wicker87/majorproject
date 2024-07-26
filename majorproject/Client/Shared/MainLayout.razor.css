@@ -37,7 +37,7 @@ main {
     /* Style for links and button links in the top row */
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
-        margin-left: 1.5rem;
+        margin-left: 1.2rem;
         text-decoration: none;
         color: black;
     }
@@ -80,7 +80,7 @@ main {
 
     /* Style for the sidebar on larger screens */
     .sidebar {
-        width: 220px;
+        width: 210px;
         height: 100vh;
         position: sticky;
         top: 0;
@@ -102,7 +102,7 @@ main {
 
     /* Padding for the top row and article(page contents) elements */
     .top-row, article {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        padding-left: 1.4rem !important;
+        padding-right: 1.4rem !important;
     }
 }

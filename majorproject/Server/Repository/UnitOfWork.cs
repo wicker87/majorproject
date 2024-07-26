@@ -23,6 +23,7 @@ namespace majorproject.Server.Repository
         private IGenericRepository<RiskEvaluation> _riskEvaluations;
         private IGenericRepository<RiskTeam> _riskTeams;
         private IGenericRepository<ImageSource> _imageSources;
+        private IGenericRepository<Alert> _alerts;
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -47,6 +48,8 @@ namespace majorproject.Server.Repository
         public IGenericRepository<ImageSource> ImageSources
             => _imageSources ??= new GenericRepository<ImageSource>(_context);
 
+        public IGenericRepository<Alert> Alerts
+            => _alerts ??= new GenericRepository<Alert>(_context);
         public void Dispose()
         {
             _context.Dispose();

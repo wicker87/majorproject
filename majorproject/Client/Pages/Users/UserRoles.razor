@@ -86,7 +86,7 @@ else
         {
             await UserRoleService.DeleteUserAsync(userId);
             userRoles = await UserRoleService.GetUserRolesAsync(); // Refresh list
-            _navManager.NavigateTo("/userroles/", forceLoad: true);
+            _navManager.NavigateTo("/userRoles/", forceLoad: true);
         }    
     }
 

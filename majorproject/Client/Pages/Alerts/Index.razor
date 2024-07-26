@@ -1,0 +1,82 @@
+﻿@page "/alerts/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Alerts Data</h3>
+<h5 style="color:red">Note: You can only delete the data only if it does not have the foreign Id (1st column) or is deemed outdated</h5>
+<br />
+
+@if (Alerts == null)
+{
+    <div class="alert alert-info">Loading Alerts Data...</div>
+}
+else
+{
+    <table class="table table-responsive" id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Assessment Id</th>
+                <th>Alert Id</th>
+                <th>Message</th>
+                <th>Date Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var alert in Alerts)
+            {
+                <tr>
+                    <td>@alert.AssessmentId</td>
+                    <td>@alert.Id</td>
+                    <td>@alert.Message</td>
+                    <td>@alert.DateTime.ToString("dd/MM/yyyy, hh:mm tt")</td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(alert.Id))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Alert>? Alerts;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Alerts = await _client.GetFromJsonAsync<List<Alert>>($"{Endpoints.AlertsEndpoint}");
+    }
+
+    async Task Delete(int alertId)
+    {
+        if (Alerts != null)
+        {
+            var alert = Alerts.First(q => q.Id == alertId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete this alert?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.AlertsEndpoint}/{alertId}");
+                await OnInitializedAsync();
+                _navManager.NavigateTo("/alerts/", forceLoad: true);
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookingsTable");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#bookingsTable");
+    }
+}
