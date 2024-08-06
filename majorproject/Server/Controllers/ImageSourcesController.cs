@@ -54,10 +54,7 @@ namespace majorproject.Server.Controllers
             {
                 return BadRequest();
             }
-            Debug.WriteLine("hello world 1");
-            var ai = new GemAI();
-            await ai.RiskTableGeneration(imageSource);
-            Debug.WriteLine("hello world 4");
+            
             _unitOfWork.ImageSources.Update(imageSource);
 
             try
@@ -86,9 +83,20 @@ namespace majorproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<ImageSource>> PostImageSource(ImageSource imageSource)
         {
-            await _unitOfWork.ImageSources.Insert(imageSource);
-            await _unitOfWork.Save(HttpContext);
-
+            Debug.WriteLine("hello world 1");
+            var ai = new GemAI();
+            await ai.RiskTableGeneration(imageSource);
+            try
+            {
+                await _unitOfWork.ImageSources.Insert(imageSource);
+                Debug.WriteLine("Hello world 4");
+                await _unitOfWork.Save(HttpContext);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"error during posting:{ex.Message}"); 
+            }
+            
             return CreatedAtAction("GetImageSource", new { id = imageSource.Id }, imageSource);
         }
 

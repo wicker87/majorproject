@@ -11,43 +11,45 @@ risk assessment form using generative AI. Users can then manually review and adj
 <br />
 <InputFile class="form-control" style="width:400px; max-height:300px;" OnChange="HandleFileSelected" multiple />
 <p style="color:red">* Can only accept up to 3 images per generate.</p>
-
-@if (uploadedFiles != null && uploadedFiles.Any())
+@if (showScreen == true)
 {
-    <div class="mt-3">
-        <h5>Image Details:</h5>
-        <div class="d-flex flex-row">
-            @foreach (var file in uploadedFiles)
-            {
-                <div class="p-2">
-                    <img src="@file.Base64String" alt="Uploaded Image" class="img-thumbnail" />
-                    <p><strong>Name:</strong> @file.Name</p>
-                    <p><strong>Type:</strong> @file.Type</p>
-                    <p><strong>Size:</strong> @Math.Round(file.Size / 1024.0, 2) kB</p>
-                </div>
-            }
-        </div>
-        <br />
-        <button class="btn btn-success btn-block" @onclick="UploadPicture">Generate</button>
-    </div>
-}
+    
 
+    @if (uploadedFiles != null && uploadedFiles.Any())
+    {
+        <div class="mt-3">
+            <h5>Image Details:</h5>
+            <div class="d-flex flex-row">
+                @foreach (var file in uploadedFiles)
+                {
+                    <div class="p-2">
+                        <img src="@file.Base64String" alt="Uploaded Image" class="img-thumbnail" />
+                        <p><strong>Name:</strong> @file.Name</p>
+                        <p><strong>Type:</strong> @file.Type</p>
+                        @*<p><strong>Size:</strong> @Math.Round(file.Size / 1024.0, 2) kB</p>*@
+                    </div>
+                }
+            </div>
+            <br />
+            <button class="btn btn-success btn-block" @onclick="UploadPicture">Generate</button>
+        </div>
+    }
+}
+else
+{
+    <h5>loading...</h5>
+}
 @code {
 
     [Parameter] public int id { get; set; }
     RiskAssessment? assessment = new RiskAssessment();
-
+    bool showScreen=true;
     private List<ImageSource> uploadedFiles = new List<ImageSource>();
 
     protected async override Task OnParametersSetAsync()
     {
         assessment = await _client.GetFromJsonAsync<RiskAssessment>($"{Endpoints.RiskAssessmentsEndpoint}/{id}");
     }
-
-    // private async Task OpenChatGPT()
-    // {
-    //     await js.InvokeVoidAsync("window.open", "https://chatgpt.com/", "_blank");
-    // }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
@@ -60,12 +62,15 @@ risk assessment form using generative AI. Users can then manually review and adj
 
             var dataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
             uploadedFiles.Add(new ImageSource
-                {
-                    Name = file.Name,
-                    Type = file.ContentType,
-                    Size = file.Size,
-                    Base64String = dataUrl
-                });
+                        {
+                            Name = file.Name,
+                            Type = file.ContentType,
+                            Size = file.Size,
+                            Base64String = dataUrl,
+                            AssessmentId = assessment.Id
+
+
+                        });
 
         }
 
@@ -75,63 +80,146 @@ risk assessment form using generative AI. Users can then manually review and adj
     }
     public async Task UploadPicture()
     {
-        
         if (uploadedFiles != null)
         {
-            int uploadedFilesLength = uploadedFiles.Count;
-            foreach (var image in uploadedFiles)
+
+            
+           
+
+            showScreen = false;
+
+            List<ImageSource> shiftedUploadedFiles = uploadedFiles;
+            uploadedFiles.Clear();
+            int uploadedFilesLength = shiftedUploadedFiles.Count;
+            foreach (var image in shiftedUploadedFiles)
             {
                 await _client.PostAsJsonAsync(Endpoints.ImageSourcesEndpoint, image);
             }
-            uploadedFiles.Clear();
 
+            Console.WriteLine("It works till here");
+            Console.WriteLine("Hello world 5");
             List<ImageSource> pictureList = new List<ImageSource>();
-
+            Console.WriteLine("Hello world 6");
             pictureList = await _client.GetFromJsonAsync<List<ImageSource>>(Endpoints.ImageSourcesEndpoint);
-
+            Console.WriteLine("Hello world 7");
             int pictureListLength = pictureList.Count;
 
             int lengthdiff = pictureListLength - uploadedFilesLength;
 
-            for(int i=lengthdiff; i<pictureListLength; i++)
+            for (int i = lengthdiff; i < pictureListLength; i++)
             {
-
-                /*for(int f=0; f< ; f++)
+                Console.WriteLine("Hello world 8");
+                string prompt = pictureList[i].PromptAnswer;
+                Console.WriteLine("Hello world 9");
+                var jsonPrompt = JsonDocument.Parse(prompt);
+                Console.WriteLine("Hello world 10");
+                JsonElement root = jsonPrompt.RootElement;
+                JsonElement wA = root.GetProperty("work activities");
+                //JsonElement hazards = root.GetProperty("Hazards and Risks");
+                //int noOfWA = wA.GetArrayLength();
+                // int noOfObj = hazards.GetArrayLength();
+                foreach (JsonElement obj in wA.EnumerateArray())
                 {
                     WorkActivity workActivity = new WorkActivity();
-                    //add variables to work activity
-                    List<Identification> identList = new List<Identification>();
-                    identList = await _client.GetFromJsonAsync<List<Identification>>(Endpoints.IdentificationsEndpoint);
-                    int identLength = 0;
-                    if (identList == null)
+
+                    workActivity.Name = obj.GetProperty("work_activity").ToString();
+                    workActivity.AssessmentId = assessment.Id;
+                    Console.WriteLine("Hello world 11");
+                    await _client.PostAsJsonAsync(Endpoints.WorkActivitiesEndpoint, workActivity);
+                    Console.WriteLine("Hello world 12");
+                    List<WorkActivity> wAAddedList = await _client.GetFromJsonAsync<List<WorkActivity>>(Endpoints.WorkActivitiesEndpoint);
+                    int wAAddedListCount = wAAddedList.Count() - 1;
+                    JsonElement analy = obj.GetProperty("hazards_and_risks");
+                    Console.WriteLine("Hello world 13");
+                    foreach (JsonElement hr in analy.EnumerateArray())
                     {
-                        identLength = 0;
-                    }
-                    else
-                    {
-                        identLength = identList.Count;
-                    }
-                    //find amount of added identification
-                    for(int g=identLength; g<identLength+; g++)
-                    {
+                        Console.WriteLine("Hello world 14");
                         Identification identification = new Identification();
-                        for(int h; h< ; h++)
+                        identification.Name = hr.GetProperty("hazard").ToString();
+                        identification.PossibleInjury = hr.GetProperty("injury_or_ill_health").ToString();
+                        identification.ActivityId = wAAddedListCount;
+                        Console.WriteLine("Hello world 15");
+                        await _client.PostAsJsonAsync(Endpoints.IdentificationsEndpoint, identification);
+                        Console.WriteLine("Hello world 16");
+                        List<Identification> identAddedList = await _client.GetFromJsonAsync<List<Identification>>(Endpoints.IdentificationsEndpoint);
+                        int identAddedListCount = identAddedList.Count() - 1;
+                        Console.WriteLine("Hello world 17");
+                        RiskEvaluation riskEvaluation = new RiskEvaluation();
+                        Console.WriteLine("Hello world b1");
+                        riskEvaluation.ExistingRiskControls = hr.GetProperty("existing_risk_controls").ToString();
+                        Console.WriteLine("Hello world b2");
+                        if (int.TryParse(hr.GetProperty("severity").ToString(), out int sev))
                         {
-                            RiskEvaluation riskEvaluation = new RiskEvaluation();
-                            RiskControl riskControl = new RiskControl();
+                            riskEvaluation.Severity = sev;
                         }
+                        if (int.TryParse(hr.GetProperty("likelihood").ToString(), out int like))
+                        {
+                            riskEvaluation.Likelihood = like;
+                        }
+                        if (int.TryParse(hr.GetProperty("risk_rating").ToString(), out int rPN))
+                        {
+                            riskEvaluation.RPN = rPN;
+                        }
+                        riskEvaluation.HazardId = identAddedListCount;
+
+                        await _client.PostAsJsonAsync(Endpoints.RiskEvaluationsEndpoint, riskEvaluation);
+                        Console.WriteLine("Hello world 18");
+
+                        List<RiskEvaluation> riskEAddedList = await _client.GetFromJsonAsync<List<RiskEvaluation>>(Endpoints.RiskEvaluationsEndpoint);
+                        int riskEAddedListCount = riskEAddedList.Count() - 1;
+                        Console.WriteLine("Hello world 19");
+
+                        RiskControl riskControl = new RiskControl();
+
+                        Console.WriteLine("Hello world 20");
+                        riskControl.AdditionalControls = hr.GetProperty("additional_risk_controls").ToString();
+                        if (int.TryParse(hr.GetProperty("severity_with_new_controls").ToString(), out int sevNC))
+                        {
+                            riskControl.Severity = sevNC;
+                        }
+                        if (int.TryParse(hr.GetProperty("likelihood_with_new_controls").ToString(), out int likeNC))
+                        {
+                            riskControl.Likelihood = likeNC;
+                        }
+                        if (int.TryParse(hr.GetProperty("risk_rating_with_new_controls").ToString(), out int rPNNC))
+                        {
+                            riskControl.RPN = rPNNC;
+                        }
+                        riskControl.EvaluationId = riskEAddedListCount;
+                        Console.WriteLine("Hello world 21");
+                        await _client.PostAsJsonAsync(Endpoints.RiskControlsEndpoint, riskControl);
+                        Console.WriteLine("Hello world 22");
+                        showScreen = true;
                     }
-                }*/
-
+                }
             }
+            
+        }
+    }
+}
 
-                
+
+                        
+                    
+
+
+                        
+
+                        
+                    
+        
+           
+        
+
+
+
+
                 
                     
                 
             
-        }
-    }
+
     
     
-}
+    
+

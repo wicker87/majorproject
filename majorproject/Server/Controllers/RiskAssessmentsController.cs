@@ -42,7 +42,7 @@ namespace majorproject.Server.Controllers
         public async Task<IActionResult> GetRiskAssessment(int id)
         {
             var riskAssessment = await _unitOfWork.RiskAssessments.Get(q => q.Id == id,
-                includes: q => q.Include(x => x.Team).Include(x=>x.WorkActivities)
+                includes: q => q.Include(x => x.Team).Include(x=>x.WorkActivities)         
           .ThenInclude(x => x.Identifications).ThenInclude(x => x.RiskEvaluations).ThenInclude(x => x.Control));
 
             if (riskAssessment == null)
