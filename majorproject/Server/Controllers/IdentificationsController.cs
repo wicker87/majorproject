@@ -39,7 +39,7 @@ namespace majorproject.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIdentification(int id)
         {
-            var identification = await _unitOfWork.Identifications.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskEvaluations));
+            var identification = await _unitOfWork.Identifications.Get(q => q.Id == id, includes: q => q.Include(x => x.RiskEvaluations)); //include section written by Jun Jie
 
             if (identification == null)
             {
@@ -48,7 +48,7 @@ namespace majorproject.Server.Controllers
             return Ok(identification);
         }
 
-        // GET: api/Identifications/assessment/5 - Newly Added
+        // GET: api/Identifications/assessment/5 - Newly Added by Jun Jie
         [HttpGet("assessment/{id}")]
         public async Task<IActionResult> GetIdentificationsByAssessment(int id)
         {
@@ -56,7 +56,7 @@ namespace majorproject.Server.Controllers
             return Ok(identifications);
         }
 
-        // GET: api/Identifications/activity/5 - Newly Added
+        // GET: api/Identifications/activity/5 - Newly Added by Ju
         [HttpGet("activity/{id}")]
         public async Task<IActionResult> GetIdentificationsByActivityId(int id)
         {

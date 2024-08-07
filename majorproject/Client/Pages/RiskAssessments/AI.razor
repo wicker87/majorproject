@@ -13,7 +13,7 @@ risk assessment form using generative AI. Users can then manually review and adj
 <p style="color:red">* Can only accept up to 3 images per generate.</p>
 @if (showScreen == true)
 {
-    
+    <h5>@success</h5>
 
     @if (uploadedFiles != null && uploadedFiles.Any())
     {
@@ -44,6 +44,7 @@ else
     [Parameter] public int id { get; set; }
     RiskAssessment? assessment = new RiskAssessment();
     bool showScreen=true;
+    string success = "";
     private List<ImageSource> uploadedFiles = new List<ImageSource>();
 
     protected async override Task OnParametersSetAsync()
@@ -53,7 +54,7 @@ else
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-
+        success = "";
         uploadedFiles.Clear();
         foreach (var file in e.GetMultipleFiles(3)) // Limit to 3 files
         {
@@ -185,12 +186,16 @@ else
                             Console.WriteLine("Hello world 21");
                             await _client.PostAsJsonAsync(Endpoints.RiskControlsEndpoint, riskControl);
                             Console.WriteLine("Hello world 22");
-                            showScreen = true;
+
                         }
                     }
                 }
-
+                success = "uploading successful";
             }
+        }
+        catch
+        {
+            success = "uploading unsuccessful";
         }
         finally
         {

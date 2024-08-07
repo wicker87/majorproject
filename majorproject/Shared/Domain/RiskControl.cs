@@ -18,7 +18,7 @@ namespace majorproject.Shared.Domain
         public DateTime DueDate { get; set; }
         public string? Remarks { get; set; }
         public int? EvaluationId { get; set; }
-        public virtual RiskEvaluation? RiskEvaluation { get; set; }
+        public virtual RiskEvaluation? Evaluation { get; set; }
 
     }
 }

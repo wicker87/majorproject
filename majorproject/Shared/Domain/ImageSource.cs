@@ -14,7 +14,7 @@ namespace majorproject.Shared.Domain
         public string? Base64String { get; set; }
         public string? PromptAnswer {  get; set; }
         public int? AssessmentId { get; set; }
-        public virtual RiskAssessment? RiskAssessment { get; set; }
+        public virtual RiskAssessment? Assessment { get; set; }
         
 
     }
